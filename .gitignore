@@ -1,13 +1,14 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+/Debug
+/ipch
+/Medicine.sdf
+/Common/Database/MySQL
+/Manager/Debug
+/Manager/Manager.log
+Debug
+Release
+/Manager/ClassDiagram1.cd
+/Configure/Configure.aps
+/Medicine.suo
+/Medicine.opensdf
+Data

@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\Database">
+      <UniqueIdentifier>{f54dd553-19dd-4ef6-9571-f606197dc3a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Common">
+      <UniqueIdentifier>{c1b3b6ca-8fb7-4cad-839e-b4e44c0ad6ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Common">
+      <UniqueIdentifier>{e54b85c9-28db-4b66-ba7d-2582b1fba80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Database">
+      <UniqueIdentifier>{7620b419-6612-4fc7-8c88-7ba7f5370043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Ctrl">
+      <UniqueIdentifier>{a09bb1db-e621-450a-b3a9-2eaee6988768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Ctrl">
+      <UniqueIdentifier>{70b1090d-5177-4965-9a65-eb66d6d5fe7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Device">
+      <UniqueIdentifier>{a31dd31a-7858-49e5-b2d3-6c487e61e009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Device">
+      <UniqueIdentifier>{74ed1e59-6f7c-4cdc-a7e7-561fe5e12a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\CfgDlg">
+      <UniqueIdentifier>{5bc0eff6-c6a3-46b0-a916-73d509378bbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\RetailDlg">
+      <UniqueIdentifier>{310c60ac-adb2-46b5-80d4-15d3dde12ec9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\CfgDlg">
+      <UniqueIdentifier>{b0dfb4e8-ca35-4830-91d8-28c9bc132843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\RetailDlg">
+      <UniqueIdentifier>{c2ab50a8-8055-4cee-95f0-2ed7f6e70a60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\RetailListDlg">
+      <UniqueIdentifier>{00ee79fb-3e5d-4c6a-a0e5-c0a0f53d70d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\RetailListDlg">
+      <UniqueIdentifier>{bef9f089-a464-4e3f-8b63-48b4c6b0b3e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\AccountDlg">
+      <UniqueIdentifier>{9ffd9ce0-06c9-4f03-b90a-f78a8c5c3477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\AccountDlg">
+      <UniqueIdentifier>{d3036e99-2f88-4030-8774-8043033d50f9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="res\POS.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\POS.ico">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\fileview.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\icon1.ico">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="POS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="POSDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\CommUtil.h">
+      <Filter>头文件\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\Database.h">
+      <Filter>头文件\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\UserDB.h">
+      <Filter>头文件\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\AccountDB.h">
+      <Filter>头文件\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Const.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\ConsDef.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\ErrorCode.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Log.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\md5.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\StdHead.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\TypeDef.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Ctrl\RichListCtrl.h">
+      <Filter>头文件\Ctrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\MedicineDB.h">
+      <Filter>头文件\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\RetailDB.h">
+      <Filter>头文件\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\StoreDB.h">
+      <Filter>头文件\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Config.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Device\PrinterManager.h">
+      <Filter>头文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Device\CashBox.h">
+      <Filter>头文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Device\PrinterEP.h">
+      <Filter>头文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Device\CustomerDisplay.h">
+      <Filter>头文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Device\DeviceManager.h">
+      <Filter>头文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Device\PrinterWithDriver.h">
+      <Filter>头文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Version.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Crypto.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\PrintFormat.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Ctrl\LogoStatic.h">
+      <Filter>头文件\Ctrl</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgPrintFormatDlg.h">
+      <Filter>头文件\CfgDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgCashboxDlg.h">
+      <Filter>头文件\CfgDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgCustomerDisplayDlg.h">
+      <Filter>头文件\CfgDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgDlg.h">
+      <Filter>头文件\CfgDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgGeneralDlg.h">
+      <Filter>头文件\CfgDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgPrinterDlg.h">
+      <Filter>头文件\CfgDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="RetailDlg.h">
+      <Filter>头文件\RetailDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckOutDlg.h">
+      <Filter>头文件\RetailDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeNumDlg.h">
+      <Filter>头文件\RetailDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteOneRowDlg.h">
+      <Filter>头文件\RetailDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="RetailListDlg.h">
+      <Filter>头文件\RetailListDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="RetailItemDlg.h">
+      <Filter>头文件\RetailListDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Device\Adapter.h">
+      <Filter>头文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\POSDB.h">
+      <Filter>头文件\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="AccountMgrDlg.h">
+      <Filter>头文件\AccountDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="PasswordMgrDlg.h">
+      <Filter>头文件\AccountDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="RetailSearchDlg.h">
+      <Filter>头文件\RetailListDlg</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="POS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="POSDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\Database.cpp">
+      <Filter>源文件\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\UserDB.cpp">
+      <Filter>源文件\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\AccountDB.cpp">
+      <Filter>源文件\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\ErrorCode.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Log.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\TypeDef.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\md5.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Ctrl\RichListCtrl.cpp">
+      <Filter>源文件\Ctrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\MedicineDB.cpp">
+      <Filter>源文件\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\RetailDB.cpp">
+      <Filter>源文件\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\StoreDB.cpp">
+      <Filter>源文件\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Config.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Device\PrinterManager.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Device\CashBox.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Device\PrinterEP.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Device\CustomerDisplay.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Device\DeviceManager.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Device\PrinterWithDriver.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Version.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Crypto.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\PrintFormat.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Ctrl\LogoStatic.cpp">
+      <Filter>源文件\Ctrl</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgPrintFormatDlg.cpp">
+      <Filter>源文件\CfgDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgCashboxDlg.cpp">
+      <Filter>源文件\CfgDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgCustomerDisplayDlg.cpp">
+      <Filter>源文件\CfgDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgDlg.cpp">
+      <Filter>源文件\CfgDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgGeneralDlg.cpp">
+      <Filter>源文件\CfgDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgPrinterDlg.cpp">
+      <Filter>源文件\CfgDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="RetailDlg.cpp">
+      <Filter>源文件\RetailDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckOutDlg.cpp">
+      <Filter>源文件\RetailDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeNumDlg.cpp">
+      <Filter>源文件\RetailDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="DeleteOneRowDlg.cpp">
+      <Filter>源文件\RetailDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="RetailListDlg.cpp">
+      <Filter>源文件\RetailListDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="RetailItemDlg.cpp">
+      <Filter>源文件\RetailListDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Device\Adapter.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\POSDB.cpp">
+      <Filter>源文件\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\CommUtil.cpp">
+      <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="RetailSearchDlg.cpp">
+      <Filter>源文件\RetailListDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="AccountMgrDlg.cpp">
+      <Filter>源文件\AccountDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="PasswordMgrDlg.cpp">
+      <Filter>源文件\AccountDlg</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="POS.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

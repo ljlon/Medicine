@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{24ffe363-cef1-46b6-bf60-3d69d8e33ea9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{a2fd297f-26e8-4aea-a3be-1d77aecc7952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{d6606036-7cb6-432a-9b42-1980ba74a18b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{cd480937-6967-4c7f-b322-fa867b1674c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Ctrl">
+      <UniqueIdentifier>{3263f29d-1b26-41bb-90e1-6b5ed5d92e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View">
+      <UniqueIdentifier>{0983d4b8-89ce-49f4-9212-6b1f599afffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\UserView">
+      <UniqueIdentifier>{82e6c90e-77b6-4180-a394-fcfbd29ea726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\PurchaseView">
+      <UniqueIdentifier>{09f9d933-6347-49d5-8f9a-2536055883d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\StoreView">
+      <UniqueIdentifier>{8c4bfdb0-4f28-4ec3-b5c8-8cec1a3d317d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\MenuView">
+      <UniqueIdentifier>{00a1149f-ed8c-4417-af3e-a1e74e19de59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\BasicView">
+      <UniqueIdentifier>{ba92d919-a2f8-423b-8f4b-1969d2505a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\BasicView\VendorView">
+      <UniqueIdentifier>{eec44f2b-c4d5-48ce-912d-29305dc6b2fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\BasicView\SupplierView">
+      <UniqueIdentifier>{3948bd23-bad9-4996-8b0f-69e9946185ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\BasicView\MedicineView">
+      <UniqueIdentifier>{111316ce-5689-4b43-a386-2b26f89b97b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\AccountView">
+      <UniqueIdentifier>{402eb964-5a1f-4230-b921-551e46f6ea93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{ce0e07cd-2f60-45e5-80bf-47c99b88a8ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\PurchaseView">
+      <UniqueIdentifier>{cf06ba24-5440-49e4-9b3b-c166540f7aac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\UserView">
+      <UniqueIdentifier>{700eeb17-4b05-478c-b0cb-39629b8e2863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\MenuView">
+      <UniqueIdentifier>{99847f81-953c-44ba-b3ad-aea037aed981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\BasicView">
+      <UniqueIdentifier>{c23bbb38-5921-49ad-8e33-2f837bc005b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\BasicView\VendorView">
+      <UniqueIdentifier>{efa94c1c-4793-4865-ae83-178f533b7af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\BasicView\SupplierView">
+      <UniqueIdentifier>{4544ab62-6147-40ff-926e-d29ec23be08a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\BasicView\MedicineView">
+      <UniqueIdentifier>{6db6a577-ad12-46e3-b82e-6bd355c32ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\AccountView">
+      <UniqueIdentifier>{f7ac370d-711d-4686-a600-0e5db66d055f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\StoreView">
+      <UniqueIdentifier>{68e931c2-b015-4257-a266-914fe028ec38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ctrl">
+      <UniqueIdentifier>{b8e2939d-966b-4fc2-b064-e030a833b1ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\RetailView">
+      <UniqueIdentifier>{89caae35-9628-458c-afd4-03868d58d61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\RetailView">
+      <UniqueIdentifier>{ee9f31e5-a37d-4398-81ab-9920bd5b4f17}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="res\file_view.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\file_view_hc.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\class_view.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\class_view_hc.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\fileview.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\fileview_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\classview.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\classview_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\explorer.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\explorer_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\sort.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\sort_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\menuimages.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\menuimages_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\output_wnd.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\output_wnd_hc.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\properties_wnd.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\properties_wnd_hc.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\properties.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\properties_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="UserImages.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Manager.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\ManagerDoc.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Manager.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Toolbar256.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\ErrorCode.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Log.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\StdHead.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\TypeDef.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\Database.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\AccountDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\md5.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\CommUtil.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\SupplierDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewTree.h">
+      <Filter>Header Files\Ctrl</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuView.h">
+      <Filter>Header Files\View\MenuView</Filter>
+    </ClInclude>
+    <ClInclude Include="MedicineMgrView.h">
+      <Filter>Header Files\View\BasicView\MedicineView</Filter>
+    </ClInclude>
+    <ClInclude Include="VendorAddView.h">
+      <Filter>Header Files\View\BasicView\VendorView</Filter>
+    </ClInclude>
+    <ClInclude Include="VendorMgrView.h">
+      <Filter>Header Files\View\BasicView\VendorView</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplierAddView.h">
+      <Filter>Header Files\View\BasicView\SupplierView</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplierMgrView.h">
+      <Filter>Header Files\View\BasicView\SupplierView</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMgrView.h">
+      <Filter>Header Files\View\BasicView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\VendorDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\MedicineDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="MedicineAddView.h">
+      <Filter>Header Files\View\BasicView\MedicineView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\UserDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="UserMgrView.h">
+      <Filter>Header Files\View\UserView</Filter>
+    </ClInclude>
+    <ClInclude Include="UserAddView.h">
+      <Filter>Header Files\View\UserView</Filter>
+    </ClInclude>
+    <ClInclude Include="AccountMgrView.h">
+      <Filter>Header Files\View\AccountView</Filter>
+    </ClInclude>
+    <ClInclude Include="PasswordMgrView.h">
+      <Filter>Header Files\View\AccountView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\SupplierMedicineDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="PurchaseMgrView.h">
+      <Filter>Header Files\View\PurchaseView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Ctrl\RichListCtrl.h">
+      <Filter>Header Files\Ctrl</Filter>
+    </ClInclude>
+    <ClInclude Include="PurchaseAddView.h">
+      <Filter>Header Files\View\PurchaseView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\PurchaseDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\StoreDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="PurchaseListView.h">
+      <Filter>Header Files\View\PurchaseView</Filter>
+    </ClInclude>
+    <ClInclude Include="RootView.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerView.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Const.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreMgrView.h">
+      <Filter>Header Files\View\StoreView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Ctrl\ExSplitterWnd.h">
+      <Filter>Header Files\Ctrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\RetailDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="RetailMgrView.h">
+      <Filter>Header Files\View\RetailView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\MedicineBatchDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Config.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Version.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Crypto.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreSearchDlg.h">
+      <Filter>Header Files\View\StoreView</Filter>
+    </ClInclude>
+    <ClInclude Include="MedicineSearchDlg.h">
+      <Filter>Header Files\View\BasicView\MedicineView</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreEditView.h">
+      <Filter>Header Files\View\StoreView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Database\POSDB.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="VendorSearchDlg.h">
+      <Filter>Header Files\View\BasicView\VendorView</Filter>
+    </ClInclude>
+    <ClInclude Include="PurchaseSearchDlg.h">
+      <Filter>Header Files\View\PurchaseView</Filter>
+    </ClInclude>
+    <ClInclude Include="RetailSearchDlg.h">
+      <Filter>Header Files\View\RetailView</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplierSearchDlg.h">
+      <Filter>Header Files\View\BasicView\SupplierView</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\AccountDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\Database.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\ErrorCode.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Log.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\TypeDef.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\md5.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\CommUtil.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\SupplierDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplierAddView.cpp">
+      <Filter>Source Files\View\BasicView\SupplierView</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplierMgrView.cpp">
+      <Filter>Source Files\View\BasicView\SupplierView</Filter>
+    </ClCompile>
+    <ClCompile Include="VendorMgrView.cpp">
+      <Filter>Source Files\View\BasicView\VendorView</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuView.cpp">
+      <Filter>Source Files\View\MenuView</Filter>
+    </ClCompile>
+    <ClCompile Include="MedicineMgrView.cpp">
+      <Filter>Source Files\View\BasicView\MedicineView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\VendorDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="VendorAddView.cpp">
+      <Filter>Source Files\View\BasicView\VendorView</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicMgrView.cpp">
+      <Filter>Source Files\View\BasicView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\MedicineDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="MedicineAddView.cpp">
+      <Filter>Source Files\View\BasicView\MedicineView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\UserDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="UserMgrView.cpp">
+      <Filter>Source Files\View\UserView</Filter>
+    </ClCompile>
+    <ClCompile Include="UserAddView.cpp">
+      <Filter>Source Files\View\UserView</Filter>
+    </ClCompile>
+    <ClCompile Include="AccountMgrView.cpp">
+      <Filter>Source Files\View\AccountView</Filter>
+    </ClCompile>
+    <ClCompile Include="PasswordMgrView.cpp">
+      <Filter>Source Files\View\AccountView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\SupplierMedicineDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="PurchaseMgrView.cpp">
+      <Filter>Source Files\View\PurchaseView</Filter>
+    </ClCompile>
+    <ClCompile Include="PurchaseAddView.cpp">
+      <Filter>Source Files\View\PurchaseView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\StoreDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreMgrView.cpp">
+      <Filter>Source Files\View\StoreView</Filter>
+    </ClCompile>
+    <ClCompile Include="PurchaseListView.cpp">
+      <Filter>Source Files\View\PurchaseView</Filter>
+    </ClCompile>
+    <ClCompile Include="RootView.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerView.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\PurchaseDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Ctrl\RichListCtrl.cpp">
+      <Filter>Source Files\Ctrl</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewTree.cpp">
+      <Filter>Source Files\Ctrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Ctrl\ExSplitterWnd.cpp">
+      <Filter>Source Files\Ctrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\RetailDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="RetailMgrView.cpp">
+      <Filter>Source Files\View\RetailView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\MedicineBatchDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Config.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Version.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Crypto.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreSearchDlg.cpp">
+      <Filter>Source Files\View\StoreView</Filter>
+    </ClCompile>
+    <ClCompile Include="MedicineSearchDlg.cpp">
+      <Filter>Source Files\View\BasicView\MedicineView</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreEditView.cpp">
+      <Filter>Source Files\View\StoreView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Database\POSDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="PurchaseSearchDlg.cpp">
+      <Filter>Source Files\View\PurchaseView</Filter>
+    </ClCompile>
+    <ClCompile Include="RetailSearchDlg.cpp">
+      <Filter>Source Files\View\RetailView</Filter>
+    </ClCompile>
+    <ClCompile Include="VendorSearchDlg.cpp">
+      <Filter>Source Files\View\BasicView\VendorView</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplierSearchDlg.cpp">
+      <Filter>Source Files\View\BasicView\SupplierView</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Manager.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
