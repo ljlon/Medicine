@@ -31,6 +31,7 @@ ERR_DB_BEGIN					= 0x2 * 0x100,
 err_DB_Open						= ERR_DB_BEGIN + 1,	//数据库连接失败
 err_DB_Proc_Execute				= ERR_DB_BEGIN + 2,	//执行查询语句失败
 err_DB_NumFieldNotMatch		    = ERR_DB_BEGIN + 3,	//数据库返回结果类型不匹配
+err_DB_Backup                   = ERR_DB_BEGIN + 4, //备份数据库失败
 
 //----------------------------------------------------------------
 //account error code

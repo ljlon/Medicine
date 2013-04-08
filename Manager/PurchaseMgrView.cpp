@@ -57,7 +57,7 @@ void CPurchaseMgrView::Dump(CDumpContext& dc) const
 #endif
 #endif //_DEBUG
 
-// CBasicMgrView message handlers
+// CPurchaseMgrView message handlers
 void CPurchaseMgrView::OnBnClickedButtonAdd()
 {
 	// TODO: Add your control notification handler code here

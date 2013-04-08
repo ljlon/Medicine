@@ -37,6 +37,8 @@ TCHAR * pszMenuName[] =							// 0x01
 	_T("用户管理"),
 	_T("添加用户"),
 	_T("个人信息"),
+	_T("修改密码"),
+	_T("数据安全"),
 	NULL
 };
 
@@ -180,6 +182,11 @@ BOOL CManagerDoc::OnNewDocument()
 	TreeStruct *pAccountTree = new TreeStruct;
 	pAccountTree->csNodeName = GetMenuName(TREE_ACCOUNT_ID);
 	m_menuTree.vctChildTree.push_back(pAccountTree);
+
+	//数据安全
+	TreeStruct *pBackup = new TreeStruct;
+	pBackup->csNodeName = GetMenuName(TREE_BACKUP_ID);
+	m_menuTree.vctChildTree.push_back(pBackup);
 
 	return TRUE;
 }

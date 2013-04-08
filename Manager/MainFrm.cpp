@@ -14,10 +14,6 @@
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
 
-const int  iMaxUserToolbars = 10;
-const UINT uiFirstUserToolBarId = AFX_IDW_CONTROLBAR_FIRST + 40;
-const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
-
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_REGISTERED_MESSAGE(WM_MAINFRM, &CMainFrame::OnMainFrm)
 	ON_WM_CREATE()
@@ -385,6 +381,16 @@ BOOL CMainFrame::ShowRightView(TreeMenuID id,  BOOL bRememberPreID)
 			m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CPasswordMgrView), CSize(0, 0), NULL);
 			m_wndSplitter.RecalcLayout();
 		}        
+	}
+	else if (m_rightViewID == TREE_BACKUP_ID)
+	{
+		m_listPreRightViewID.clear();
+		if (!pView->IsKindOf(RUNTIME_CLASS(CBackupMgrView)))
+		{
+			m_wndSplitter.DeleteView(0, 1);
+			m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CBackupMgrView), CSize(0, 0), NULL);
+			m_wndSplitter.RecalcLayout();
+		}    
 	}
 
 	return TRUE;

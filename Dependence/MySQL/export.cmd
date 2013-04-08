@@ -1,0 +1,3 @@
+mysqldump.exe --user=root --password=root --max_allowed_packet=1G --host=localhost --port=3306 --default-character-set=utf8 --routines "store" "view_store" "view_retail" "view_purchase" "view_retail_item" "view_supplier_medicine" "pos" "user_role" "medicine" "medicine_class" "user" "medicine_otc" "vendor" "store_by_batch" "view_pos" "medicine_type" "medicine_batch" "purchase" "view_medicine" "supplier_medicine" "medicine_form" "pc" "medicine_unit" "retail_item" "supplier" "view_store_by_batch" "retail" > D:\Backup.sql
+
+mysqldump.exe --user=root --password=root --max_allowed_packet=1G --host=localhost --port=3306 --default-character-set=utf8 --routines --database store > D:\Backup.sql

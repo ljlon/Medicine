@@ -23,6 +23,7 @@
 #include "RetailMgrView.h"
 #include "StoreMgrView.h"
 #include "StoreEditView.h"
+#include "BackupMgrView.h"
 #include <list>
 
 const UINT WM_MAINFRM = ::RegisterWindowMessage(_T("WM_MAINFRM"));

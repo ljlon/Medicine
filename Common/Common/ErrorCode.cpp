@@ -25,8 +25,9 @@ TCHAR * pszDBErrMsg[] =						// 0x2 * 0x100
 {
 	NULL,											//Begin
 	_T("数据库连接失败"),							//err_FILE_Open				= ERR_FILE_BEGIN + 1,
-	_T("执行数据库查询过程失败"),					//err_DB_Proc_Execute	    = ERR_FILE_BEGIN + 2,
-	_T("数据库返回结果类型不匹配"),					//err_DB_NumFieldNotMatch	= ERR_DB_BEGIN + 3,	//
+	_T("执行数据库查询过程失败"),						//err_DB_Proc_Execute	    = ERR_FILE_BEGIN + 2,
+	_T("数据库返回结果类型不匹配"),					//err_DB_NumFieldNotMatch	= ERR_DB_BEGIN + 3,	
+	_T("备份数据库失败"),							//err_DB_Backup             = ERR_DB_BEGIN + 4, 
 	NULL											//End
 };
 

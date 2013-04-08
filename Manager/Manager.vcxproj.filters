@@ -97,6 +97,18 @@
     <Filter Include="Header Files\View\RetailView">
       <UniqueIdentifier>{ee9f31e5-a37d-4398-81ab-9920bd5b4f17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Backup">
+      <UniqueIdentifier>{926aa536-67be-40d7-9db7-f25a79df8fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Backup">
+      <UniqueIdentifier>{545ef216-2fa0-47e2-9a6d-857e70dfd7d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\BackupView">
+      <UniqueIdentifier>{76b6f527-8ccc-4ffc-90b0-b134449aa1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\BackupView">
+      <UniqueIdentifier>{7eebe3df-96c0-4610-8677-a5c168cc20f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -354,6 +366,12 @@
     <ClInclude Include="SupplierSearchDlg.h">
       <Filter>Header Files\View\BasicView\SupplierView</Filter>
     </ClInclude>
+    <ClInclude Include="..\Common\Backup\MySQLBackup.h">
+      <Filter>Header Files\Backup</Filter>
+    </ClInclude>
+    <ClInclude Include="BackupMgrView.h">
+      <Filter>Header Files\View\BackupView</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Manager.cpp">
@@ -517,6 +535,12 @@
     </ClCompile>
     <ClCompile Include="SupplierSearchDlg.cpp">
       <Filter>Source Files\View\BasicView\SupplierView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Backup\MySQLBackup.cpp">
+      <Filter>Source Files\Backup</Filter>
+    </ClCompile>
+    <ClCompile Include="BackupMgrView.cpp">
+      <Filter>Source Files\View\BackupView</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
