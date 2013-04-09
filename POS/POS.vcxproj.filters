@@ -225,6 +225,9 @@
     <ClInclude Include="RetailSearchDlg.h">
       <Filter>头文件\RetailListDlg</Filter>
     </ClInclude>
+    <ClInclude Include="..\Common\Common\POSConfig.h">
+      <Filter>头文件\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="POS.cpp">
@@ -358,6 +361,9 @@
     </ClCompile>
     <ClCompile Include="PasswordMgrDlg.cpp">
       <Filter>源文件\AccountDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\POSConfig.cpp">
+      <Filter>源文件\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

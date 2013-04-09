@@ -39,7 +39,7 @@ BOOL CCfgCustomerDisplayDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	m_vctAllCustomerDisplay.resize(1);
-	m_vctAllCustomerDisplay[0] = g_config.customerdispay_name;
+	m_vctAllCustomerDisplay[0] = g_POSCfg.customerdispay_name;
 	m_iSelCustomerDisplayIdx = 0;
 	m_cbCom.AddString(m_vctAllCustomerDisplay[0]);
 	m_cbCom.SetCurSel(0);
@@ -47,7 +47,7 @@ BOOL CCfgCustomerDisplayDlg::OnInitDialog()
 	return TRUE;
 }
 
-ERRCODE CCfgCustomerDisplayDlg::ApplyCfg(Config &config)
+ERRCODE CCfgCustomerDisplayDlg::ApplyCfg(POSConfig &config)
 {
 	ERRCODE errRet = err_OK;
 

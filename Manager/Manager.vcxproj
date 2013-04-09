@@ -141,6 +141,7 @@
     <ClInclude Include="..\Common\Common\ErrorCode.h" />
     <ClInclude Include="..\Common\Common\Log.h" />
     <ClInclude Include="..\Common\Common\md5.h" />
+    <ClInclude Include="..\Common\Common\MgrConfig.h" />
     <ClInclude Include="..\Common\Common\StdHead.h" />
     <ClInclude Include="..\Common\Common\TypeDef.h" />
     <ClInclude Include="..\Common\Common\Version.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="..\Common\Common\ErrorCode.cpp" />
     <ClCompile Include="..\Common\Common\Log.cpp" />
     <ClCompile Include="..\Common\Common\md5.cpp" />
+    <ClCompile Include="..\Common\Common\MgrConfig.cpp" />
     <ClCompile Include="..\Common\Common\TypeDef.cpp" />
     <ClCompile Include="..\Common\Common\Version.cpp" />
     <ClCompile Include="..\Common\Ctrl\ExSplitterWnd.cpp" />

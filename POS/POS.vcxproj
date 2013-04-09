@@ -119,6 +119,7 @@
     <ClInclude Include="..\Common\Common\ErrorCode.h" />
     <ClInclude Include="..\Common\Common\Log.h" />
     <ClInclude Include="..\Common\Common\md5.h" />
+    <ClInclude Include="..\Common\Common\POSConfig.h" />
     <ClInclude Include="..\Common\Common\PrintFormat.h" />
     <ClInclude Include="..\Common\Common\StdHead.h" />
     <ClInclude Include="..\Common\Common\TypeDef.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="..\Common\Common\ErrorCode.cpp" />
     <ClCompile Include="..\Common\Common\Log.cpp" />
     <ClCompile Include="..\Common\Common\md5.cpp" />
+    <ClCompile Include="..\Common\Common\POSConfig.cpp" />
     <ClCompile Include="..\Common\Common\PrintFormat.cpp" />
     <ClCompile Include="..\Common\Common\TypeDef.cpp" />
     <ClCompile Include="..\Common\Common\Version.cpp" />

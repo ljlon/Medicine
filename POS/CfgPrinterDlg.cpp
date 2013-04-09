@@ -42,7 +42,7 @@ BOOL CCfgPrinterDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	m_vctAllPrinters.resize(1);
-	m_vctAllPrinters[0].csPrinterName = g_config.printer_name;
+	m_vctAllPrinters[0].csPrinterName = g_POSCfg.printer_name;
 	m_iSelPrinterIdx = 0;
 	m_cmbPrinters.AddString(m_vctAllPrinters[0].csPrinterName);
 	m_cmbPrinters.SetCurSel(0);
@@ -50,7 +50,7 @@ BOOL CCfgPrinterDlg::OnInitDialog()
 	return TRUE;
 }
 
-ERRCODE CCfgPrinterDlg::ApplyCfg(Config &config)
+ERRCODE CCfgPrinterDlg::ApplyCfg(POSConfig &config)
 {
 	ERRCODE errRet = err_OK;
 

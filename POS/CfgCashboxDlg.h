@@ -1,6 +1,6 @@
 #pragma once
 #include "afxwin.h"
-
+#include "POSConfig.h"
 
 // CCfgCashboxDlg dialog
 
@@ -21,7 +21,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	ERRCODE ApplyCfg(Config &config);
+	ERRCODE ApplyCfg(POSConfig &config);
 
 	CComboBox m_cbCashbox;
 	vector<CString> m_vctAllCashbox;

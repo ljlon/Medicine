@@ -12,6 +12,7 @@
 #include "Version.h"
 #include "ManagerDoc.h"
 #include "ManagerView.h"
+#include "MgrConfig.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -132,6 +133,12 @@ BOOL CManagerApp::InitInstance()
 	if (errRet)
 	{
 		g_log.Write(_T("Load config fail"), errRet);
+		return FALSE;
+	}
+	errRet = g_MgrCfg.Load();
+	if (errRet)
+	{
+		g_log.Write(_T("Load MgrConfig fail"), errRet);
 		return FALSE;
 	}
 

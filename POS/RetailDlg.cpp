@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 #include "StoreDB.h"
 #include "RetailDB.h"
-#include "Config.h"
+#include "POSConfig.h"
 #include "PrintFormat.h"
 #include "ChangeNumDlg.h"
 #include "DeleteOneRowDlg.h"
@@ -124,7 +124,7 @@ BOOL CRetailDlg::OnInitDialog()
 
 ERRCODE CRetailDlg::Init()
 {
-	ERRCODE errRet = m_printerEP.Create(g_config.printer_name.GetBuffer());
+	ERRCODE errRet = m_printerEP.Create(g_POSCfg.printer_name.GetBuffer());
 	if (errRet != err_OK)
 	{
 		if (IDOK != MessageBox(_T("初始化打印机设备失败！"), _T(""), MB_ICONERROR))
@@ -133,13 +133,13 @@ ERRCODE CRetailDlg::Init()
 		}
 	}
 
-	if (g_config.printer_name != g_config.cashbox_name)
+	if (g_POSCfg.printer_name != g_POSCfg.cashbox_name)
 	{
 		if (m_pCashBox == NULL)
 		{
 			m_pCashBox = new CCashBox();
 		}
-		errRet = m_pCashBox->Create(g_config.cashbox_name.GetBuffer());
+		errRet = m_pCashBox->Create(g_POSCfg.cashbox_name.GetBuffer());
 		if (errRet != err_OK)
 		{
 			if (IDOK != MessageBox(_T("初始化钱箱设备失败！"), _T(""), MB_ICONERROR))
@@ -149,7 +149,7 @@ ERRCODE CRetailDlg::Init()
 		}
 	}
 
-	errRet = m_customerDisplay.Create(g_config.customerdispay_name.GetBuffer());
+	errRet = m_customerDisplay.Create(g_POSCfg.customerdispay_name.GetBuffer());
 	if (errRet != err_OK)
 	{
 		if (IDOK != MessageBox(_T("初始化顾客显示屏设备失败！"), _T(""), MB_ICONERROR))
@@ -168,25 +168,25 @@ BOOL CRetailDlg::PreTranslateMessage(MSG* pMsg)
 		if (m_retailStatus == RetailStatus_Input)
 		{
 			//删除
-			if (pMsg->wParam == g_config.key_del_one[0] || pMsg->wParam == g_config.key_del_one[1])
+			if (pMsg->wParam == g_POSCfg.key_del_one[0] || pMsg->wParam == g_POSCfg.key_del_one[1])
 			{
 				OnDelRetailItem();
 				return TRUE;
 			}
 			//结帐
-			else if (pMsg->wParam == g_config.key_checkout[0] || pMsg->wParam == g_config.key_checkout[1])
+			else if (pMsg->wParam == g_POSCfg.key_checkout[0] || pMsg->wParam == g_POSCfg.key_checkout[1])
 			{
 				OnStatusCheckOut();
 				return TRUE;
 			}
 			//修改数量
-			else if (pMsg->wParam == g_config.key_num[0] || pMsg->wParam == g_config.key_num[1])
+			else if (pMsg->wParam == g_POSCfg.key_num[0] || pMsg->wParam == g_POSCfg.key_num[1])
 			{
 				OnChangeNum();
 				return TRUE;
 			}
 			//重新上单
-			else if (pMsg->wParam == g_config.key_new_retail[0] || pMsg->wParam == g_config.key_new_retail[1])
+			else if (pMsg->wParam == g_POSCfg.key_new_retail[0] || pMsg->wParam == g_POSCfg.key_new_retail[1])
 			{
 				OnStatusNewInput();
 				return TRUE;

@@ -1,6 +1,7 @@
 #pragma once
 #include "afxwin.h"
 #include "PrinterManager.h"
+#include "POSConfig.h"
 
 // CCfgPrinterDlg dialog
 
@@ -21,7 +22,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	ERRCODE ApplyCfg(Config &config);
+	ERRCODE ApplyCfg(POSConfig &config);
 
 	CComboBox m_cmbPrinters;
 	vector<PrinterInfo> m_vctAllPrinters;

@@ -7,7 +7,6 @@
 #include "afxdialogex.h"
 #include "DeviceManager.h"
 
-
 // CCfgCashboxDlg dialog
 
 
@@ -46,7 +45,7 @@ BOOL CCfgCashboxDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	m_vctAllCashbox.resize(1);
-	m_vctAllCashbox[0] = g_config.cashbox_name;
+	m_vctAllCashbox[0] = g_POSCfg.cashbox_name;
 	m_iSelCashboxIdx = 0;
 	m_cbCashbox.AddString(m_vctAllCashbox[0]);
 	m_cbCashbox.SetCurSel(0);
@@ -55,7 +54,7 @@ BOOL CCfgCashboxDlg::OnInitDialog()
 }
 
 
-ERRCODE CCfgCashboxDlg::ApplyCfg(Config &config)
+ERRCODE CCfgCashboxDlg::ApplyCfg(POSConfig &config)
 {
 	ERRCODE errRet = err_OK;
 

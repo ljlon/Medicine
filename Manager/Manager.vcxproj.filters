@@ -372,6 +372,9 @@
     <ClInclude Include="BackupMgrView.h">
       <Filter>Header Files\View\BackupView</Filter>
     </ClInclude>
+    <ClInclude Include="..\Common\Common\MgrConfig.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Manager.cpp">
@@ -541,6 +544,9 @@
     </ClCompile>
     <ClCompile Include="BackupMgrView.cpp">
       <Filter>Source Files\View\BackupView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\MgrConfig.cpp">
+      <Filter>Source Files\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

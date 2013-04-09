@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "POS.h"
+#include "POSConfig.h"
 #include "RetailDlg.h"
 #include "CheckOutDlg.h"
 #include "afxdialogex.h"
@@ -53,8 +54,8 @@ BOOL CCheckOutDlg::PreTranslateMessage(MSG* pMsg)
 	if (pMsg->message == WM_KEYDOWN)
 	{
 		if (pMsg->wParam == VK_RETURN || 
-			pMsg->wParam == g_config.key_checkout[0] || 
-			pMsg->wParam == g_config.key_checkout[1])
+			pMsg->wParam == g_POSCfg.key_checkout[0] || 
+			pMsg->wParam == g_POSCfg.key_checkout[1])
 		{
 			if (m_iStatus == CheckOut_Status_1)
 			{

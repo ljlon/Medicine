@@ -200,7 +200,7 @@ void CCfgDlg::OnBnClickedOk()
 
 	if (m_pCfgGeneralDlg != NULL)
 	{
-		errRet = m_pCfgGeneralDlg->ApplyCfg(g_config);
+		errRet = m_pCfgGeneralDlg->ApplyCfg(g_POSCfg);
 		if (errRet != err_OK)
 		{
 			//MessageBox(_T("保存常规配置错误"), _T(""), MB_ICONERROR);
@@ -210,7 +210,7 @@ void CCfgDlg::OnBnClickedOk()
 
 	if (m_pCfgPrinterDlg != NULL)
 	{
-		errRet = m_pCfgPrinterDlg->ApplyCfg(g_config);
+		errRet = m_pCfgPrinterDlg->ApplyCfg(g_POSCfg);
 		if (errRet != err_OK)
 		{
 			//MessageBox(_T("保存打印机设置错误"), _T(""), MB_ICONERROR);
@@ -220,7 +220,7 @@ void CCfgDlg::OnBnClickedOk()
 
 	if (m_pCfgCashboxDlg != NULL)
 	{
-		errRet = m_pCfgCashboxDlg->ApplyCfg(g_config);
+		errRet = m_pCfgCashboxDlg->ApplyCfg(g_POSCfg);
 		if (errRet != err_OK)
 		{
 			//MessageBox(_T("保存钱箱设置错误"), _T(""), MB_ICONERROR);
@@ -230,7 +230,7 @@ void CCfgDlg::OnBnClickedOk()
 
 	if (m_pCfgCustomerDisplayDlg != NULL)
 	{
-		errRet = m_pCfgCustomerDisplayDlg->ApplyCfg(g_config);
+		errRet = m_pCfgCustomerDisplayDlg->ApplyCfg(g_POSCfg);
 		if (errRet != err_OK)
 		{
 			//MessageBox(_T("保存顾客显示屏设置错误"), _T(""), MB_ICONERROR);
@@ -238,7 +238,7 @@ void CCfgDlg::OnBnClickedOk()
 		}
 	}
 
-	errRet = g_config.Save();
+	errRet = g_POSCfg.Save();
 	if (errRet != err_OK)
 	{
 		MessageBox(_T("保存设置错误"), _T(""), MB_ICONERROR);
@@ -270,9 +270,8 @@ void CCfgDlg::OnTvnSelchangedTreeItem(NMHDR *pNMHDR, LRESULT *pResult)
 void CCfgDlg::OnBnClickedCancel()
 {
 	// TODO: Add your control notification handler code here
-
-	ERRCODE errRet = g_config.Load();
-	if (errRet != err_OK)
+	ERRCODE errRet = g_POSCfg.Load();
+	if (errRet)
 	{
 		MessageBox(_T("取消设置错误"), _T(""), MB_ICONERROR);
 		return;

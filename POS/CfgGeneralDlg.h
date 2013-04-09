@@ -1,6 +1,6 @@
 #pragma once
 #include "afxwin.h"
-
+#include "POSConfig.h"
 
 // CCfgGeneralDlg 对话框
 
@@ -15,7 +15,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_CFG_GENERAL };
 
-	ERRCODE ApplyCfg(Config &config);
+	ERRCODE ApplyCfg(POSConfig &config);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持

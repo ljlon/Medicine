@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "Manager.h"
 #include "BackupMgrView.h"
-#include "Config.h"
+#include "MgrConfig.h"
 #include "MySQLBackup.h"
 
 // CBackupMgrView
@@ -57,7 +57,7 @@ void CBackupMgrView::OnBnClickedButtonBackup()
 	// TODO: 在此添加控件通知处理程序代码
 
 	CMySQLBackup backup;
-	ERRCODE errRet = backup.Backup(_T("C:\\Program Files (x86)\\MySQL\\MySQL Server 5.5"),
+	ERRCODE errRet = backup.Backup(g_MgrCfg.mysql_install_folder.GetBuffer(),
 		g_config.database_host.GetBuffer(),
 		g_config.database_port,
 		g_config.database_uid.GetBuffer(),

@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "POS.h"
 #include "POSDlg.h"
+#include "POSConfig.h"
 #include "afxdialogex.h"
 #include "RetailDlg.h"
 #include "CfgDlg.h"
@@ -204,7 +205,7 @@ void CPOSDlg::OnBnClickedBtnSale()
 
 	CRetailDlg retailDlg;
 	ERRCODE errRet = retailDlg.Init();
-	if (g_config.factory_mode != 0 && errRet != err_OK)
+	if (g_POSCfg.factory_mode != 0 && errRet != err_OK)
 	{
 		return;
 	}

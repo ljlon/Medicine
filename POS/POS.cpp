@@ -11,7 +11,7 @@
 #include "PrinterManager.h"
 #include "Version.h"
 #include "Adapter.h"
-
+#include "POSConfig.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -99,6 +99,12 @@ BOOL CPOSApp::InitInstance()
 	{
 		csMsg.Format(_T("Load config fail with errCode=%d"), errRet);
 		g_log.Write(csMsg);
+		return FALSE;
+	}
+	errRet = g_POSCfg.Load();
+	if (errRet)
+	{
+		g_log.Write(_T("Load POSConfig fail"), errRet);
 		return FALSE;
 	}
 

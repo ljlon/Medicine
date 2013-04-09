@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "POSConfig.h"
 #include "POS.h"
 #include "RetailItemDlg.h"
 #include "afxdialogex.h"
@@ -121,7 +122,7 @@ void CRetailItemDlg::ResizeDlg()
 {
 	int iWidthSpan = 10;
 
-	int iPrintCharNum = (g_config.printer_width + 1) / g_config.printer_font_width;
+	int iPrintCharNum = (g_POSCfg.printer_width + 1) / g_POSCfg.printer_font_width;
 	if (iPrintCharNum <= 0)
 	{
 		return;

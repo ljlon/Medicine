@@ -5,7 +5,7 @@
 #include "POS.h"
 #include "CfgGeneralDlg.h"
 #include "afxdialogex.h"
-#include "Config.h"
+#include "POSConfig.h"
 
 // CCfgGeneralDlg 对话框
 
@@ -38,7 +38,7 @@ BOOL CCfgGeneralDlg::OnInitDialog()
 
 	CString csMsg;
 
-	m_editCompanyName.SetWindowText(g_config.general_company_name);
+	m_editCompanyName.SetWindowText(g_POSCfg.general_company_name);
 	csMsg.Format(_T("%s"), theApp.m_curPOS.csID);
 	m_editPOSID.SetWindowText(csMsg);
 
@@ -46,7 +46,7 @@ BOOL CCfgGeneralDlg::OnInitDialog()
 }
 
 // CCfgGeneralDlg 消息处理程序
-ERRCODE CCfgGeneralDlg::ApplyCfg(Config &config)
+ERRCODE CCfgGeneralDlg::ApplyCfg(POSConfig &config)
 {
 	ERRCODE errRet = err_OK;
 
