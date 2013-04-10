@@ -133,6 +133,8 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\Backup\BackupMgr.h" />
+    <ClInclude Include="..\Common\Backup\Backup.h" />
     <ClInclude Include="..\Common\Backup\MySQLBackup.h" />
     <ClInclude Include="..\Common\Common\CommUtil.h" />
     <ClInclude Include="..\Common\Common\Config.h" />
@@ -143,6 +145,7 @@
     <ClInclude Include="..\Common\Common\md5.h" />
     <ClInclude Include="..\Common\Common\MgrConfig.h" />
     <ClInclude Include="..\Common\Common\StdHead.h" />
+    <ClInclude Include="..\Common\Common\Time.h" />
     <ClInclude Include="..\Common\Common\TypeDef.h" />
     <ClInclude Include="..\Common\Common\Version.h" />
     <ClInclude Include="..\Common\Ctrl\ExSplitterWnd.h" />
@@ -196,6 +199,8 @@
     <ClInclude Include="ViewTree.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\Backup\BackupMgr.cpp" />
+    <ClCompile Include="..\Common\Backup\Backup.cpp" />
     <ClCompile Include="..\Common\Backup\MySQLBackup.cpp" />
     <ClCompile Include="..\Common\Common\CommUtil.cpp" />
     <ClCompile Include="..\Common\Common\Config.cpp" />
@@ -204,6 +209,7 @@
     <ClCompile Include="..\Common\Common\Log.cpp" />
     <ClCompile Include="..\Common\Common\md5.cpp" />
     <ClCompile Include="..\Common\Common\MgrConfig.cpp" />
+    <ClCompile Include="..\Common\Common\Time.cpp" />
     <ClCompile Include="..\Common\Common\TypeDef.cpp" />
     <ClCompile Include="..\Common\Common\Version.cpp" />
     <ClCompile Include="..\Common\Ctrl\ExSplitterWnd.cpp" />

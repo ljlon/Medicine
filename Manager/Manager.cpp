@@ -13,6 +13,7 @@
 #include "ManagerDoc.h"
 #include "ManagerView.h"
 #include "MgrConfig.h"
+#include "BackupMgr.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -62,6 +63,26 @@ CManagerApp theApp;
 
 BOOL CManagerApp::InitInstance()
 {
+	//查找是否存在已打开实例
+	HANDLE hEvent = CreateEvent(NULL,FALSE,FALSE,_T("福瑞堂医药管理系统-后台管理.exe"));
+	if(hEvent != INVALID_HANDLE_VALUE)
+	{
+		if(ERROR_ALREADY_EXISTS==GetLastError())
+		{
+			HWND hwnd = ::FindWindow(NULL, _T("福瑞堂医药管理系统-后台管理"));
+			if (hwnd != NULL) 
+			{
+				// Another Instance is already running.
+				::ShowWindow(hwnd, SW_SHOW);
+				::UpdateWindow(hwnd);
+				::SetForegroundWindow(hwnd);
+				return FALSE;
+			}
+
+			return FALSE;
+		}
+	}
+
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。否则，将无法创建窗口。
@@ -142,6 +163,23 @@ BOOL CManagerApp::InitInstance()
 		return FALSE;
 	}
 
+	//备份模块
+	errRet = g_backupMgr.Start(g_MgrCfg.mysql_install_folder.GetBuffer(),
+								g_config.database_host.GetBuffer(),
+								g_config.database_port,
+								g_config.database_uid.GetBuffer(),
+								g_config.database_pwd.GetBuffer(),
+								g_config.database_dbname.GetBuffer(),
+								g_MgrCfg.backup_auto,
+								g_MgrCfg.backup_auto_date,
+								g_MgrCfg.backup_auto_date_unit,
+								g_MgrCfg.backup_auto_time);
+	if (errRet != err_OK)
+	{
+		g_log.Write(_T("Start backupMgr fail"), errRet);
+		return FALSE;
+	}
+
 	//登陆界面
 	CLoginDlg loginDlg;
 	INT_PTR nResponse = loginDlg.DoModal();
@@ -176,6 +214,7 @@ BOOL CManagerApp::InitInstance()
 		return FALSE;
 
 	// 唯一的一个窗口已初始化，因此显示它并对其进行更新
+	m_nCmdShow = SW_SHOWMAXIMIZED;
 	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
 	m_pMainWnd->SetWindowText(csMsg);
 	m_pMainWnd->ShowWindow(SW_SHOW);
@@ -189,6 +228,8 @@ int CManagerApp::ExitInstance()
 {
 	//TODO: 处理可能已添加的附加资源
 	AfxOleTerm(FALSE);
+
+	g_backupMgr.Stop();
 
 	return CWinAppEx::ExitInstance();
 }

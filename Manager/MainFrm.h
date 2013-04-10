@@ -24,6 +24,7 @@
 #include "StoreMgrView.h"
 #include "StoreEditView.h"
 #include "BackupMgrView.h"
+#include "LoginDlg.h"
 #include <list>
 
 const UINT WM_MAINFRM = ::RegisterWindowMessage(_T("WM_MAINFRM"));
@@ -59,12 +60,16 @@ protected:
 	list<TreeMenuID>   m_listPreRightViewID;
 
 	CExSplitterWnd m_wndSplitter;
-
+	CLoginDlg m_loginDlg;
+	BOOL m_bAuthorized;
 
 // 生成的消息映射函数
 protected:
 	afx_msg LRESULT OnMainFrm(WPARAM wParam, LPARAM lParam);
+	afx_msg void OnClose();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+	afx_msg void OnPaint();
 	afx_msg void OnApplicationLook(UINT id);
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);

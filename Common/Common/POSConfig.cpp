@@ -27,10 +27,6 @@ POSConfig::~POSConfig()
 
 ERRCODE POSConfig::Load()
 {
-	BYTE pbyBuf[MAX_PATH];
-	int iByteLen;
-	DWORD dwByteLen;
-
 	//general
 	GetPrivateProfileString(SECTION_GENERAL, _T("CompanyName"), _T(""), general_company_name.GetBuffer(MAX_PATH), MAX_PATH, FILE_POSCFG_INI);
 
@@ -58,9 +54,6 @@ ERRCODE POSConfig::Load()
 ERRCODE POSConfig::Save()
 { 
 	BOOL bRet = TRUE;
-	TCHAR tszBuf[MAX_PATH];
-	BYTE pbyBuf[MAX_PATH];
-	DWORD dwBufLen;
 
 	//General
 	bRet = WritePrivateProfileString(SECTION_GENERAL, _T("CompanyName"), general_company_name, FILE_POSCFG_INI);

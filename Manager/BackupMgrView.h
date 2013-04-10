@@ -1,6 +1,5 @@
 #pragma once
-
-
+#include "afxwin.h"
 
 // CBackupMgrView 窗体视图
 
@@ -23,11 +22,21 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+	virtual void OnInitialUpdate();
 
 	DECLARE_MESSAGE_MAP()
+
+	void AdjustLayout();
+
 public:
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnBnClickedButtonBackup();
 	afx_msg void OnBnClickedButtonRestore();
+	CButton m_cbAutoBackup;
+	CEdit m_editAutoDate;
+	CComboBox m_comboAutoDateUnit;
+	CComboBox m_comboAutoTime;	
+	CStatic m_staticBackupInfo;
 };
 
 

@@ -15,7 +15,7 @@ IMPLEMENT_DYNAMIC(CLoginDlg, CDialogEx)
 CLoginDlg::CLoginDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CLoginDlg::IDD, pParent)
 {
-
+	
 }
 
 CLoginDlg::~CLoginDlg()
@@ -31,6 +31,7 @@ void CLoginDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CLoginDlg, CDialogEx)
+	ON_WM_SIZE()
 	ON_BN_CLICKED(IDOK, &CLoginDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CLoginDlg::OnBnClickedCancel)
 END_MESSAGE_MAP()
@@ -50,6 +51,13 @@ BOOL CLoginDlg::OnInitDialog()
 
 	return FALSE;
 }
+
+
+void CLoginDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+}
+
 
 void CLoginDlg::OnBnClickedOk()
 {
@@ -103,5 +111,7 @@ void CLoginDlg::OnBnClickedOk()
 void CLoginDlg::OnBnClickedCancel()
 {
 	// TODO: Add your control notification handler code here
-	CDialogEx::OnCancel();
+	ShowWindow(SW_HIDE);
+
+	//CDialogEx::OnCancel();
 }

@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "Manager.h"
 #include "MainFrm.h"
+#include "LoginDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -17,6 +18,9 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_REGISTERED_MESSAGE(WM_MAINFRM, &CMainFrame::OnMainFrm)
 	ON_WM_CREATE()
+	ON_WM_CLOSE()
+	ON_WM_SHOWWINDOW()
+	ON_WM_PAINT()
 	ON_WM_SETTINGCHANGE()
 END_MESSAGE_MAP()
 
@@ -35,6 +39,7 @@ CMainFrame::CMainFrame()
 	// TODO: 在此添加成员初始化代码
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_WINDOWS_7);
 	m_rightViewID = TREE_ROOT_ID;
+	m_bAuthorized = TRUE;
 }
 
 CMainFrame::~CMainFrame()
@@ -98,12 +103,20 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	return TRUE;
 }
 
+
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	if( !CFrameWndEx::PreCreateWindow(cs) )
 		return FALSE;
+	
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
+
+/*
+	int cxScreen = ::GetSystemMetrics(SM_CXSCREEN);//获得屏幕宽
+	int cyScreen = ::GetSystemMetrics(SM_CYSCREEN);// 获得屏幕高
+	cs.cx = cxScreen; 
+	cs.cy = cyScreen;*/
 
 	return TRUE;
 }
@@ -130,8 +143,29 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 }
 
 
+void CMainFrame::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CFrameWndEx::OnShowWindow(bShow, nStatus);
+}
+
+
+void CMainFrame::OnPaint()
+{
+	CFrameWndEx::OnPaint();
+}
+
+
 BOOL CMainFrame::SetLeftViewMenu(TreeMenuID id)
 {
+	if (m_bAuthorized != TRUE)
+	{
+		if (m_loginDlg.DoModal() != IDOK)
+		{
+			return FALSE;
+		}
+		m_bAuthorized = TRUE;
+	}
+
 	int iRole = atoi(theApp.m_curUser.csRole);
 	if (iRole != Role_Supper && iRole != Role_Manager)
 	{
@@ -149,6 +183,11 @@ BOOL CMainFrame::SetLeftViewMenu(TreeMenuID id)
 
 BOOL CMainFrame::ShowRightView(TreeMenuID id,  BOOL bRememberPreID)
 {
+	if (m_bAuthorized != TRUE)
+	{
+		return FALSE;
+	}
+
 	if (m_rightViewID == id)
 	{
 		return TRUE;
@@ -560,4 +599,18 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CFrameWndEx::OnSettingChange(uFlags, lpszSection);
+}
+
+
+void CMainFrame::OnClose()
+{
+	ShowWindow(SW_HIDE);
+
+	SetLeftViewMenu(TREE_ROOT_ID);
+	ShowRightView(TREE_ROOT_ID);
+	m_listPreRightViewID.clear();
+
+	m_bAuthorized = FALSE;
+
+	//CFrameWndEx::OnClose();
 }
