@@ -63,26 +63,6 @@ CManagerApp theApp;
 
 BOOL CManagerApp::InitInstance()
 {
-	//查找是否存在已打开实例
-	HANDLE hEvent = CreateEvent(NULL,FALSE,FALSE,_T("福瑞堂医药管理系统-后台管理.exe"));
-	if(hEvent != INVALID_HANDLE_VALUE)
-	{
-		if(ERROR_ALREADY_EXISTS==GetLastError())
-		{
-			HWND hwnd = ::FindWindow(NULL, _T("福瑞堂医药管理系统-后台管理"));
-			if (hwnd != NULL) 
-			{
-				// Another Instance is already running.
-				::ShowWindow(hwnd, SW_SHOW);
-				::UpdateWindow(hwnd);
-				::SetForegroundWindow(hwnd);
-				return FALSE;
-			}
-
-			return FALSE;
-		}
-	}
-
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。否则，将无法创建窗口。
@@ -129,6 +109,51 @@ BOOL CManagerApp::InitInstance()
 	ttParams.m_bVislManagerTheme = TRUE;
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
 		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
+
+	//分析命令行参数
+	BOOL bConsole = FALSE;
+	if (__argc >= 2)
+	{
+		if (!strcmp(__argv[1], _T("-console")))
+		{
+			bConsole = TRUE;
+		}
+	}
+
+	//查找是否存在已打开实例
+	HANDLE hEvent = CreateEvent(NULL,FALSE,FALSE,_T("福瑞堂医药管理系统-后台管理.exe"));
+	if(hEvent != INVALID_HANDLE_VALUE)
+	{
+		if(ERROR_ALREADY_EXISTS==GetLastError())
+		{
+			if (bConsole == TRUE)
+			{
+				return FALSE;
+			}
+
+			HWND hwnd = ::FindWindow(NULL, _T("福瑞堂医药管理系统-后台管理"));
+			if (hwnd != NULL) 
+			{
+				// Another Instance is already running.
+				::ShowWindow(hwnd, SW_SHOWMAXIMIZED);
+				::UpdateWindow(hwnd);
+				::SetForegroundWindow(hwnd);
+				return FALSE;
+			}
+			hwnd = ::FindWindow(NULL, _T("福瑞堂医药管理系统-后台管理登陆"));
+			if (hwnd != NULL) 
+			{
+				// Another Instance is already running.
+				::SendMessage(hwnd, LOGINDLG_SHOWWINDOW, 0, 0);
+				::ShowWindow(hwnd, SW_SHOW);
+				::UpdateWindow(hwnd);
+				::SetForegroundWindow(hwnd);
+				return FALSE;
+			}
+
+			return FALSE;
+		}
+	}
 
 	//自定义初始化
 	ERRCODE errRet = err_OK;
@@ -182,14 +207,22 @@ BOOL CManagerApp::InitInstance()
 
 	//登陆界面
 	CLoginDlg loginDlg;
-	INT_PTR nResponse = loginDlg.DoModal();
-	if (nResponse == IDOK)
+	while(TRUE)
 	{
-		theApp.m_curUser = loginDlg.m_curUser;
-	}
-	else if (nResponse == IDCANCEL)
-	{
-		return FALSE;
+		if (bConsole == TRUE)
+		{
+			loginDlg.SetShowWindow(SW_HIDE);
+		}
+		INT_PTR nResponse = loginDlg.DoModal();
+		if (nResponse == IDOK)
+		{
+			theApp.m_curUser = loginDlg.m_curUser;
+			break;
+		}
+		else if (nResponse == IDCANCEL)
+		{
+			loginDlg.SetShowWindow(SW_HIDE);
+		}
 	}
 
 	// 注册应用程序的文档模板。文档模板
@@ -214,7 +247,6 @@ BOOL CManagerApp::InitInstance()
 		return FALSE;
 
 	// 唯一的一个窗口已初始化，因此显示它并对其进行更新
-	m_nCmdShow = SW_SHOWMAXIMIZED;
 	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
 	m_pMainWnd->SetWindowText(csMsg);
 	m_pMainWnd->ShowWindow(SW_SHOW);

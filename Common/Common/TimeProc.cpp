@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Time.h"
+#include "TimeProc.h"
 
 int ChangeSysTime(SYSTEMTIME &sysTime, int nIncDay, int nIncHour, int nIncMin, int nIncSec)
 {

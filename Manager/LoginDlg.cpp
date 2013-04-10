@@ -15,7 +15,7 @@ IMPLEMENT_DYNAMIC(CLoginDlg, CDialogEx)
 CLoginDlg::CLoginDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CLoginDlg::IDD, pParent)
 {
-	
+	m_iShowWindow = SW_SHOW;
 }
 
 CLoginDlg::~CLoginDlg()
@@ -43,7 +43,7 @@ BOOL CLoginDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	CString csMsg;
-	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
+	csMsg.Format("%s-%sµÇÂ½", APP_NAME, APP_MANAGER);
 	SetWindowText(csMsg);
 
 	csMsg.Format(_T("»¶Ó­Ê¹ÓÃ%s"), APP_NAME);
@@ -51,6 +51,25 @@ BOOL CLoginDlg::OnInitDialog()
 
 	return FALSE;
 }
+
+
+LRESULT CLoginDlg::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+{ 
+    if (message == 133)
+     {
+		if (m_iShowWindow == SW_HIDE)
+		{
+			ShowWindow(SW_HIDE);
+			return TRUE;
+		}
+	}
+	else if (message == LOGINDLG_SHOWWINDOW)
+	{
+		m_iShowWindow = SW_SHOW;
+    } 
+    
+	return CDialogEx::DefWindowProc(message, wParam, lParam); 
+} 
 
 
 void CLoginDlg::OnSize(UINT nType, int cx, int cy)
@@ -61,7 +80,6 @@ void CLoginDlg::OnSize(UINT nType, int cx, int cy)
 
 void CLoginDlg::OnBnClickedOk()
 {
-	// TODO: Add your control notification handler code here
 	// TODO: Add your control notification handler code here
 	ERRCODE errRet = err_OK;
 	CString csMsg;
@@ -111,7 +129,16 @@ void CLoginDlg::OnBnClickedOk()
 void CLoginDlg::OnBnClickedCancel()
 {
 	// TODO: Add your control notification handler code here
-	ShowWindow(SW_HIDE);
 
-	//CDialogEx::OnCancel();
+	m_editUID.SetWindowText(_T(""));
+	m_editPWD.SetWindowText(_T(""));
+	m_editUID.SetFocus();
+
+
+	CDialogEx::OnCancel();
+}
+
+void CLoginDlg::SetShowWindow(int iShowWindow)
+{
+	m_iShowWindow = iShowWindow;
 }

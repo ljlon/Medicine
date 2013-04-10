@@ -157,7 +157,7 @@ void CMainFrame::OnPaint()
 
 BOOL CMainFrame::SetLeftViewMenu(TreeMenuID id)
 {
-	if (m_bAuthorized != TRUE)
+	if (m_bAuthorized != TRUE && id != TREE_ROOT_ID)
 	{
 		if (m_loginDlg.DoModal() != IDOK)
 		{
@@ -183,7 +183,7 @@ BOOL CMainFrame::SetLeftViewMenu(TreeMenuID id)
 
 BOOL CMainFrame::ShowRightView(TreeMenuID id,  BOOL bRememberPreID)
 {
-	if (m_bAuthorized != TRUE)
+	if (m_bAuthorized != TRUE && id != TREE_ROOT_ID)
 	{
 		return FALSE;
 	}
