@@ -10,6 +10,7 @@ CBackupMgr::CBackupMgr()
 	m_pLastBackupTime = NULL;
 	m_bShouldExit = FALSE;
 	m_bStarted = FALSE;
+	m_csBackupFolder = DEFAULT_BACKUP_FOLDER;
 }
 
 CBackupMgr::~CBackupMgr()
@@ -45,6 +46,34 @@ ERRCODE CBackupMgr::Start(LPTSTR lpMySQLInstallDir,
 	m_iAutoBackupDateUnit = iAutoBackupDateUnit;
 	m_iAutoBackupTime = iAutoBackupTime;
 
+	//创建Backup Folder
+	m_csBackupFolder.Trim();
+	if (m_csBackupFolder == _T(""))
+	{
+		GetCurrentDirectory(MAX_PATH, m_csBackupFolder.GetBuffer(MAX_PATH));
+		m_csBackupFolder.Append(_T("\\Backup"));
+	}
+	else
+	{
+		int nLen = m_csBackupFolder.GetLength();
+		while (nLen && m_csBackupFolder.GetBuffer()[nLen - 1] == '\\')
+		{
+			m_csBackupFolder.GetBuffer()[nLen - 1] = 0;
+			nLen--;
+		}
+	}
+	CreateDirectory(m_csBackupFolder, NULL);
+	WIN32_FIND_DATA wfd;
+	HANDLE hFile = FindFirstFile(m_csBackupFolder, &wfd);
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		GetCurrentDirectory(MAX_PATH, m_csBackupFolder.GetBuffer(MAX_PATH));
+		m_csBackupFolder.Append(_T("\\Backup"));
+		CreateDirectory(m_csBackupFolder, NULL);
+	}
+	FindClose(hFile);
+
+	//启动线程
 	if (bAutoBackup != FALSE)
 	{
 		if (m_hThread == INVALID_HANDLE_VALUE)

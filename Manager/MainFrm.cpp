@@ -44,10 +44,12 @@ CMainFrame::CMainFrame()
 	m_bAuthorized = TRUE;
 }
 
+
 CMainFrame::~CMainFrame()
 {
 	m_listPreRightViewID.clear();
 }
+
 
 LRESULT CMainFrame::OnMainFrm(WPARAM wParam, LPARAM lParam)
 {
@@ -84,6 +86,7 @@ LRESULT CMainFrame::OnMainFrm(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
@@ -104,6 +107,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	return 0;
 }
+
 
 BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
 	CCreateContext* pContext)

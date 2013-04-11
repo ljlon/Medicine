@@ -43,6 +43,7 @@ protected:
 	SYSTEMTIME *m_pLastBackupTime;
 	BOOL m_bShouldExit;
 
+	CString m_csBackupFolder;
 	CString m_csMySQLInstallDir;
 	CString m_csHost;
 	UINT16 m_iPort;
