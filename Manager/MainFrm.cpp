@@ -214,6 +214,7 @@ BOOL CMainFrame::SetLeftViewMenu(TreeMenuID id)
 		{
 			return FALSE;
 		}
+		theApp.m_curUser = m_loginDlg.m_curUser;
 		m_bAuthorized = TRUE;
 	}
 
