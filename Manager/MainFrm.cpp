@@ -19,9 +19,11 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_REGISTERED_MESSAGE(WM_MAINFRM, &CMainFrame::OnMainFrm)
 	ON_WM_CREATE()
 	ON_WM_CLOSE()
+	ON_WM_DESTROY()
 	ON_WM_SHOWWINDOW()
 	ON_WM_PAINT()
 	ON_WM_SETTINGCHANGE()
+	ON_MESSAGE(MY_WM_NOTIFYICON, &CMainFrame::OnNotifyIcon)    
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -90,6 +92,16 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 基于持久值设置视觉管理器和样式
 	OnApplicationLook(theApp.m_nAppLook);
 
+	/*
+	m_ntIcon.cbSize = sizeof(NOTIFYICONDATA);						//该结构体变量的大小
+	m_ntIcon.hIcon = AfxGetApp()->LoadIconA(IDR_MAINFRAME);			//图标，通过资源ID得到
+	m_ntIcon.hWnd = this->m_hWnd;									//接收托盘图标通知消息的窗口句柄								
+	sprintf_s(m_ntIcon.szTip, "%s-%s", APP_NAME, APP_MANAGER);		//鼠标设上面时显示的提示            
+	m_ntIcon.uCallbackMessage = MY_WM_NOTIFYICON;					//应用程序定义的消息ID号
+	m_ntIcon.uFlags = NIF_MESSAGE|NIF_ICON|NIF_TIP;					//图标的属性：设置成员uCallbackMessage、hIcon、szTip有效
+	::Shell_NotifyIconA(NIM_ADD, &m_ntIcon);						//在系统通知区域增加这个图标
+	*/
+
 	return 0;
 }
 
@@ -122,6 +134,13 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 }
 
 
+void CMainFrame::OnDestroy()
+{
+	::Shell_NotifyIcon(NIM_DELETE, &m_ntIcon);
+	CFrameWndEx::OnDestroy();
+}
+
+
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg) 
 {
 	if(WM_KEYDOWN == pMsg->message)
@@ -140,6 +159,34 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 	}
 
 	return CFrameWndEx::PreTranslateMessage(pMsg);
+}
+
+
+LRESULT CMainFrame::OnNotifyIcon(WPARAM wparam, LPARAM lparam)
+{
+	if(lparam == WM_LBUTTONDOWN)
+	{
+		if (AfxGetMainWnd()->IsWindowVisible())
+		{
+			OnClose();
+		}
+		else
+		{
+			AfxGetMainWnd()->ShowWindow(SW_SHOWMAXIMIZED);
+		}
+	}
+	else if(lparam == WM_RBUTTONDOWN)
+	{
+		if (AfxGetMainWnd()->IsWindowVisible())
+		{
+			OnClose();
+		}
+		else
+		{
+			AfxGetMainWnd()->ShowWindow(SW_SHOWMAXIMIZED);
+		}
+	}
+	return 0;
 }
 
 

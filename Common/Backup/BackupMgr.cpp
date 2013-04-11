@@ -284,20 +284,24 @@ UINT BackupThreadFunc(LPVOID param)
 	ERRCODE errRet = err_OK;
 	CString csMsg;
 	DWORD dwSleepMS = INFINITE;
-	SYSTEMTIME curTime, planTime;
+	SYSTEMTIME curTime, curPlanTime, nextPlanTime;
+
+	GetLocalTime(&curTime);
+	pBackupMgr->GetNextPlanTime(curTime, nextPlanTime);
 
 	while(TRUE)
 	{
+		curPlanTime = nextPlanTime;
 		GetLocalTime(&curTime);
-		pBackupMgr->GetNextPlanTime(curTime, planTime);
-		dwSleepMS = CmpTimeBySec(curTime, planTime) * 1000;
-		
+		dwSleepMS = CmpTimeBySec(curTime, curPlanTime) * 1000;
+
 		WaitForSingleObject(pBackupMgr->m_event.m_hObject, dwSleepMS);
 		pBackupMgr->m_event.ResetEvent();
 		
 		GetLocalTime(&curTime);
-		dwSleepMS = CmpTimeBySec(curTime, planTime) * 1000;
-		if (dwSleepMS <= 0)
+		dwSleepMS = CmpTimeBySec(curTime, nextPlanTime) * 1000;
+		pBackupMgr->GetNextPlanTime(curTime, nextPlanTime);
+		if (dwSleepMS <= 0 || CmpTimeBySec(curPlanTime, nextPlanTime) > 0)
 		{
 			//Do job
 			errRet = pBackupMgr->Backup();
@@ -313,6 +317,8 @@ UINT BackupThreadFunc(LPVOID param)
 				csMsg.Format(_T("backup thread failed with errRet=%d"), errRet);
 				g_log.Write(csMsg);
 			}
+
+			pBackupMgr->GetNextPlanTime(curTime, nextPlanTime);
 		}
 
 		if (pBackupMgr->m_bShouldExit == TRUE)

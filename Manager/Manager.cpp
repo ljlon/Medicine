@@ -131,7 +131,9 @@ BOOL CManagerApp::InitInstance()
 				return FALSE;
 			}
 
-			HWND hwnd = ::FindWindow(NULL, _T("福瑞堂医药管理系统-后台管理"));
+			CString csMsg;
+			csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
+			HWND hwnd = ::FindWindow(NULL, csMsg);
 			if (hwnd != NULL) 
 			{
 				// Another Instance is already running.
@@ -140,7 +142,8 @@ BOOL CManagerApp::InitInstance()
 				::SetForegroundWindow(hwnd);
 				return FALSE;
 			}
-			hwnd = ::FindWindow(NULL, _T("福瑞堂医药管理系统-后台管理登陆"));
+			csMsg.Format("%s-登陆", APP_MANAGER);
+			hwnd = ::FindWindow(NULL, csMsg);
 			if (hwnd != NULL) 
 			{
 				// Another Instance is already running.

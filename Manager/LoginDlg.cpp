@@ -43,7 +43,7 @@ BOOL CLoginDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	CString csMsg;
-	csMsg.Format("%s-%sµÇÂ½", APP_NAME, APP_MANAGER);
+	csMsg.Format("%s-µÇÂ½", APP_MANAGER);
 	SetWindowText(csMsg);
 
 	csMsg.Format(_T("»¶Ó­Ê¹ÓÃ%s"), APP_NAME);

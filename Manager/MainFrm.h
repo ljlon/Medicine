@@ -31,6 +31,8 @@ const UINT WM_MAINFRM = ::RegisterWindowMessage(_T("WM_MAINFRM"));
 const UINT WM_MAINFRM_SETRIGHTPANE = 1;
 const UINT WM_MAINFRM_SETPRERIGHTPANE = 2;
 
+#define MY_WM_NOTIFYICON (WM_USER+1001)
+
 class CMainFrame : public CFrameWndEx
 {
 	
@@ -60,6 +62,7 @@ protected:
 	list<TreeMenuID>   m_listPreRightViewID;
 
 	CExSplitterWnd m_wndSplitter;
+	NOTIFYICONDATA m_ntIcon;
 	CLoginDlg m_loginDlg;
 	BOOL m_bAuthorized;
 
@@ -68,11 +71,13 @@ protected:
 	afx_msg LRESULT OnMainFrm(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnClose();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnPaint();
 	afx_msg void OnApplicationLook(UINT id);
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+	afx_msg LRESULT OnNotifyIcon(WPARAM, LPARAM);
 	DECLARE_MESSAGE_MAP()
 };
 
