@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "AccountDB.h"
 #include "UserDB.h"
+#include "Config.h"
 
 // CLoginDlg dialog
 
@@ -55,6 +56,8 @@ BOOL CLoginDlg::OnInitDialog()
 
 LRESULT CLoginDlg::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 { 
+	ERRCODE errRet = err_OK;
+
     if (message == 133)
      {
 		if (m_iShowWindow == SW_HIDE)
@@ -66,6 +69,13 @@ LRESULT CLoginDlg::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	else if (message == LOGINDLG_SHOWWINDOW)
 	{
 		m_iShowWindow = SW_SHOW;
+
+		errRet = g_config.Load();
+		if (errRet)
+		{
+			g_log.Write(_T("Load config fail"), errRet);
+			return FALSE;
+		}
     } 
     
 	return CDialogEx::DefWindowProc(message, wParam, lParam); 

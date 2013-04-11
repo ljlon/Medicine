@@ -178,49 +178,59 @@ BOOL CManagerApp::InitInstance()
 		_T(" by Jinlong Liu."));
 	g_log.Write(csMsg);
 
+	//读取全局配置信息
 	errRet = g_config.Load();
 	if (errRet)
 	{
 		g_log.Write(_T("Load config fail"), errRet);
 		return FALSE;
 	}
-	errRet = g_MgrCfg.Load();
-	if (errRet)
-	{
-		g_log.Write(_T("Load MgrConfig fail"), errRet);
-		return FALSE;
-	}
 
-	//备份模块
-	errRet = g_backupMgr.Start(g_MgrCfg.mysql_install_folder.GetBuffer(),
-								g_config.database_host.GetBuffer(),
-								g_config.database_port,
-								g_config.database_uid.GetBuffer(),
-								g_config.database_pwd.GetBuffer(),
-								g_config.database_dbname.GetBuffer(),
-								g_MgrCfg.backup_auto,
-								g_MgrCfg.backup_auto_date,
-								g_MgrCfg.backup_auto_date_unit,
-								g_MgrCfg.backup_auto_time);
-	if (errRet != err_OK)
-	{
-		g_log.Write(_T("Start backupMgr fail"), errRet);
-		return FALSE;
-	}
-
-	//登陆界面
 	CLoginDlg loginDlg;
+	BOOL bAuthorized = FALSE;
 	while(TRUE)
 	{
+		//读取Manager配置信息
+		errRet = g_MgrCfg.Load();
+		if (errRet)
+		{
+			g_log.Write(_T("Load MgrConfig fail"), errRet);
+			return FALSE;
+		}
+
+		//备份模块
+		errRet = g_backupMgr.Start(g_MgrCfg.mysql_install_folder.GetBuffer(),
+									g_config.database_host.GetBuffer(),
+									g_config.database_port,
+									g_config.database_uid.GetBuffer(),
+									g_config.database_pwd.GetBuffer(),
+									g_config.database_dbname.GetBuffer(),
+									g_MgrCfg.backup_auto,
+									g_MgrCfg.backup_auto_date,
+									g_MgrCfg.backup_auto_date_unit,
+									g_MgrCfg.backup_auto_time);
+		if (errRet != err_OK)
+		{
+			g_log.Write(_T("Start backupMgr fail"), errRet);
+			return FALSE;
+		}
+
+		//是否授权登陆
+		if (bAuthorized == TRUE)
+		{
+			break;
+		}
+
+		//登陆界面
 		if (bConsole == TRUE)
 		{
 			loginDlg.SetShowWindow(SW_HIDE);
 		}
-		INT_PTR nResponse = loginDlg.DoModal();
+	    INT_PTR nResponse = loginDlg.DoModal();
 		if (nResponse == IDOK)
 		{
+			bAuthorized = TRUE;
 			theApp.m_curUser = loginDlg.m_curUser;
-			break;
 		}
 		else if (nResponse == IDCANCEL)
 		{
