@@ -4,7 +4,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
 
 [Languages]
-Name: cn; MessagesFile: "compiler:Languages\Chinese.isl"
+; Name: cn; MessagesFile: "compiler:Languages\Chinese.isl"
 
 [Setup]
 AppId={{69D1853D-0DFE-4D17-8BEE-AF8C2DB6F001}
@@ -26,7 +26,9 @@ Name: "pos"; Description: "POS ’“¯÷’∂À"; Types: all pos
 [Files]
 Source: "Configuration\Config.ini"; DestDir: "{app}\Configuration"
 Source: "libmysql.dll"; DestDir: "{app}"
+Source: "Configuration\MgrConfig.ini"; DestDir: "{app}\Configuration"; Components: manager
 Source: "Manager.exe"; DestDir: "{app}"; Components: manager
+Source: "Configuration\POSConfig.ini"; DestDir: "{app}\Configuration"; Components: pos
 Source: "POS.exe"; DestDir: "{app}"; Components: pos
 Source: "Configuration\PrintFormat.dat"; DestDir: "{app}\Configuration"; Components: pos
 Source: "Configure.exe"; DestDir: "{app}"; AfterInstall: ExcCurrentFile
