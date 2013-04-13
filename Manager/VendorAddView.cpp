@@ -71,6 +71,8 @@ void CVendorAddView::OnInitialUpdate()
 			DisplayVendorInfo(pDoc->m_csVendorID.GetBuffer());
 		}
 	}
+
+	GetDlgItem(IDC_EDIT_VENDOR_NAME)->SetFocus();
 }
 
 

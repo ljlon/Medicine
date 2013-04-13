@@ -55,6 +55,8 @@ void CSupplierAddView::OnInitialUpdate()
 			DisplaySupplierInfo(pDoc->m_csSupplierID.GetBuffer());
 		}
 	}
+
+	GetDlgItem(IDC_EDIT_SUPPLIER_NAME)->SetFocus();
 }
 
 

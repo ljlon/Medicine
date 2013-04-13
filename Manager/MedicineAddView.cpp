@@ -290,8 +290,10 @@ BOOL CMedicineAddView::PreTranslateMessage(MSG* pMsg)
 				GetDlgItemText(IDC_EDIT_MEDICINE_SN, csSN);
 				csSN.Trim();
 
+				//GetDlgItem(IDC_EDIT_MEDICINE_NAME)->SetFocus();
 				//DisplayMedicineInfo(csSN.GetBuffer());
 			}
+			pMsg->wParam = VK_TAB;
 		}
 	}  
 

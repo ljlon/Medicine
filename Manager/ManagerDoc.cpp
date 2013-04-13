@@ -184,9 +184,12 @@ BOOL CManagerDoc::OnNewDocument()
 	m_menuTree.vctChildTree.push_back(pAccountTree);
 
 	//数据安全
-	TreeStruct *pBackup = new TreeStruct;
-	pBackup->csNodeName = GetMenuName(TREE_BACKUP_ID);
-	m_menuTree.vctChildTree.push_back(pBackup);
+	if (iUserRole == Role_Supper || iUserRole == Role_Manager)
+	{
+		TreeStruct *pBackup = new TreeStruct;
+		pBackup->csNodeName = GetMenuName(TREE_BACKUP_ID);
+		m_menuTree.vctChildTree.push_back(pBackup);
+	}
 
 	return TRUE;
 }
