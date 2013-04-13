@@ -273,6 +273,8 @@ void CMedicineAddView::OnInitialUpdate()
 
 		LoadDataFromDoc();
 	}
+
+	m_editMedicineSN.SetFocus();
 }
 
 BOOL CMedicineAddView::PreTranslateMessage(MSG* pMsg)
