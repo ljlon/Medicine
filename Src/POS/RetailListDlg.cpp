@@ -281,7 +281,7 @@ void CRetailListDlg::AdjustLayout()
 		pStaticPageInfo->GetClientRect(pageInfoRect);
 		iWidth = pageInfoRect.Width();
 		iHeight = pageInfoRect.Height();
-		pageInfoRect.right =  preBtnRect.left;
+		pageInfoRect.right =  preBtnRect.left - 3;
 		pageInfoRect.left = pageInfoRect.right - iWidth;
 		pageInfoRect.top = nextBtnRect.top + 5;
 		pageInfoRect.bottom =  pageInfoRect.top + iHeight;

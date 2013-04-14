@@ -14,7 +14,6 @@ CMedicineAddView::CMedicineAddView()
 	: CFormView(CMedicineAddView::IDD)
 {
 	m_bDataChanged = FALSE;
-	m_bShowQuickSearchList = FALSE;
 	m_iSupplierListItem = -1;
 	m_iSupplierListSubItem = -1;
 }
@@ -1054,12 +1053,11 @@ void CMedicineAddView::OnEnChangeEditMedicineRetailprice()
 void CMedicineAddView::OnCbnEditupdateComboSupplier()
 {
 	CString csMsg;
-	CString csSupplier;
-	m_pSupplierListPopupCmbox->GetWindowText(csSupplier);
-	csSupplier.Trim();
+	m_pSupplierListPopupCmbox->GetWindowText(m_csSubSupplierName);
+	m_csSubSupplierName.Trim();
 
 	csMsg.Format(_T("%s-%s"), m_supplier.csID, m_supplier.csName);
-	if (csMsg == csSupplier)
+	if (csMsg == m_csSubSupplierName)
 	{
 		//m_bDataChanged = FALSE;
 		//GetDlgItem(IDC_BUTTON_MEDICINE_ADD_OK)->EnableWindow(FALSE);
@@ -1070,34 +1068,9 @@ void CMedicineAddView::OnCbnEditupdateComboSupplier()
 		GetDlgItem(IDC_BUTTON_MEDICINE_ADD_OK)->EnableWindow(TRUE);
 	}
 
-	DWORD dwCurPage = 0;
-	DWORD dwTotalPage = 0;
-	DWORD dwTotalNum = 0;
-	CSupplierDB supplierDB;
-	vector<Supplier*> vctSuppliers;
-	supplierDB.GetSuppliers(dwCurPage, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctSuppliers, csSupplier.GetBuffer());
-
-	for(int  i = m_pSupplierListPopupCmbox->GetCount() - 1;  i >= 0;  i--) 
-	{ 
-		m_pSupplierListPopupCmbox->DeleteString(i); 
-	} 
-
-	for (unsigned int i = 0; i < vctSuppliers.size(); i++)
-	{
-		if (m_mapVctSupplierMedicine.find(atol(vctSuppliers[i]->csID)) == m_mapVctSupplierMedicine.end())
-		{
-			csMsg.Format(_T("%s-%s"), vctSuppliers[i]->csID, vctSuppliers[i]->csName);
-			m_pSupplierListPopupCmbox->InsertString(i, csMsg);
-		}
-
-		delete vctSuppliers[i];
-		vctSuppliers[i] = NULL;
-	}
-	vctSuppliers.clear();
-
+	m_pSupplierListPopupCmbox->ShowDropDown(FALSE);
 	m_pSupplierListPopupCmbox->ShowDropDown(TRUE);
 	SetCursor(LoadCursor(NULL, IDC_ARROW));
-	m_bShowQuickSearchList = TRUE;
 }
 
 
@@ -1106,12 +1079,11 @@ void CMedicineAddView::OnCbnEditupdateComboVendor()
 	// TODO: Add your control notification handler code here
 
 	CString csMsg;
-	CString csVendor;
-	m_cbVendor.GetWindowText(csVendor);
-	csVendor.Trim();
+	m_cbVendor.GetWindowText(m_csSubVendorName);
+	m_csSubVendorName.Trim();
 
 	csMsg.Format(_T("%s-%s"), m_vendor.csID, m_vendor.csName);
-	if (csMsg == csVendor)
+	if (csMsg == m_csSubVendorName)
 	{
 		//m_bDataChanged = FALSE;
 		//GetDlgItem(IDC_BUTTON_MEDICINE_ADD_OK)->EnableWindow(FALSE);
@@ -1122,12 +1094,84 @@ void CMedicineAddView::OnCbnEditupdateComboVendor()
 		GetDlgItem(IDC_BUTTON_MEDICINE_ADD_OK)->EnableWindow(TRUE);
 	}
 
+	m_cbVendor.ShowDropDown(FALSE);
+	m_cbVendor.ShowDropDown(TRUE);
+	SetCursor(LoadCursor(NULL, IDC_ARROW));
+}
+
+
+void CMedicineAddView::OnCbnDropdownComboMedicineSupplierid()
+{
+	// TODO: Add your control notification handler code here
+
+	CString csMsg;
+	CSize   sz;
+	int     dx = 0;
+	TEXTMETRIC   tm;
+	CDC*    pDC = m_pSupplierListPopupCmbox->GetDC();
+	CFont*  pFont = m_pSupplierListPopupCmbox->GetFont();
+	CFont* pOldFont = pDC->SelectObject(pFont);
+	pDC->GetTextMetrics(&tm);
+
+	DWORD dwCurPage = 0;
+	DWORD dwTotalPage = 0;
+	DWORD dwTotalNum = 0;
+	CSupplierDB supplierDB;
+	vector<Supplier*> vctSuppliers;
+	supplierDB.GetSuppliers(dwCurPage, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctSuppliers, m_csSubSupplierName.GetBuffer());
+
+	for(int  i = m_pSupplierListPopupCmbox->GetCount() - 1;  i >= 0;  i--) 
+	{ 
+		m_pSupplierListPopupCmbox->DeleteString(i); 
+	} 
+
+	int iIdx = 0;
+	for (unsigned int i = 0; i < vctSuppliers.size(); i++)
+	{
+		if (m_mapVctSupplierMedicine.find(atol(vctSuppliers[i]->csID)) == m_mapVctSupplierMedicine.end())
+		{
+			csMsg.Format(_T("%s-%s"), vctSuppliers[i]->csID, vctSuppliers[i]->csName);
+			m_pSupplierListPopupCmbox->InsertString(iIdx++, csMsg);
+
+			sz = pDC->GetTextExtent(csMsg);
+			sz.cx += tm.tmAveCharWidth;
+
+			if (sz.cx > dx)
+				dx = sz.cx;
+		}
+
+		delete vctSuppliers[i];
+		vctSuppliers[i] = NULL;
+	}
+	vctSuppliers.clear();
+
+	pDC->SelectObject(pOldFont);
+	m_pSupplierListPopupCmbox->ReleaseDC(pDC);
+	dx += ::GetSystemMetrics(SM_CXVSCROLL) + 2*::GetSystemMetrics(SM_CXEDGE);
+	m_pSupplierListPopupCmbox->SetDroppedWidth(dx);
+
+	m_csSubSupplierName = _T("");
+}
+
+
+void CMedicineAddView::OnCbnDropdownComboMedicineVendorid()
+{
+	// TODO: Add your control notification handler code here
+	CString csMsg;
+	CSize   sz;
+	int     dx = 0;
+	TEXTMETRIC   tm;
+	CDC*    pDC = m_cbVendor.GetDC();
+	CFont*  pFont = m_cbVendor.GetFont();
+	CFont* pOldFont = pDC->SelectObject(pFont);
+	pDC->GetTextMetrics(&tm);
+
 	DWORD dwCurPage = 0;
 	DWORD dwTotalPage = 0;
 	DWORD dwTotalNum = 0;
 	CVendorDB vendorDB;
 	vector<Vendor*> vctVendors;
-	vendorDB.GetVendors(dwCurPage, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctVendors, csVendor.GetBuffer());
+	vendorDB.GetVendors(dwCurPage, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctVendors, m_csSubVendorName.GetBuffer());
 
 	for(int  i = m_cbVendor.GetCount() - 1;  i >= 0;  i--) 
 	{ 
@@ -1139,88 +1183,23 @@ void CMedicineAddView::OnCbnEditupdateComboVendor()
 		csMsg.Format(_T("%s-%s"), vctVendors[i]->csID, vctVendors[i]->csName);
 		m_cbVendor.InsertString(i, csMsg);
 
+		sz = pDC->GetTextExtent(csMsg);
+		sz.cx += tm.tmAveCharWidth;
+
+		if (sz.cx > dx)
+			dx = sz.cx;
+
 		delete vctVendors[i];
 		vctVendors[i] = NULL;
 	}
 	vctVendors.clear();
+	
+	pDC->SelectObject(pOldFont);
+	m_cbVendor.ReleaseDC(pDC);
+	dx += ::GetSystemMetrics(SM_CXVSCROLL) + 2*::GetSystemMetrics(SM_CXEDGE);
+	m_cbVendor.SetDroppedWidth(dx);
 
-	m_cbVendor.ShowDropDown(TRUE);
-	SetCursor(LoadCursor(NULL, IDC_ARROW));
-	m_bShowQuickSearchList = TRUE;
-}
-
-
-void CMedicineAddView::OnCbnDropdownComboMedicineSupplierid()
-{
-	// TODO: Add your control notification handler code here
-
-	CString csMsg;
-
-	if (m_bShowQuickSearchList == FALSE)
-	{
-		DWORD dwCurPage = 0;
-		DWORD dwTotalPage = 0;
-		DWORD dwTotalNum = 0;
-		CSupplierDB supplierDB;
-		vector<Supplier*> vctSuppliers;
-		supplierDB.GetSuppliers(dwCurPage, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctSuppliers);
-
-		for(int  i = m_pSupplierListPopupCmbox->GetCount() - 1;  i >= 0;  i--) 
-		{ 
-			m_pSupplierListPopupCmbox->DeleteString(i); 
-		} 
-
-		int iIdx = 0;
-		for (unsigned int i = 0; i < vctSuppliers.size(); i++)
-		{
-			if (m_mapVctSupplierMedicine.find(atol(vctSuppliers[i]->csID)) == m_mapVctSupplierMedicine.end())
-			{
-				csMsg.Format(_T("%s-%s"), vctSuppliers[i]->csID, vctSuppliers[i]->csName);
-				m_pSupplierListPopupCmbox->InsertString(iIdx++, csMsg);
-			}
-
-			delete vctSuppliers[i];
-			vctSuppliers[i] = NULL;
-		}
-		vctSuppliers.clear();
-	}
-
-	m_bShowQuickSearchList = FALSE;
-}
-
-
-void CMedicineAddView::OnCbnDropdownComboMedicineVendorid()
-{
-	CString csMsg;
-
-	if (m_bShowQuickSearchList == FALSE)
-	{
-		DWORD dwCurPage = 0;
-		DWORD dwTotalPage = 0;
-		DWORD dwTotalNum = 0;
-		CVendorDB vendorDB;
-		vector<Vendor*> vctVendors;
-		vendorDB.GetVendors(dwCurPage, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctVendors);
-
-		for(int  i = m_cbVendor.GetCount() - 1;  i >= 0;  i--) 
-		{ 
-			m_cbVendor.DeleteString(i); 
-		} 
-
-		for (unsigned int i = 0; i < vctVendors.size(); i++)
-		{
-			csMsg.Format(_T("%s-%s"), vctVendors[i]->csID, vctVendors[i]->csName);
-			m_cbVendor.InsertString(i, csMsg);
-
-			delete vctVendors[i];
-			vctVendors[i] = NULL;
-		}
-		vctVendors.clear();
-	}
-
-	m_bShowQuickSearchList = FALSE;
-
-	// TODO: Add your control notification handler code here
+	m_csSubVendorName = _T("");
 }
 
 void CMedicineAddView::OnCbnSelchangeComboMedicineSupplierid()

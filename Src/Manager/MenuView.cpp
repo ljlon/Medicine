@@ -91,6 +91,17 @@ void CMenuView::OnInitialUpdate()
  }
 
 
+ BOOL CMenuView::PreTranslateMessage(MSG* pMsg) 
+ {
+	 if(WM_KEYDOWN == pMsg->message)
+	 {
+		 
+	 }
+
+	 return CView::PreTranslateMessage(pMsg);
+ }
+
+
  void CMenuView::SetMenuItem(TreeMenuID menuID)
  {
 	 if (GetSafeHwnd() == NULL)

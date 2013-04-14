@@ -37,6 +37,7 @@ public:
 	virtual ~CMenuView();
 	virtual void OnInitialUpdate();
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
+	virtual  BOOL PreTranslateMessage(MSG* pMsg);
 
 	void SetMenuItem(TreeMenuID menuID);
 

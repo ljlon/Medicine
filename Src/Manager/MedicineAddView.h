@@ -38,7 +38,8 @@ public:
 protected:
 	EnumViewType m_viewType;			//标识类型：新建或者修改
 	BOOL m_bDataChanged;				//数据是否已经被修改，用于退出时保存的判断
-	BOOL m_bShowQuickSearchList;		//显示快速筛选结果或者全部结果	
+	CString m_csSubVendorName;	
+	CString m_csSubSupplierName;
 	Medicine m_medicine;
 	Supplier  m_supplier;
 	Vendor   m_vendor;

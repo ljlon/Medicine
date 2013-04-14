@@ -157,7 +157,7 @@ void CPurchaseListView::AdjustLayout()
 		pStaticPageInfo->GetClientRect(pageInfoRect);
 		iWidth = pageInfoRect.Width();
 		iHeight = pageInfoRect.Height();
-		pageInfoRect.right =  preBtnRect.left;
+		pageInfoRect.right =  preBtnRect.left - 3;
 		pageInfoRect.left = pageInfoRect.right - iWidth;
 		pageInfoRect.top = groupPurRect.top + 25;
 		pageInfoRect.bottom =  pageInfoRect.top + iHeight;
@@ -386,5 +386,6 @@ void CPurchaseListView::OnBnClickedButtonSearch()
 		return;
 	}
 
+	m_dwCurPage = 0;
 	DisplayListItem();
 }

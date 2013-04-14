@@ -361,7 +361,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SELECT * FROM medicine_batch WHERE medicine_id=medicineID AND batch_num LIKE batchNum ORDER BY id DESC LIMIT offset,numPerPage;
     END IF;
     
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
     
 END IF;
 
@@ -561,7 +561,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum=@totalNum;
-    SET totalPage = totalNum / numPerPage;
+	SET totalPage = (totalNum - 1) / numPerPage + 1;
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -786,7 +786,7 @@ DECLARE offset int;
 
 IF (pageNum >= 0 && numPerPage > 0) THEN
     SELECT COUNT(*)INTO totalNum FROM view_pos ORDER BY id;
-    SET totalPage = totalNum/numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
     
     SET offset = numPerPage*pageNum;
     SELECT * FROM view_pos ORDER BY id LIMIT offset,numPerPage;
@@ -972,7 +972,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     EXECUTE smtp;
     SET totalPrice=@totalPrice;
     SET totalNum=@totalNum;
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -1090,7 +1090,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     EXECUTE smtp;
     SET totalPrice=@totalPrice;
     SET totalNum=@totalNum;
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
         
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -1352,7 +1352,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum=@totalNum;
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -1498,7 +1498,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum=@totalNum;
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -1902,7 +1902,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum=@totalNum;
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -2150,7 +2150,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SELECT * FROM supplier WHERE name REGEXP subName ORDER BY id DESC LIMIT offset,numPerPage;
     END IF;
 
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
 
 END IF;
 END */;;
@@ -2316,7 +2316,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum = @totalNum;
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -2532,7 +2532,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SELECT * FROM vendor WHERE name REGEXP subName ORDER BY id DESC LIMIT offset,numPerPage;
     END IF;
     
-    SET totalPage = totalNum / numPerPage;
+    SET totalPage = (totalNum - 1) / numPerPage + 1;
     
 END IF;
 
@@ -2621,4 +2621,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-04-14  9:19:52
+-- Dump completed on 2013-04-14 10:00:40

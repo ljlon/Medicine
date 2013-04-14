@@ -179,7 +179,7 @@ void CStoreMgrView::AdjustLayout()
 		pStaticPageInfo->GetClientRect(pageInfoRect);
 		iWidth = pageInfoRect.Width();
 		iHeight = pageInfoRect.Height();
-		pageInfoRect.right =  preBtnRect.left;
+		pageInfoRect.right =  preBtnRect.left - 3;
 		pageInfoRect.left = pageInfoRect.right - iWidth;
 		pageInfoRect.top = groupStoreRect.top + 25;
 		pageInfoRect.bottom =  pageInfoRect.top + iHeight;
@@ -725,6 +725,7 @@ void CStoreMgrView::OnBnClickedButtonSearch()
 	}
 	SetDlgItemText(IDC_STATIC_GROUP_STORE, csMsg);
 
+	m_dwCurPage = 0;
 	DisplayListItem();
 }
 
