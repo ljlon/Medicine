@@ -62,8 +62,15 @@ void CMedicineMgrView::OnInitialUpdate()
 	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
 	AfxGetApp()->GetMainWnd()->SetWindowText(csMsg);
 
-	CRect rectClient;
-	GetClientRect(rectClient);
+	if(atol(theApp.m_curUser.csRole.GetBuffer()) == Role_Supper || 
+		atol(theApp.m_curUser.csRole.GetBuffer()) == Role_Manager)
+	{
+		m_btnImport.ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		m_btnImport.ShowWindow(SW_HIDE);
+	}
 
 	m_listMedicine.SetExtendedStyle(LVS_EX_FLATSB    // 扁平风格滚动
 		| LVS_EX_FULLROWSELECT    // 允许整行选中
@@ -83,6 +90,7 @@ void CMedicineMgrView::OnInitialUpdate()
 	
 	DisplayListItem();
 
+	m_btnAdd.SetFocus();
 }
 
 void CMedicineMgrView::OnSize(UINT nType, int cx, int cy)
@@ -99,7 +107,7 @@ void CMedicineMgrView::AdjustLayout()
 	}
 
 	int iWidth = 0, iHeight = 0;
-	CRect clientRect;
+	CRect clientRect, tempRect;
 	GetClientRect(clientRect);
 
 	CRect nextBtnRect;
@@ -164,6 +172,38 @@ void CMedicineMgrView::AdjustLayout()
 		groupListRect.right = listRect.left + (clientRect.Width() - 10);
 		groupListRect.bottom = listRect.top + (clientRect.Height() - 55);
 		pGroupList->SetWindowPos(NULL, groupListRect.left, groupListRect.top, groupListRect.Width(), groupListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+	}
+
+	CRect btnImportRect, btnSearchRect;
+	CButton *pBtnImport = (CButton*)GetDlgItem(IDC_BUTTON_IMPORT);
+	CButton *pBtnSearch = (CButton*)GetDlgItem(IDC_BUTTON_SEARCH);
+	if( pBtnImport->GetSafeHwnd() != NULL && 
+	    pBtnImport->IsWindowVisible() == TRUE &&
+		pBtnSearch->GetSafeHwnd() != NULL)
+	{
+		pBtnImport->GetWindowRect(&btnImportRect);
+		pBtnSearch->GetWindowRect(&btnSearchRect);
+		ScreenToClient(&btnImportRect);
+		ScreenToClient(&btnSearchRect);
+
+		if (btnImportRect.left > btnSearchRect.left)
+		{
+			tempRect = btnImportRect;
+			btnImportRect = btnSearchRect;
+			btnSearchRect =tempRect;
+		}
+		pBtnImport->SetWindowPos(NULL, 
+								btnImportRect.left,  
+								btnImportRect.top, 
+								btnImportRect.Width(), 
+								btnImportRect.Height(), 
+								SWP_NOACTIVATE | SWP_NOZORDER);
+		pBtnSearch->SetWindowPos(NULL, 
+								btnSearchRect.left,  
+								btnSearchRect.top, 
+								btnSearchRect.Width(), 
+								btnSearchRect.Height(), 
+								SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 }
 
