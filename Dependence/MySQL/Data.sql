@@ -115,7 +115,7 @@ CREATE TABLE `medicine_type` (
 
 LOCK TABLES `medicine_type` WRITE;
 /*!40000 ALTER TABLE `medicine_type` DISABLE KEYS */;
-INSERT INTO `medicine_type` VALUES (0,'中成药'),(1,'保健药'),(2,'中草药'),(3,'西药');
+INSERT INTO `medicine_type` VALUES (0,'中成药'),(1,'保健药'),(2,'中草药'),(3,'西药'),(4,'医疗器械');
 /*!40000 ALTER TABLE `medicine_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
