@@ -73,6 +73,8 @@ void CVendorMgrView::OnInitialUpdate()
 	m_listVendor.InsertColumn(7, "ÐÞ¸ÄÊ±¼ä", LVCFMT_LEFT, 150, 0);
 
 	DisplayListItem();
+
+	m_btnAdd.SetFocus();
 }
 
 void CVendorMgrView::OnSize(UINT nType, int cx, int cy)

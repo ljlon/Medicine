@@ -74,6 +74,8 @@ void CSupplierMgrView::OnInitialUpdate()
 	m_listSupplier.InsertColumn(7, "ÐÞ¸ÄÊ±¼ä", LVCFMT_LEFT, 150, 0);
 
 	DisplayListItem();
+
+	m_btnAdd.SetFocus();
 }
 
 void CSupplierMgrView::OnSize(UINT nType, int cx, int cy)

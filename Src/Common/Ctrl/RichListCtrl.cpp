@@ -3,7 +3,7 @@
 
 CRichListCtrl::CRichListCtrl()
 {
-	m_iListItemHeight = 24;
+	m_iListItemHeight = 20;
 	m_dwExStyle = 0;
 	m_dwRichStype = 0;
 	m_nListItemID = LIST_ITEM_ID_BENGIN;
@@ -14,7 +14,8 @@ CRichListCtrl::~CRichListCtrl()
 	DeleteAllItems();
 }
 
-BEGIN_MESSAGE_MAP(CRichListCtrl, CListCtrl)  
+BEGIN_MESSAGE_MAP(CRichListCtrl, CListCtrl) 
+	ON_WM_MEASUREITEM_REFLECT()
     ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, &CRichListCtrl::OnNMCustomdraw)
 END_MESSAGE_MAP()  
   
@@ -34,10 +35,11 @@ BOOL CRichListCtrl::PreTranslateMessage(MSG* pMsg)
 			this->GetParent()->SendMessage(WM_RICHLISTCTRL_MESSGAE, WM_RICHLS_CLICK_BUTTON, (LPARAM)&hitInfo); 
 			return TRUE;
 		}
-		
 	}
+
 	return CListCtrl::PreTranslateMessage(pMsg);
 }
+
 
 void CRichListCtrl::SetExtendedStyle(DWORD dwExStyle)
 {
@@ -45,10 +47,32 @@ void CRichListCtrl::SetExtendedStyle(DWORD dwExStyle)
 	CListCtrl::SetExtendedStyle(dwExStyle);
 }
 
+
 void CRichListCtrl::SetRichStyle(DWORD dwRichStype)
 {
 	m_dwRichStype = dwRichStype;
 }
+
+
+void CRichListCtrl::SetItemHeight(int iHeight)
+{
+	m_iListItemHeight = iHeight;
+	CRect rcWin;
+	GetWindowRect(&rcWin);
+	WINDOWPOS wp;
+	wp.hwnd = m_hWnd;
+	wp.cx = rcWin.Width();
+	wp.cy = rcWin.Height();
+	wp.flags = SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER;
+	SendMessage(WM_WINDOWPOSCHANGED, 0, (LPARAM)&wp);
+}
+
+
+void  CRichListCtrl::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+{
+	lpMeasureItemStruct-> itemHeight = m_iListItemHeight;
+}
+
 
 int CRichListCtrl::InsertItem(int nItem, LPCTSTR lpszItem, EnumCtrlType ctrlType)
 {
@@ -212,13 +236,27 @@ EnumCtrlType CRichListCtrl::GetItemType( int nItem, int nSubItem)
 	return CTRL_DEFAULT;
 }
 
+
+void CRichListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+	int   nItem = lpDrawItemStruct->itemID;
+	CDC*  pDC   = CDC::FromHandle(lpDrawItemStruct->hDC);
+
+	CRect   rcBound, rcLabel, rcIcon;
+	GetItemRect( nItem, rcIcon, LVIR_ICON );
+	GetItemRect( nItem, rcLabel, LVIR_LABEL );
+	GetItemRect( nItem, rcBound, LVIR_BOUNDS );
+
+	DrawItem(pDC, nItem, rcBound);
+}
+
 // CRichListCtrl message handlers  
 void CRichListCtrl::OnNMCustomdraw(NMHDR *pNMHDR, LRESULT *pResult)  
 {  
     *pResult = 0;  
 	LPNMLVCUSTOMDRAW lpnmcd = (LPNMLVCUSTOMDRAW) pNMHDR;  
 
-	CString csMsg;
+	/*CString csMsg;
 
     if (lpnmcd ->nmcd.dwDrawStage == CDDS_PREPAINT)  
     {  
@@ -308,23 +346,27 @@ void CRichListCtrl::OnNMCustomdraw(NMHDR *pNMHDR, LRESULT *pResult)
 				}
 			}
 		}  
-	}
-    else if (lpnmcd ->nmcd.dwDrawStage == CDDS_POSTPAINT)  
+	}*/
+    if (lpnmcd ->nmcd.dwDrawStage == CDDS_POSTPAINT)  
     {  
 		if (m_dwRichStype&LVS_RICH_DRAWREMAIN)
 		{
-			DrawRemainSpace(lpnmcd); 
+			CDC dc;
+			dc.Attach(lpnmcd->nmcd.hdc);
+			CRect rect = lpnmcd->nmcd.rc;
+			DrawRemainItems(&dc, rect); 
+			dc.Detach();
 		}
         *pResult = CDRF_SKIPDEFAULT;  
         return;  
-    }  
+    }
        
     *pResult = 0;  
 }  
 
 
 // overwrite:  
-void CRichListCtrl::DrawSubItem(CDC *pDC, int nItem, int nSubItem, CRect &rSubItem, bool bSelected, bool bFocus)  
+void CRichListCtrl::DrawSubItem(CDC *pDC, int nItem, int nSubItem, CRect &rcSubItem, bool bSelected, bool bFocus)  
 {  
   
     pDC->SetBkMode(TRANSPARENT);  
@@ -347,66 +389,108 @@ void CRichListCtrl::DrawSubItem(CDC *pDC, int nItem, int nSubItem, CRect &rSubIt
     pDC->SelectObject(&font);  
     CString strText;  
     strText = GetItemText(nItem, nSubItem);  
-    DrawRowBK(pDC, rSubItem, bSelected, bFocus, nItem);  
+    DrawRowBK(pDC, rcSubItem, bSelected, bFocus, nItem);  
 
 	CRect drawRect;
-	drawRect.left = rSubItem.left + 8;
-	drawRect.right = rSubItem.right;
-	drawRect.top = rSubItem.top;
-	drawRect.bottom = rSubItem.bottom;
+	drawRect.left = rcSubItem.left + 8;
+	drawRect.right = rcSubItem.right;
+	drawRect.top = rcSubItem.top;
+	drawRect.bottom = rcSubItem.bottom;
     pDC->DrawText(strText, strText.GetLength(), &drawRect, DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_END_ELLIPSIS);  
     
 }  
 
 
-// ª≠ £”‡≤ø∑÷  
-void CRichListCtrl::DrawRemainSpace(LPNMLVCUSTOMDRAW lpnmcd)  
+void CRichListCtrl::DrawItem(CDC* pDC, int nItem, CRect &rcItem)  
 {  
-    int nTop = lpnmcd->nmcd.rc.top;  
-    int nCount = GetItemCount();  
-    if (nCount > 0)  
-    {  
-        CRect rcItem;  
-        GetItemRect(nCount - 1, &rcItem, LVIR_LABEL);  
-        nTop = rcItem.bottom;  
-    }  
-    CRect rectClient;  
-    GetClientRect(&rectClient);  
-    if (nTop < lpnmcd->nmcd.rc.bottom) // ”– £”‡  
-    {  
-        CRect rcRemain = lpnmcd->nmcd.rc;  
-        rcRemain.top = nTop;  
-        rcRemain.right = rectClient.right;  
-        int nRemainItem = rcRemain.Height(); // m_iListItemHeight;  
-        if (rcRemain.Height() % m_iListItemHeight)  
-        {  
-            nRemainItem++;  
-        }  
-        int pos = GetScrollPos(SB_HORZ);  
-        CDC dc;  
-        dc.Attach(lpnmcd->nmcd.hdc);  
-        for (int i = 0; i < nRemainItem; ++i)  
-        {  
-            CRect rcItem;  
-            rcItem.top = rcRemain.top + i * m_iListItemHeight;  
-            rcItem.left = rcRemain.left;  
-            rcItem.right = rcRemain.right;  
-            rcItem.bottom = rcItem.top + m_iListItemHeight;  
-            int nColumnCount = GetHeaderCtrl()->GetItemCount();  
-            CRect  rcSubItem;  
-            for (int j = 0; j < nColumnCount; ++j)  
-            {  
-                GetHeaderCtrl()->GetItemRect(j, &rcSubItem);  
-                rcSubItem.top = rcItem.top;  
-                rcSubItem.bottom = rcItem.bottom;  
-                rcSubItem.OffsetRect(-pos, 0);  
-                if(rcSubItem.right < rcRemain.left || rcSubItem.left > rcRemain.right)  
-                    continue;  
-                DrawRowBK(&dc, rcSubItem, false, false, i + nCount);            
-            }   
-        }  
-        dc.Detach();  
-    }  
+	if (nItem < 0 || nItem >= (int)m_vctItem.size())
+	{
+		return;
+	}
+
+	bool bSelected = false;  
+	if (GetItemState(nItem, LVIS_SELECTED))  
+	{  
+		bSelected = true;  
+	}  
+
+	bool bFocus = false;  
+	CWnd *pWndFocus = GetFocus();  
+	if (IsChild(pWndFocus) || pWndFocus == this)  
+	{  
+		bFocus = true;  
+	}  
+
+	int pos = GetScrollPos(SB_HORZ);  
+	int nColumnCount = GetHeaderCtrl()->GetItemCount();  
+	CRect  rcSubItem;  
+	for (int j = 0; j < nColumnCount; ++j)  
+	{  
+		GetHeaderCtrl()->GetItemRect(j, &rcSubItem);  
+		rcSubItem.top = rcItem.top;  
+		rcSubItem.bottom = rcItem.bottom;  
+		rcSubItem.OffsetRect(-pos, 0);  
+		if(rcSubItem.right < rcItem.left || rcSubItem.left > rcItem.right)  
+		{
+			continue;  
+		}
+
+		map<int, ListSubItem*>::iterator it = m_vctItem[nItem].find(j);
+		if (it == m_vctItem[nItem].end() || it->second->itemType == CTRL_STATIC)
+		{
+			DrawSubItem(pDC, nItem, j, rcSubItem, bSelected, bFocus);
+		}
+		else if (it->second->itemType == CTRL_BUTTON)
+		{
+			CButton *pButton = (CButton*)(it->second->pItem);
+			if (pButton != NULL)
+			{		
+				pButton->ShowWindow(SW_SHOW);
+				pButton->MoveWindow(rcSubItem);
+			}
+		}
+	}   
+}  
+
+
+// ª≠ £”‡≤ø∑÷  
+void CRichListCtrl::DrawRemainItems(CDC* pDC, CRect &rect)  
+{  
+	int nItemCount = GetItemCount();  
+	int nTotalCount = rect.Height() / m_iListItemHeight;  
+	if (rect.Height() % m_iListItemHeight)  
+	{  
+		nTotalCount++;  
+	}  
+
+	if (nTotalCount > nItemCount) // ”– £”‡  
+	{  
+		CRect rcRemain = rect;
+		rcRemain.top += nItemCount * m_iListItemHeight;  
+		int nRemainItem = nTotalCount - nItemCount;
+		int pos = GetScrollPos(SB_HORZ);  
+
+		for (int i = 0; i < nRemainItem; ++i)  
+		{  
+			CRect rcItem;  
+			rcItem.top = rcRemain.top + i * m_iListItemHeight;  
+			rcItem.left = rcRemain.left;  
+			rcItem.right = rcRemain.right;  
+			rcItem.bottom = rcItem.top + m_iListItemHeight;  
+			int nColumnCount = GetHeaderCtrl()->GetItemCount();  
+			CRect  rcSubItem;  
+			for (int j = 0; j < nColumnCount; ++j)  
+			{  
+				GetHeaderCtrl()->GetItemRect(j, &rcSubItem);  
+				rcSubItem.top = rcItem.top;  
+				rcSubItem.bottom = rcItem.bottom;  
+				rcSubItem.OffsetRect(-pos, 0);  
+				if(rcSubItem.right < rcRemain.left || rcSubItem.left > rcRemain.right)  
+					continue;  
+				DrawRowBK(pDC, rcSubItem, false, false, i + nItemCount);            
+			}   
+		}  
+	}  
 }  
 
 

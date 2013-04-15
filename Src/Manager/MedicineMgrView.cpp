@@ -577,8 +577,10 @@ void CMedicineMgrView::OnBnClickedButtonSearch()
 
 	if (IDOK != m_medicineSearchDlg.DoModal())
 	{
+		m_btnAdd.SetFocus();
 		return;
 	}
+	m_listMedicine.SetFocus();
 
 	CString csMsg;
 	if (m_medicineSearchDlg.m_csMedicineSN == _T("") && m_medicineSearchDlg.m_csMedicineName == _T(""))

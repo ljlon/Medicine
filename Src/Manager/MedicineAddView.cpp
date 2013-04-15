@@ -153,10 +153,10 @@ void CMedicineAddView::OnInitialUpdate()
 	m_listSupplier.SetExtendedStyle(LVS_EX_FLATSB    // 扁平风格滚动
 		| LVS_EX_FULLROWSELECT    // 允许整行选中
 		| LVS_EX_HEADERDRAGDROP    // 允许标题拖拽
-		| LVS_EX_CHECKBOXES
 		//| LVS_EX_GRIDLINES    // 画出网格线
 		);
-	m_listSupplier.InsertColumn(0, "", LVCFMT_LEFT, 20, 0);
+	m_listSupplier.SetItemHeight(20);
+	m_listSupplier.InsertColumn(0, "", LVCFMT_LEFT, 0, 0);
 	m_listSupplier.InsertColumn(1, "编号", LVCFMT_LEFT, 0, 0);
 	m_listSupplier.InsertColumn(2, "供应商", LVCFMT_LEFT, 200, 0);
 	m_listSupplier.InsertColumn(3, "进价", LVCFMT_LEFT, 80, 0);
@@ -1390,7 +1390,14 @@ void CMedicineAddView::OnLvnItemchangedListSupplier(NMHDR *pNMHDR, LRESULT *pRes
 		return;	
 	}
 	 
-	BOOL bPrevState = (BOOL)(((pNMLV->uOldState &  LVIS_STATEIMAGEMASK)>> 12)-1);  //Old check box state 
+	BOOL bSelected = FALSE;
+	if (m_listSupplier.GetSelectedCount() !=  0)
+	{
+		bSelected = TRUE;
+	}
+	m_btnDelPur.EnableWindow(bSelected);
+
+	/*BOOL bPrevState = (BOOL)(((pNMLV->uOldState &  LVIS_STATEIMAGEMASK)>> 12)-1);  //Old check box state 
 	if (bPrevState < 0)	//On startup there's no previous state   
 	{
 		bPrevState = 0; //so assign as false (unchecked) 
@@ -1407,8 +1414,7 @@ void CMedicineAddView::OnLvnItemchangedListSupplier(NMHDR *pNMHDR, LRESULT *pRes
 		return; 
 	}
 
-	m_btnDelPur.EnableWindow(bChecked);
-
+	m_btnDelPur.EnableWindow(bChecked);*/
 }
 
 
@@ -1417,13 +1423,17 @@ void CMedicineAddView::OnBnClickedBtnSupplierMedicineDel()
 	// TODO: 在此添加控件通知处理程序代码
 	CString csMsg;
 	vector<int> vctCheckedID;
-	for (int i = 0; i < m_listSupplier.GetItemCount(); i++)
+	int i = -1;
+	POSITION pos = m_listSupplier.GetFirstSelectedItemPosition();
+	while(TRUE)
 	{
-		if (m_listSupplier.GetCheck(i) == TRUE)
+		i = m_listSupplier.GetNextSelectedItem(pos);
+		if (i == -1)
 		{
-			vctCheckedID.push_back(i);
+			break;
 		}
-	}
+		vctCheckedID.push_back(i);
+	} 	
 	
 	if (vctCheckedID.size() == 0)
 	{

@@ -55,6 +55,7 @@ public:
 	
 	void SetExtendedStyle(DWORD dwExStyle);
 	void SetRichStyle(DWORD dwRichStype);
+	void SetItemHeight(int iHeight);
 	int InsertItem(int nItem, LPCTSTR lpszItem, EnumCtrlType ctrlType = CTRL_STATIC); 
 	BOOL SetItemText(int nItem, int nSubItem, LPCTSTR lpszText, EnumCtrlType ctrlType = CTRL_STATIC);
 	EnumCtrlType GetItemType( int nItem, int nSubItem);
@@ -71,10 +72,12 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()  
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnNMCustomdraw(NMHDR *pNMHDR, LRESULT *pResult);  
+	afx_msg void MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 
-	virtual void DrawSubItem(CDC *pDC, int nItem, int nSubItem, CRect &rSubItem, bool bSelected, bool bFocus);  
-	virtual void DrawRemainSpace(LPNMLVCUSTOMDRAW lpnmcd);  
-	virtual void DrawRowBK(CDC *pDC, RECT rc, bool bSelected, bool bFocus,int nRow);  
-
+	void DrawItem(CDC* pDC, int nItem, CRect &rcItem);
+	void DrawSubItem(CDC *pDC, int nItem, int nSubItem, CRect &rcSubItem, bool bSelected, bool bFocus);  
+	void DrawRowBK(CDC *pDC, RECT rc, bool bSelected, bool bFocus,int nRow);  
+	void DrawRemainItems(CDC* pDC, CRect &rect);
 };

@@ -107,6 +107,7 @@ void CPurchaseAddView::OnInitialUpdate()
 									| LVS_EX_FULLROWSELECT    // 允许整行选中
 									//| LVS_EX_GRIDLINES    // 画出网格线
 									);
+	m_purchaseList.SetItemHeight(22);
 
 	int iIdx = 0;
 	m_purchaseList.InsertColumn(iIdx++, "行号", LVCFMT_LEFT, 40, 0);
