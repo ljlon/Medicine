@@ -14,6 +14,8 @@
 #include "ManagerView.h"
 #include "MgrConfig.h"
 #include "BackupMgr.h"
+#include "CfgDlg.h"
+#include "Theme.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -23,6 +25,7 @@
 
 BEGIN_MESSAGE_MAP(CManagerApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, &CManagerApp::OnAppAbout)
+	ON_COMMAND(ID_APP_CFG, &CManagerApp::OnAppCfg)
 	// 基于文件的标准文档命令
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
@@ -198,6 +201,8 @@ BOOL CManagerApp::InitInstance()
 			return FALSE;
 		}
 
+		g_theme.Init(g_MgrCfg.theme_font_name.GetBuffer(), g_MgrCfg.theme_font_height);
+
 		//备份模块
 		errRet = g_backupMgr.Start(g_MgrCfg.mysql_install_folder.GetBuffer(),
 									g_config.database_host.GetBuffer(),
@@ -341,6 +346,14 @@ void CManagerApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
+}
+
+void CManagerApp::OnAppCfg()
+{
+	CCfgDlg cfgDlg;
+	cfgDlg.DoModal();
+
+	g_theme.Init(g_MgrCfg.theme_font_name.GetBuffer(), g_MgrCfg.theme_font_height);
 }
 
 // CManagerApp 自定义加载/保存方法

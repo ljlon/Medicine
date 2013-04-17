@@ -62,6 +62,18 @@ void CMedicineMgrView::OnInitialUpdate()
 	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
 	AfxGetApp()->GetMainWnd()->SetWindowText(csMsg);
 
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	if(atol(theApp.m_curUser.csRole.GetBuffer()) == Role_Supper || 
 		atol(theApp.m_curUser.csRole.GetBuffer()) == Role_Manager)
 	{
@@ -157,7 +169,7 @@ void CMedicineMgrView::AdjustLayout()
 	if (pMedicineList->GetSafeHwnd() != NULL)
 	{
 		listRect.left = clientRect.left + 5;
-		listRect.top = clientRect.top + 50;
+		listRect.top = clientRect.top + 55;
 		listRect.right = listRect.left + (clientRect.Width() - 10);
 		listRect.bottom = listRect.top + (clientRect.Height() - 75 - 5);
 		pMedicineList->SetWindowPos(NULL, listRect.left, listRect.top, listRect.Width(), listRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);

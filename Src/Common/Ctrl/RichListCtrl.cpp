@@ -3,15 +3,32 @@
 
 CRichListCtrl::CRichListCtrl()
 {
-	m_iListItemHeight = 20;
+	m_iListItemHeight = 14 + LIST_ITEM_HEIGHT_SPAN;
 	m_dwExStyle = 0;
 	m_dwRichStype = 0;
 	m_nListItemID = LIST_ITEM_ID_BENGIN;
+
+	m_font.CreateFont(m_iListItemHeight - LIST_ITEM_HEIGHT_SPAN,   // nHeight  
+		0,                         // nWidth  
+		0,                         // nEscapement  
+		0,                         // nOrientation  
+		FW_NORMAL,                 // nWeight  
+		FALSE,                     // bItalic  
+		FALSE,                     // bUnderline  
+		0,                         // cStrikeOut  
+		ANSI_CHARSET,              // nCharSet  
+		OUT_DEFAULT_PRECIS,        // nOutPrecision  
+		CLIP_DEFAULT_PRECIS,       // nClipPrecision  
+		DEFAULT_QUALITY,           // nQuality  
+		DEFAULT_PITCH | FF_SWISS,  // nPitchAndFamily  
+		_T("ËÎÌו"));  
+
 }
 
 CRichListCtrl::~CRichListCtrl()
 {
 	DeleteAllItems();
+	m_font.Detach();
 }
 
 BEGIN_MESSAGE_MAP(CRichListCtrl, CListCtrl) 
@@ -54,9 +71,19 @@ void CRichListCtrl::SetRichStyle(DWORD dwRichStype)
 }
 
 
-void CRichListCtrl::SetItemHeight(int iHeight)
+void CRichListCtrl::SetFont(CFont* pFont, BOOL bRedraw)
 {
-	m_iListItemHeight = iHeight;
+	if (pFont == NULL)
+	{
+		return;
+	}
+
+	LOGFONT logFont;
+	pFont->GetLogFont(&logFont);
+	m_font.Detach();
+	m_font.CreateFontIndirect(&logFont);
+	m_iListItemHeight = logFont.lfHeight + LIST_ITEM_HEIGHT_SPAN;
+
 	CRect rcWin;
 	GetWindowRect(&rcWin);
 	WINDOWPOS wp;
@@ -368,25 +395,9 @@ void CRichListCtrl::OnNMCustomdraw(NMHDR *pNMHDR, LRESULT *pResult)
 // overwrite:  
 void CRichListCtrl::DrawSubItem(CDC *pDC, int nItem, int nSubItem, CRect &rcSubItem, bool bSelected, bool bFocus)  
 {  
-  
     pDC->SetBkMode(TRANSPARENT);  
     pDC->SetTextColor(RGB(0, 0, 0));  
-    CFont font;  
-    font.CreateFont(12,   // nHeight  
-        0,                         // nWidth  
-        0,                         // nEscapement  
-        0,                         // nOrientation  
-        FW_NORMAL,                 // nWeight  
-        FALSE,                     // bItalic  
-        FALSE,                     // bUnderline  
-        0,                         // cStrikeOut  
-        ANSI_CHARSET,              // nCharSet  
-        OUT_DEFAULT_PRECIS,        // nOutPrecision  
-        CLIP_DEFAULT_PRECIS,       // nClipPrecision  
-        DEFAULT_QUALITY,           // nQuality  
-        DEFAULT_PITCH | FF_SWISS,  // nPitchAndFamily  
-        _T("ËÎÌו"));  
-    pDC->SelectObject(&font);  
+    pDC->SelectObject(&m_font);  
     CString strText;  
     strText = GetItemText(nItem, nSubItem);  
     DrawRowBK(pDC, rcSubItem, bSelected, bFocus, nItem);  

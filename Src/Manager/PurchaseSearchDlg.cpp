@@ -40,6 +40,18 @@ BOOL CPurchaseSearchDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	BOOL bHasDate = FALSE;
 	if (m_csPurBeginDate != _T("") && m_csPurEndDate != _T(""))
 	{

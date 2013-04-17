@@ -86,6 +86,13 @@ void CMedicineAddView::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BTN_SUPPLIER_DEL, m_btnDelPur);
 	DDX_Control(pDX, IDC_BTN_SUPPLIER_ADD, m_btnAddPur);
 	DDX_Control(pDX, IDC_EDIT_MEDICINE_SN, m_editMedicineSN);
+	DDX_Control(pDX, IDC_EDIT_MEDICINE_NAME, m_editMedicineName);
+	DDX_Control(pDX, IDC_EDIT_MEDICINE_SPEC, m_editMedicineSpec);
+	DDX_Control(pDX, IDC_EDIT_MEDICINE_RETAILPRICE, m_editRetailPrice);
+	DDX_Control(pDX, IDC_EDIT_MEDICINE_ID, m_editMedicineID);
+	DDX_Control(pDX, IDC_BTN_VENDOR_ADD, m_btnAddVendor);
+	DDX_Control(pDX, IDC_BUTTON_MEDICINE_ADD_OK, m_btnAdd);
+	DDX_Control(pDX, IDC_BUTTON_MEDICINE_CANCEL, m_btnCancel);
 }
 
 BEGIN_MESSAGE_MAP(CMedicineAddView, CFormView)
@@ -155,7 +162,6 @@ void CMedicineAddView::OnInitialUpdate()
 		| LVS_EX_HEADERDRAGDROP    // 允许标题拖拽
 		//| LVS_EX_GRIDLINES    // 画出网格线
 		);
-	m_listSupplier.SetItemHeight(20);
 	m_listSupplier.InsertColumn(0, "", LVCFMT_LEFT, 0, 0);
 	m_listSupplier.InsertColumn(1, "编号", LVCFMT_LEFT, 0, 0);
 	m_listSupplier.InsertColumn(2, "供应商", LVCFMT_LEFT, 200, 0);
@@ -172,6 +178,20 @@ void CMedicineAddView::OnInitialUpdate()
 	m_pSupplierListPopupCmbox->Create(CBS_AUTOHSCROLL|CBS_DROPDOWN|WS_VSCROLL|WS_CHILD|WS_VISIBLE|WS_TABSTOP , CRect(0,0,0,0), this, IDC_COMBO_POPUP);
 	m_pSupplierListPopupCmbox->ShowWindow(SW_HIDE);
 	m_pSupplierListPopupCmbox->SetParent(&m_listSupplier);
+
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+
+		m_listSupplier.SetFont(pFont);
+	}
 
 	CMedicineDB medicineDB;
 	//Medicine Units
@@ -1185,7 +1205,6 @@ void CMedicineAddView::OnCbnDropdownComboMedicineVendorid()
 
 		sz = pDC->GetTextExtent(csMsg);
 		sz.cx += tm.tmAveCharWidth;
-
 		if (sz.cx > dx)
 			dx = sz.cx;
 

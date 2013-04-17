@@ -16,17 +16,8 @@
     <Filter Include="Source Files\Common">
       <UniqueIdentifier>{24ffe363-cef1-46b6-bf60-3d69d8e33ea9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Database">
-      <UniqueIdentifier>{a2fd297f-26e8-4aea-a3be-1d77aecc7952}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Common">
       <UniqueIdentifier>{d6606036-7cb6-432a-9b42-1980ba74a18b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Database">
-      <UniqueIdentifier>{cd480937-6967-4c7f-b322-fa867b1674c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Ctrl">
-      <UniqueIdentifier>{3263f29d-1b26-41bb-90e1-6b5ed5d92e85}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\View">
       <UniqueIdentifier>{0983d4b8-89ce-49f4-9212-6b1f599afffd}</UniqueIdentifier>
@@ -88,26 +79,53 @@
     <Filter Include="Source Files\View\StoreView">
       <UniqueIdentifier>{68e931c2-b015-4257-a266-914fe028ec38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Ctrl">
-      <UniqueIdentifier>{b8e2939d-966b-4fc2-b064-e030a833b1ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\View\RetailView">
       <UniqueIdentifier>{89caae35-9628-458c-afd4-03868d58d61f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\View\RetailView">
       <UniqueIdentifier>{ee9f31e5-a37d-4398-81ab-9920bd5b4f17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Backup">
-      <UniqueIdentifier>{926aa536-67be-40d7-9db7-f25a79df8fd5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Backup">
-      <UniqueIdentifier>{545ef216-2fa0-47e2-9a6d-857e70dfd7d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\View\BackupView">
       <UniqueIdentifier>{76b6f527-8ccc-4ffc-90b0-b134449aa1f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\View\BackupView">
       <UniqueIdentifier>{7eebe3df-96c0-4610-8677-a5c168cc20f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\Database">
+      <UniqueIdentifier>{a2fd297f-26e8-4aea-a3be-1d77aecc7952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\Backup">
+      <UniqueIdentifier>{926aa536-67be-40d7-9db7-f25a79df8fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\Ctrl">
+      <UniqueIdentifier>{b8e2939d-966b-4fc2-b064-e030a833b1ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common\Backup">
+      <UniqueIdentifier>{545ef216-2fa0-47e2-9a6d-857e70dfd7d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common\Ctrl">
+      <UniqueIdentifier>{3263f29d-1b26-41bb-90e1-6b5ed5d92e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common\Database">
+      <UniqueIdentifier>{cd480937-6967-4c7f-b322-fa867b1674c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\Theme">
+      <UniqueIdentifier>{3a7a87bf-0d94-4052-9b20-bacf4eb97865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common\Theme">
+      <UniqueIdentifier>{86fbed85-95f1-4ab7-a527-fd4caf61f612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common\Common">
+      <UniqueIdentifier>{93c2a9a9-c69a-4c07-b6e1-a49e0110539d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\Common">
+      <UniqueIdentifier>{22cbfb17-0ba2-4983-8df9-dcb169e27d0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\ConfigDlg">
+      <UniqueIdentifier>{3acba378-621d-447d-84a3-0ae2ffa36e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\Config">
+      <UniqueIdentifier>{f85450ae-2ffc-43d3-9a10-76f128f57b91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -210,38 +228,17 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LoginDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\ErrorCode.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\Log.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\StdHead.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\TypeDef.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\Common\Database\Database.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\AccountDB.h">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\md5.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\CommUtil.h">
-      <Filter>Header Files\Common</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\SupplierDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="ViewTree.h">
-      <Filter>Header Files\Ctrl</Filter>
+      <Filter>Header Files\Common\Ctrl</Filter>
     </ClInclude>
     <ClInclude Include="MenuView.h">
       <Filter>Header Files\View\MenuView</Filter>
@@ -265,16 +262,16 @@
       <Filter>Header Files\View\BasicView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\VendorDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\MedicineDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="MedicineAddView.h">
       <Filter>Header Files\View\BasicView\MedicineView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\UserDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="UserMgrView.h">
       <Filter>Header Files\View\UserView</Filter>
@@ -289,22 +286,22 @@
       <Filter>Header Files\View\AccountView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\SupplierMedicineDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="PurchaseMgrView.h">
       <Filter>Header Files\View\PurchaseView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Ctrl\RichListCtrl.h">
-      <Filter>Header Files\Ctrl</Filter>
+      <Filter>Header Files\Common\Ctrl</Filter>
     </ClInclude>
     <ClInclude Include="PurchaseAddView.h">
       <Filter>Header Files\View\PurchaseView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\PurchaseDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\StoreDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="PurchaseListView.h">
       <Filter>Header Files\View\PurchaseView</Filter>
@@ -315,32 +312,20 @@
     <ClInclude Include="ManagerView.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Common\Const.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
     <ClInclude Include="StoreMgrView.h">
       <Filter>Header Files\View\StoreView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Ctrl\ExSplitterWnd.h">
-      <Filter>Header Files\Ctrl</Filter>
+      <Filter>Header Files\Common\Ctrl</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\RetailDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="RetailMgrView.h">
       <Filter>Header Files\View\RetailView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\MedicineBatchDB.h">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\Config.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\Version.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\Crypto.h">
-      <Filter>Header Files\Common</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="StoreSearchDlg.h">
       <Filter>Header Files\View\StoreView</Filter>
@@ -352,7 +337,7 @@
       <Filter>Header Files\View\StoreView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Database\POSDB.h">
-      <Filter>Header Files\Database</Filter>
+      <Filter>Header Files\Common\Database</Filter>
     </ClInclude>
     <ClInclude Include="VendorSearchDlg.h">
       <Filter>Header Files\View\BasicView\VendorView</Filter>
@@ -367,25 +352,67 @@
       <Filter>Header Files\View\BasicView\SupplierView</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Backup\MySQLBackup.h">
-      <Filter>Header Files\Backup</Filter>
+      <Filter>Header Files\Common\Backup</Filter>
     </ClInclude>
     <ClInclude Include="BackupMgrView.h">
       <Filter>Header Files\View\BackupView</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Common\MgrConfig.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\Common\Backup\Backup.h">
-      <Filter>Header Files\Backup</Filter>
+      <Filter>Header Files\Common\Backup</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Backup\BackupMgr.h">
-      <Filter>Header Files\Backup</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Common\TimeProc.h">
-      <Filter>Header Files\Common</Filter>
+      <Filter>Header Files\Common\Backup</Filter>
     </ClInclude>
     <ClInclude Include="MedicineImport.h">
       <Filter>Header Files\View\BasicView\MedicineView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Theme\Theme.h">
+      <Filter>Header Files\Common\Theme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\CommUtil.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Version.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Config.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Const.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Crypto.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\ErrorCode.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\Log.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\md5.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\MgrConfig.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\StdHead.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\TimeProc.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Common\TypeDef.h">
+      <Filter>Header Files\Common\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgGeneralDlg.h">
+      <Filter>Header Files\View\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="CfgDlg.h">
+      <Filter>Header Files\View\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginDlg.h">
+      <Filter>Header Files\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -401,32 +428,14 @@
     <ClCompile Include="ManagerDoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LoginDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Common\Database\AccountDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\Database.cpp">
-      <Filter>Source Files\Database</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\ErrorCode.cpp">
-      <Filter>Source Files\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\Log.cpp">
-      <Filter>Source Files\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\TypeDef.cpp">
-      <Filter>Source Files\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\md5.cpp">
-      <Filter>Source Files\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\CommUtil.cpp">
-      <Filter>Source Files\Common</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\SupplierDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="SupplierAddView.cpp">
       <Filter>Source Files\View\BasicView\SupplierView</Filter>
@@ -444,7 +453,7 @@
       <Filter>Source Files\View\BasicView\MedicineView</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\VendorDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="VendorAddView.cpp">
       <Filter>Source Files\View\BasicView\VendorView</Filter>
@@ -453,13 +462,13 @@
       <Filter>Source Files\View\BasicView</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\MedicineDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="MedicineAddView.cpp">
       <Filter>Source Files\View\BasicView\MedicineView</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\UserDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="UserMgrView.cpp">
       <Filter>Source Files\View\UserView</Filter>
@@ -474,7 +483,7 @@
       <Filter>Source Files\View\AccountView</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\SupplierMedicineDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="PurchaseMgrView.cpp">
       <Filter>Source Files\View\PurchaseView</Filter>
@@ -483,7 +492,7 @@
       <Filter>Source Files\View\PurchaseView</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\StoreDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="StoreMgrView.cpp">
       <Filter>Source Files\View\StoreView</Filter>
@@ -498,34 +507,25 @@
       <Filter>Source Files\View</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\PurchaseDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Ctrl\RichListCtrl.cpp">
-      <Filter>Source Files\Ctrl</Filter>
+      <Filter>Source Files\Common\Ctrl</Filter>
     </ClCompile>
     <ClCompile Include="ViewTree.cpp">
-      <Filter>Source Files\Ctrl</Filter>
+      <Filter>Source Files\Common\Ctrl</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Ctrl\ExSplitterWnd.cpp">
-      <Filter>Source Files\Ctrl</Filter>
+      <Filter>Source Files\Common\Ctrl</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\RetailDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="RetailMgrView.cpp">
       <Filter>Source Files\View\RetailView</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\MedicineBatchDB.cpp">
-      <Filter>Source Files\Database</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\Config.cpp">
-      <Filter>Source Files\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\Version.cpp">
-      <Filter>Source Files\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\Crypto.cpp">
-      <Filter>Source Files\Common</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="StoreSearchDlg.cpp">
       <Filter>Source Files\View\StoreView</Filter>
@@ -537,7 +537,7 @@
       <Filter>Source Files\View\StoreView</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Database\POSDB.cpp">
-      <Filter>Source Files\Database</Filter>
+      <Filter>Source Files\Common\Database</Filter>
     </ClCompile>
     <ClCompile Include="PurchaseSearchDlg.cpp">
       <Filter>Source Files\View\PurchaseView</Filter>
@@ -552,25 +552,61 @@
       <Filter>Source Files\View\BasicView\SupplierView</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Backup\MySQLBackup.cpp">
-      <Filter>Source Files\Backup</Filter>
+      <Filter>Source Files\Common\Backup</Filter>
     </ClCompile>
     <ClCompile Include="BackupMgrView.cpp">
       <Filter>Source Files\View\BackupView</Filter>
     </ClCompile>
-    <ClCompile Include="..\Common\Common\MgrConfig.cpp">
-      <Filter>Source Files\Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\Common\Backup\Backup.cpp">
-      <Filter>Source Files\Backup</Filter>
+      <Filter>Source Files\Common\Backup</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Backup\BackupMgr.cpp">
-      <Filter>Source Files\Backup</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Common\TimeProc.cpp">
-      <Filter>Source Files\Common</Filter>
+      <Filter>Source Files\Common\Backup</Filter>
     </ClCompile>
     <ClCompile Include="MedicineImport.cpp">
       <Filter>Source Files\View\BasicView\MedicineView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Theme\Theme.cpp">
+      <Filter>Source Files\Common\Theme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\CommUtil.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Version.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Config.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Crypto.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\ErrorCode.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\Log.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\md5.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\MgrConfig.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\TimeProc.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Common\TypeDef.cpp">
+      <Filter>Source Files\Common\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginDlg.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgDlg.cpp">
+      <Filter>Source Files\View\ConfigDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="CfgGeneralDlg.cpp">
+      <Filter>Source Files\View\ConfigDlg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

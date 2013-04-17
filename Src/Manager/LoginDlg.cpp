@@ -42,6 +42,18 @@ END_MESSAGE_MAP()
 
 BOOL CLoginDlg::OnInitDialog()
 {
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	CDialogEx::OnInitDialog();
 	CString csMsg;
 	csMsg.Format("%s-µÇÂ½", APP_MANAGER);

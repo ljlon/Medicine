@@ -10,13 +10,14 @@
 #endif
 
 #include "ManagerDoc.h"
-
 #include <propkey.h>
+#include "MgrConfig.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+extern MgrConfig g_MgrCfg;
 
 TCHAR * pszMenuName[] =							// 0x01
 {

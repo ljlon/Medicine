@@ -47,6 +47,18 @@ void CRootView::Dump(CDumpContext& dc) const
 
 void CRootView::OnInitialUpdate()
 {
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	CFormView::OnInitialUpdate();
 
 	CString csMsg;

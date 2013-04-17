@@ -24,6 +24,9 @@ enum EnumCtrlType{
 };
 
 //
+#define  LIST_ITEM_HEIGHT_SPAN 8
+
+//
 typedef struct _ListSubItem{
 	EnumCtrlType itemType;
 	CString csText;
@@ -55,7 +58,7 @@ public:
 	
 	void SetExtendedStyle(DWORD dwExStyle);
 	void SetRichStyle(DWORD dwRichStype);
-	void SetItemHeight(int iHeight);
+	void SetFont(CFont* pFont, BOOL bRedraw = TRUE);
 	int InsertItem(int nItem, LPCTSTR lpszItem, EnumCtrlType ctrlType = CTRL_STATIC); 
 	BOOL SetItemText(int nItem, int nSubItem, LPCTSTR lpszText, EnumCtrlType ctrlType = CTRL_STATIC);
 	EnumCtrlType GetItemType( int nItem, int nSubItem);
@@ -63,6 +66,7 @@ public:
 	BOOL DeleteAllItems();
 
 protected:
+	CFont m_font;
 	unsigned int m_iListItemHeight;
 	DWORD m_dwExStyle;
 	DWORD m_dwRichStype;

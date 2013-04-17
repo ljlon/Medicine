@@ -41,6 +41,18 @@ BOOL CMedicineImportDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	TCHAR tszPath[MAX_PATH];
 	memset(tszPath, 0, MAX_PATH * sizeof(TCHAR));
 	GetCurrentDirectory(MAX_PATH, tszPath);

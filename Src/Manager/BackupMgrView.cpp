@@ -46,6 +46,18 @@ void CBackupMgrView::OnInitialUpdate()
 	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
 	AfxGetApp()->GetMainWnd()->SetWindowText(csMsg);
 
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	SYSTEMTIME lastBackupTime;
 	if (g_backupMgr.GetLastBackupTime(lastBackupTime) == TRUE)
 	{

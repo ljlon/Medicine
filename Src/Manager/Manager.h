@@ -10,6 +10,7 @@
 #include "resource.h"       // 主符号
 #include "StdHead.h"
 #include "UserDB.h"
+#include "Theme.h"
 
 #define APP_MANAGER _T("后台管理")
 
@@ -38,6 +39,7 @@ public:
 	virtual void SaveCustomState();
 
 	afx_msg void OnAppAbout();
+	afx_msg void OnAppCfg();
 	DECLARE_MESSAGE_MAP()
 };
 

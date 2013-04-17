@@ -31,7 +31,8 @@ public:
 	BOOL BeCancel();
 
 	CRichListCtrl m_purchaseList;
-	BOOL m_bShowQuickSearchList;
+	CString m_csSubSupplierName;
+	CString m_csSubPopupStr;
 	CEdit *m_pPurListPopupEdit;
 	CDateTimeCtrl *m_pDataTimeCtrl;
 	CComboBox *m_pCbPopupBox;

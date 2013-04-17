@@ -51,7 +51,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../Common/Common;../Common/Database;../Common/Database/MySQL/include;../Common/Ctrl;../Common/Device;../Common/Backup;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Common/Common;../Common/Database;../Common/Database/MySQL/include;../Common/Ctrl;../Common/Device;../Common/Backup;../Common/Theme;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -80,7 +80,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../Common/Common;../Common/Database;../Common/Database/MySQL/include;../Common/Ctrl;../Common/Device;../Common/Backup;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Common/Common;../Common/Database;../Common/Database/MySQL/include;../Common/Ctrl;../Common/Device;../Common/Backup;../Common/Theme;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -162,9 +162,12 @@
     <ClInclude Include="..\Common\Database\SupplierMedicineDB.h" />
     <ClInclude Include="..\Common\Database\UserDB.h" />
     <ClInclude Include="..\Common\Database\VendorDB.h" />
+    <ClInclude Include="..\Common\Theme\Theme.h" />
     <ClInclude Include="AccountMgrView.h" />
     <ClInclude Include="BackupMgrView.h" />
     <ClInclude Include="BasicMgrView.h" />
+    <ClInclude Include="CfgDlg.h" />
+    <ClInclude Include="CfgGeneralDlg.h" />
     <ClInclude Include="LoginDlg.h" />
     <ClInclude Include="MedicineAddView.h" />
     <ClInclude Include="MedicineImport.h" />
@@ -227,9 +230,12 @@
     <ClCompile Include="..\Common\Database\SupplierMedicineDB.cpp" />
     <ClCompile Include="..\Common\Database\UserDB.cpp" />
     <ClCompile Include="..\Common\Database\VendorDB.cpp" />
+    <ClCompile Include="..\Common\Theme\Theme.cpp" />
     <ClCompile Include="AccountMgrView.cpp" />
     <ClCompile Include="BackupMgrView.cpp" />
     <ClCompile Include="BasicMgrView.cpp" />
+    <ClCompile Include="CfgDlg.cpp" />
+    <ClCompile Include="CfgGeneralDlg.cpp" />
     <ClCompile Include="LoginDlg.cpp" />
     <ClCompile Include="MedicineAddView.cpp" />
     <ClCompile Include="MedicineImport.cpp" />

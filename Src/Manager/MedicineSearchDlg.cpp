@@ -51,6 +51,18 @@ BOOL CMedicineSearchDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	ERRCODE errRet;
 	CString csMsg;
 	CVendorDB vendorDB;
@@ -227,6 +239,13 @@ void CMedicineSearchDlg::OnCbnDropdownComboVendor()
 	vector<Vendor*> vctVendor;
 	DWORD dwTotalPage, dwTotalNum;
 	CString csMsg;
+	CSize   sz;
+	int     dx = 0;
+	TEXTMETRIC   tm;
+	CDC*    pDC = m_comboVendor.GetDC();
+	CFont*  pFont = m_comboVendor.GetFont();
+	CFont* pOldFont = pDC->SelectObject(pFont);
+	pDC->GetTextMetrics(&tm);
 
 	for (int i = m_comboVendor.GetCount() - 1; i >= 0; i--)
 	{
@@ -244,10 +263,20 @@ void CMedicineSearchDlg::OnCbnDropdownComboVendor()
 		csMsg.Format(_T("%s-%s"), vctVendor[i]->csID.GetBuffer(), vctVendor[i]->csName.GetBuffer());
 		m_comboVendor.AddString(csMsg);
 
+		sz = pDC->GetTextExtent(csMsg);
+		sz.cx += tm.tmAveCharWidth;
+		if (sz.cx > dx)
+			dx = sz.cx;
+
 		delete vctVendor[i];
 		vctVendor[i] = NULL;
 	}
 	vctVendor.clear();
+
+	pDC->SelectObject(pOldFont);
+	m_comboVendor.ReleaseDC(pDC);
+	dx += ::GetSystemMetrics(SM_CXVSCROLL) + 2*::GetSystemMetrics(SM_CXEDGE);
+	m_comboVendor.SetDroppedWidth(dx);
 
 	m_csMatchStr = _T("");
 }
@@ -260,6 +289,13 @@ void CMedicineSearchDlg::OnCbnDropdownComboSupplier()
 	vector<Supplier*> vctSupplier;
 	DWORD dwTotalPage, dwTotalNum;
 	CString csMsg;
+	CSize   sz;
+	int     dx = 0;
+	TEXTMETRIC   tm;
+	CDC*    pDC = m_comboSupplier.GetDC();
+	CFont*  pFont = m_comboSupplier.GetFont();
+	CFont* pOldFont = pDC->SelectObject(pFont);
+	pDC->GetTextMetrics(&tm);
 
 	for (int i = m_comboSupplier.GetCount() - 1; i >= 0; i--)
 	{
@@ -277,11 +313,21 @@ void CMedicineSearchDlg::OnCbnDropdownComboSupplier()
 		csMsg.Format(_T("%s-%s"), vctSupplier[i]->csID.GetBuffer(), vctSupplier[i]->csName.GetBuffer());
 		m_comboSupplier.AddString(csMsg);
 
+		sz = pDC->GetTextExtent(csMsg);
+		sz.cx += tm.tmAveCharWidth;
+		if (sz.cx > dx)
+			dx = sz.cx;
+
 		delete vctSupplier[i];
 		vctSupplier[i] = NULL;
 	}
 	vctSupplier.clear();
 	
+	pDC->SelectObject(pOldFont);
+	m_comboSupplier.ReleaseDC(pDC);
+	dx += ::GetSystemMetrics(SM_CXVSCROLL) + 2*::GetSystemMetrics(SM_CXEDGE);
+	m_comboSupplier.SetDroppedWidth(dx);
+
 	m_csMatchStr = _T("");
 }
 

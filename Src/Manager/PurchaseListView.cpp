@@ -55,6 +55,18 @@ void CPurchaseListView::OnInitialUpdate()
 	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
 	AfxGetApp()->GetMainWnd()->SetWindowText(csMsg);
 
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	CRect rectClient;
 	GetClientRect(rectClient);
 
@@ -63,7 +75,6 @@ void CPurchaseListView::OnInitialUpdate()
 		| LVS_EX_HEADERDRAGDROP    // 允许标题拖拽
 		| LVS_EX_GRIDLINES    // 画出网格线
 		);
-
 	m_listPur.InsertColumn(0, "编号", LVCFMT_LEFT, 0, 0);
 	m_listPur.InsertColumn(1, "进货人员", LVCFMT_LEFT, 80, 0);
 	m_listPur.InsertColumn(2, "药品编码", LVCFMT_LEFT, 120, 0);

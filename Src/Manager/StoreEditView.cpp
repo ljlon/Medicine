@@ -94,6 +94,18 @@ void CStoreEditView::OnInitialUpdate()
 	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
 	AfxGetApp()->GetMainWnd()->SetWindowText(csMsg);
 
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	m_listBatchStore.SetExtendedStyle(LVS_EX_FLATSB    // 扁平风格滚动
 		| LVS_EX_FULLROWSELECT    // 允许整行选中
 		| LVS_EX_HEADERDRAGDROP    // 允许标题拖拽

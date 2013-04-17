@@ -101,6 +101,13 @@ public:
 	afx_msg void OnLvnEndScrollListSupplier(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedBtnVendorAdd();
 	CEdit m_editMedicineSN;
+	CEdit m_editMedicineName;
+	CEdit m_editMedicineSpec;
+	CEdit m_editRetailPrice;
+	CEdit m_editMedicineID;
+	CButton m_btnAddVendor;
+	CButton m_btnAdd;
+	CButton m_btnCancel;
 };
 
 

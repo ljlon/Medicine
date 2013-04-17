@@ -15,7 +15,6 @@ IMPLEMENT_DYNCREATE(CPurchaseAddView, CFormView)
 CPurchaseAddView::CPurchaseAddView()
 	: CFormView(CPurchaseAddView::IDD)
 {
-	m_bShowQuickSearchList = FALSE;
 	m_pPurListPopupEdit = NULL;
 	m_pDataTimeCtrl = NULL;
 	m_pCbPopupBox = NULL;
@@ -107,10 +106,22 @@ void CPurchaseAddView::OnInitialUpdate()
 									| LVS_EX_FULLROWSELECT    // 允许整行选中
 									//| LVS_EX_GRIDLINES    // 画出网格线
 									);
-	m_purchaseList.SetItemHeight(22);
+
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+		m_purchaseList.SetFont(pFont);
+	}
 
 	int iIdx = 0;
-	m_purchaseList.InsertColumn(iIdx++, "行号", LVCFMT_LEFT, 40, 0);
+	m_purchaseList.InsertColumn(iIdx++, "行号", LVCFMT_LEFT, 60, 0);
 	m_purchaseList.InsertColumn(iIdx++, "药品编号", LVCFMT_LEFT, 0, 0);
 	m_purchaseList.InsertColumn(iIdx++, "药品编码", LVCFMT_LEFT, 150, 0);
 	m_purchaseList.InsertColumn(iIdx++, "药品名称", LVCFMT_LEFT, 150, 0);
@@ -297,16 +308,44 @@ void CPurchaseAddView::OnCbnEditupdateComboSupplier()
 	}
 
 	CString csMsg;
-	CString csSupplier;
-	pcbSupplier->GetWindowText(csSupplier);
-	csSupplier.Trim();
+	pcbSupplier->GetWindowText(m_csSubSupplierName);
+	m_csSubSupplierName.Trim();
+
+	pcbSupplier->ShowDropDown(FALSE);
+	pcbSupplier->ShowDropDown(TRUE);
+	SetCursor(LoadCursor(NULL, IDC_ARROW));
+}
+
+
+void CPurchaseAddView::OnCbnDropdownComboSupplier()
+{
+	// TODO: Add your control notification handler code here
+	CComboBox *pcbSupplier = (CComboBox*)GetDlgItem(IDC_COMBO_SUPPLIER);
+	if (pcbSupplier->GetSafeHwnd() == NULL)
+	{
+		return;
+	}
+
+	CString csMsg;
+	CSize   sz;
+	int     dx = 0;
+	TEXTMETRIC   tm;
+	CDC*    pDC = pcbSupplier->GetDC();
+	CFont*  pFont = pcbSupplier->GetFont();
+	CFont* pOldFont = pDC->SelectObject(pFont);
+	pDC->GetTextMetrics(&tm);
 
 	DWORD dwCurPage = 0;
 	DWORD dwTotalPage = 0;
 	DWORD dwTotalNum = 0;
 	CSupplierDB supplierDB;
 	vector<Supplier*> vctSuppliers;
-	supplierDB.GetSuppliers(dwCurPage, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctSuppliers, csSupplier.GetBuffer());
+	supplierDB.GetSuppliers(dwCurPage, 
+							g_ciNumPerPage, 
+							dwTotalPage, 
+							dwTotalNum, 
+							vctSuppliers, 
+							m_csSubSupplierName.GetBuffer());
 
 	for(int  i = pcbSupplier->GetCount() - 1;  i >= 0;  i--) 
 	{ 
@@ -318,54 +357,22 @@ void CPurchaseAddView::OnCbnEditupdateComboSupplier()
 		csMsg.Format(_T("%s-%s"), vctSuppliers[i]->csID, vctSuppliers[i]->csName);
 		pcbSupplier->InsertString(i, csMsg);
 
+		sz = pDC->GetTextExtent(csMsg);
+		sz.cx += tm.tmAveCharWidth;
+		if (sz.cx > dx)
+			dx = sz.cx;
+
 		delete vctSuppliers[i];
 		vctSuppliers[i] = NULL;
 	}
 	vctSuppliers.clear();
 
-	m_bShowQuickSearchList = TRUE;
-	pcbSupplier->ShowDropDown(TRUE);
-	SetCursor(LoadCursor(NULL, IDC_ARROW));
-}
+	pDC->SelectObject(pOldFont);
+	pcbSupplier->ReleaseDC(pDC);
+	dx += ::GetSystemMetrics(SM_CXVSCROLL) + 2*::GetSystemMetrics(SM_CXEDGE);
+	pcbSupplier->SetDroppedWidth(dx);
 
-
-void CPurchaseAddView::OnCbnDropdownComboSupplier()
-{
-	CString csMsg;
-
-	if (m_bShowQuickSearchList != TRUE)
-	{
-		CComboBox *pcbSupplier = (CComboBox*)GetDlgItem(IDC_COMBO_SUPPLIER);
-		if (pcbSupplier->GetSafeHwnd() == NULL)
-		{
-			return;
-		}
-
-		DWORD dwCurPage = 0;
-		DWORD dwTotalPage = 0;
-		DWORD dwTotalNum = 0;
-		CSupplierDB supplierDB;
-		vector<Supplier*> vctSuppliers;
-		supplierDB.GetSuppliers(dwCurPage, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctSuppliers);
-
-		for(int  i = pcbSupplier->GetCount() - 1;  i >= 0;  i--) 
-		{ 
-			pcbSupplier->DeleteString(i); 
-		} 
-
-		for (unsigned int i = 0; i < vctSuppliers.size(); i++)
-		{
-			csMsg.Format(_T("%s-%s"), vctSuppliers[i]->csID, vctSuppliers[i]->csName);
-			pcbSupplier->InsertString(i, csMsg);
-
-			delete vctSuppliers[i];
-			vctSuppliers[i] = NULL;
-		}
-		vctSuppliers.clear();
-	}
-
-	m_bShowQuickSearchList = FALSE;
-	// TODO: Add your control notification handler code here
+	m_csSubSupplierName = _T("");
 }
 
 
@@ -466,7 +473,7 @@ void CPurchaseAddView::OnNMClickListPurchase(NMHDR *pNMHDR, LRESULT *pResult)
 			m_pCbPopupBox->ShowWindow(SW_SHOW);
 			m_pCbPopupBox->SetFocus();
 
-			csMsg = m_purchaseList.GetItemText(hitInfo.iItem,iActiveSubItem);
+			csMsg = _T(" ") + m_purchaseList.GetItemText(hitInfo.iItem,iActiveSubItem);
 			m_pCbPopupBox->SetWindowText(csMsg);
 		}
 		else	
@@ -1082,6 +1089,10 @@ BOOL CPurchaseAddView::AddPurchase()
 		}
 	}
 
+	int iLastItem = m_purchaseList.GetItemCount() - 1;
+	csMsg.Format(_T("0.00"));
+	m_purchaseList.SetItemText(iLastItem, 10, csMsg);
+
 	return TRUE;
 }
 
@@ -1339,75 +1350,70 @@ void CPurchaseAddView::OnCbnSelchangeCbPopup()
 void CPurchaseAddView::OnCbnDropdownCbPopup()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	CSize   sz;
+	int     dx = 0;
+	TEXTMETRIC   tm;
+	CDC*    pDC = m_pCbPopupBox->GetDC();
+	CFont*  pFont = m_pCbPopupBox->GetFont();
+	CFont* pOldFont = pDC->SelectObject(pFont);
+	pDC->GetTextMetrics(&tm);
 
-	if (m_bShowQuickSearchList == FALSE)
-	{
-		CMedicineBatchDB medicineBatchDB;
-		vector<MedicineBatch*> vctMedicineBatch;
-		CString csMsg = m_purchaseList.GetItemText(m_iPurListItem, 1);
-		csMsg.Trim();
-		DWORD dwTotalNum, dwTotalPage;
-		ERRCODE errRet = medicineBatchDB.GetMedicineBatchs(0, 50, dwTotalPage, dwTotalNum,vctMedicineBatch, csMsg.GetBuffer());
-		if (errRet != err_OK)
-		{
-			return;
-		}
-
-		while(m_pCbPopupBox->GetCount())
-		{
-			m_pCbPopupBox->DeleteString(0);
-		}
-
-		for (int i = 0; i < (int)vctMedicineBatch.size(); i++)
-		{
-			m_pCbPopupBox->InsertString(i, vctMedicineBatch[i]->csBatchNum);
-
-			delete vctMedicineBatch[i];
-			vctMedicineBatch[i] = NULL;
-		}
-		vctMedicineBatch.clear();
-	}
-
-	m_bShowQuickSearchList = FALSE;
-}
-
-
-void CPurchaseAddView::OnCbnEditupdateCbPopup()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	CString csMsg;
 	CMedicineBatchDB medicineBatchDB;
 	vector<MedicineBatch*> vctMedicineBatch;
+	CString csMsg = m_purchaseList.GetItemText(m_iPurListItem, 1);
+	csMsg.Trim();
 	DWORD dwTotalNum, dwTotalPage;
-
-	CString csMedicineID = m_purchaseList.GetItemText(m_iPurListItem, 1);
-	csMsg.Trim();
-
-	m_pCbPopupBox->GetWindowText(csMsg);
-	csMsg.Trim();
-	csMsg.AppendFormat(_T("%%"));
-
-	ERRCODE errRet = medicineBatchDB.GetMedicineBatchs(0, 50, dwTotalPage, dwTotalNum,vctMedicineBatch,csMedicineID.GetBuffer(), csMsg.GetBuffer());
+	ERRCODE errRet = medicineBatchDB.GetMedicineBatchs(0, 
+														50, 
+														dwTotalPage, 
+														dwTotalNum,
+														vctMedicineBatch, 
+														csMsg.GetBuffer(), 
+														m_csSubPopupStr.GetBuffer());
 	if (errRet != err_OK)
 	{
 		return;
 	}
 
-	for(int  i = m_pCbPopupBox->GetCount() - 1;  i >= 0;  i--) 
-	{ 
-		m_pCbPopupBox->DeleteString(i); 
-	} 
+	while(m_pCbPopupBox->GetCount())
+	{
+		m_pCbPopupBox->DeleteString(0);
+	}
 
 	for (int i = 0; i < (int)vctMedicineBatch.size(); i++)
 	{
 		m_pCbPopupBox->InsertString(i, vctMedicineBatch[i]->csBatchNum);
+
+		sz = pDC->GetTextExtent(vctMedicineBatch[i]->csBatchNum);
+		sz.cx += tm.tmAveCharWidth;
+		if (sz.cx > dx)
+			dx = sz.cx;
 
 		delete vctMedicineBatch[i];
 		vctMedicineBatch[i] = NULL;
 	}
 	vctMedicineBatch.clear();
 
-	m_bShowQuickSearchList = TRUE;
+	pDC->SelectObject(pOldFont);
+	m_pCbPopupBox->ReleaseDC(pDC);
+	dx += ::GetSystemMetrics(SM_CXVSCROLL) + 2*::GetSystemMetrics(SM_CXEDGE);
+	m_pCbPopupBox->SetDroppedWidth(dx);
+
+	m_csSubPopupStr = _T("");
+}
+
+
+void CPurchaseAddView::OnCbnEditupdateCbPopup()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CMedicineBatchDB medicineBatchDB;
+	vector<MedicineBatch*> vctMedicineBatch;
+
+	m_pCbPopupBox->GetWindowText(m_csSubPopupStr);
+	m_csSubPopupStr.Trim();
+	m_csSubPopupStr.AppendFormat(_T("%%"));
+
+	m_pCbPopupBox->ShowDropDown(FALSE);
 	m_pCbPopupBox->ShowDropDown(TRUE);
 	SetCursor(LoadCursor(NULL, IDC_ARROW));
 }

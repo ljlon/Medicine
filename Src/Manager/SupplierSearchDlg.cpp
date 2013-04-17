@@ -39,6 +39,18 @@ BOOL CSupplierSearchDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
+
 	m_cbName.SetCheck(TRUE);
 	m_editName.SetFocus();
 

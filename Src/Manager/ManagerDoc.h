@@ -8,6 +8,7 @@
 #include "MedicineDB.h"
 #include "SupplierMedicineDB.h"
 #include "StoreDB.h"
+#include "Theme.h"
 #include <map>
 
 using namespace std;
