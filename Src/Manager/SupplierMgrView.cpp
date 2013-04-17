@@ -152,7 +152,7 @@ void CSupplierMgrView::AdjustLayout()
 	CListCtrl *pSupplierList = (CListCtrl*)GetDlgItem(IDC_LIST_SUPPLIER);
 	if (pSupplierList->GetSafeHwnd() != NULL)
 	{
-		pSupplierList->SetWindowPos(NULL, clientRect.left + 5, clientRect.top + 50, clientRect.Width() - 10, clientRect.Height() - 55, SWP_NOACTIVATE | SWP_NOZORDER);
+		pSupplierList->SetWindowPos(NULL, clientRect.left + 5, clientRect.top + 60, clientRect.Width() - 10, clientRect.Height() - 55, SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 }
 

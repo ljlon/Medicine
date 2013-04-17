@@ -139,7 +139,7 @@ void CStoreMgrView::AdjustLayout()
 	if (pGroupStore->GetSafeHwnd() != NULL)
 	{
 		groupStoreRect.left = clientRect.left + 5;
-		groupStoreRect.top = clientRect.top + 50;
+		groupStoreRect.top = clientRect.top + 60;
 		groupStoreRect.right = groupStoreRect.left + (clientRect.Width() - 10);
 		groupStoreRect.bottom = groupStoreRect.top + (clientRect.Height() - 55) * 3 / 5;
 		pGroupStore->SetWindowPos(NULL, groupStoreRect.left, groupStoreRect.top, groupStoreRect.Width(), groupStoreRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
@@ -150,7 +150,7 @@ void CStoreMgrView::AdjustLayout()
 	if (pStoreList->GetSafeHwnd() != NULL)
 	{
 		storeRect.left = clientRect.left + 5;
-		storeRect.top = groupStoreRect.top + 60;
+		storeRect.top = groupStoreRect.top + 65;
 		storeRect.right = storeRect.left + (clientRect.Width() - 10);
 		storeRect.bottom = groupStoreRect.bottom;
 		pStoreList->SetWindowPos(NULL, storeRect.left, storeRect.top, storeRect.Width(), storeRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
@@ -202,10 +202,10 @@ void CStoreMgrView::AdjustLayout()
 	CButton *pStoreEditBtn = (CButton*)GetDlgItem(IDC_BUTTON_STORE_EDIT);
 	if (pStoreEditBtn->GetSafeHwnd() != NULL)
 	{
-		pStoreEditBtn->GetClientRect(&storeEditRect);
+		pStoreEditBtn->GetWindowRect(&storeEditRect);
+		ScreenToClient(&storeEditRect);
 		iWidth = storeEditRect.Width();
 		iHeight = storeEditRect.Height();
-		storeEditRect.left = clientRect.left + 10;
 		storeEditRect.top = groupStoreRect.top + 25;
 		storeEditRect.right = storeEditRect.left + iWidth;
 		storeEditRect.bottom = storeEditRect.top + iHeight;
@@ -216,10 +216,10 @@ void CStoreMgrView::AdjustLayout()
 	CButton *pStoreDelBtn = (CButton*)GetDlgItem(IDC_BUTTON_STORE_DEL);
 	if (pStoreDelBtn->GetSafeHwnd() != NULL)
 	{
-		pStoreDelBtn->GetClientRect(&storeDelRect);
+		pStoreDelBtn->GetWindowRect(&storeDelRect);
+		ScreenToClient(&storeDelRect);
 		iWidth = storeDelRect.Width();
 		iHeight = storeDelRect.Height();
-		storeDelRect.left = storeEditRect.right + 5;
 		storeDelRect.top = storeEditRect.top;
 		storeDelRect.right = storeDelRect.left + iWidth;
 		storeDelRect.bottom = storeDelRect.top + iHeight;

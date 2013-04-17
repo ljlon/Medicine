@@ -266,7 +266,7 @@ void CRetailMgrView::AdjustLayout()
 	if (pGroupRetail->GetSafeHwnd() != NULL)
 	{
 		groupRetailRect.left = clientRect.left + 5;
-		groupRetailRect.top = clientRect.top + 50;
+		groupRetailRect.top = clientRect.top + 60;
 		groupRetailRect.right = clientRect.Width() - 10 + groupRetailRect.left;
 		groupRetailRect.bottom = clientRect.bottom - (clientRect.Height() - 75 - 5) / 3;
 		pGroupRetail->SetWindowPos(NULL, groupRetailRect.left, groupRetailRect.top, groupRetailRect.Width(), groupRetailRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
@@ -277,7 +277,7 @@ void CRetailMgrView::AdjustLayout()
 	if (pRetailList->GetSafeHwnd() != NULL)
 	{
 		retailListRect.left = clientRect.left + 5;
-		retailListRect.top = groupRetailRect.top + 60;
+		retailListRect.top = groupRetailRect.top + 65;
 		retailListRect.right = clientRect.Width() - 10 + retailListRect.left;
 		retailListRect.bottom = groupRetailRect.bottom;
 		pRetailList->SetWindowPos(NULL, retailListRect.left, retailListRect.top, retailListRect.Width(), retailListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);

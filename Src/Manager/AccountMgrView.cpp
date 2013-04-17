@@ -104,7 +104,7 @@ void CAccountMgrView::AdjustLayout()
 	CStatic *pStaticGroup = (CStatic*)GetDlgItem(IDC_STATIC_GROUP_DETAIL);
 	if (pStaticGroup->GetSafeHwnd() != NULL)
 	{
-		pStaticGroup->SetWindowPos(NULL, rectClient.left + 5, rectClient.top + 50, rectClient.Width() - 10, rectClient.Height() - 55, SWP_NOACTIVATE | SWP_NOZORDER);
+		pStaticGroup->SetWindowPos(NULL, rectClient.left + 5, rectClient.top + 60, rectClient.Width() - 10, rectClient.Height() - 55, SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 }
 

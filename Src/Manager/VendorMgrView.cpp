@@ -151,7 +151,7 @@ void CVendorMgrView::AdjustLayout()
 	CListCtrl *pVendorList = (CListCtrl*)GetDlgItem(IDC_LIST_VENDOR);
 	if (pVendorList->GetSafeHwnd() != NULL)
 	{
-		pVendorList->SetWindowPos(NULL, clientRect.left + 5, clientRect.top + 50, clientRect.Width() - 10, clientRect.Height() - 55, SWP_NOACTIVATE | SWP_NOZORDER);
+		pVendorList->SetWindowPos(NULL, clientRect.left + 5, clientRect.top + 60, clientRect.Width() - 10, clientRect.Height() - 55, SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 }
 

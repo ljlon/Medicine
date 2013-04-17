@@ -49,18 +49,6 @@ void CMenuView::OnInitialUpdate()
 	csMsg.Format("%s-%s", APP_NAME, APP_MANAGER);
 	AfxGetApp()->GetMainWnd()->SetWindowText(csMsg);
 
-	CFont *pFont = g_theme.GetFont();
-	if (pFont != NULL)
-	{
-		SetFont(pFont);
-		CWnd *pw = GetWindow(GW_CHILD);
-		while(pw != NULL)
-		{
-			pw->SetFont(pFont);
-			pw = pw->GetWindow(GW_HWNDNEXT);
-		};
-	}
-
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
 
@@ -82,6 +70,18 @@ void CMenuView::OnInitialUpdate()
 	// 填入一些静态树视图数据(此处只需填入虚拟代码，而不是复杂的数据)
 	FillMenuView();
 	AdjustLayout();
+
+	CFont *pFont = g_theme.GetFont();
+	if (pFont != NULL)
+	{
+		SetFont(pFont);
+		CWnd *pw = GetWindow(GW_CHILD);
+		while(pw != NULL)
+		{
+			pw->SetFont(pFont);
+			pw = pw->GetWindow(GW_HWNDNEXT);
+		};
+	}
 }
 
  LRESULT CMenuView::OnMenuView(WPARAM wParam, LPARAM lParam)

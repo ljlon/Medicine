@@ -116,7 +116,7 @@ void CPurchaseListView::AdjustLayout()
 	if (pGroupPur->GetSafeHwnd() != NULL)
 	{
 		groupPurRect.left = clientRect.left + 5;
-		groupPurRect.top = clientRect.top + 50;
+		groupPurRect.top = clientRect.top + 60;
 		groupPurRect.right = groupPurRect.left + (clientRect.Width() - 10);
 		groupPurRect.bottom = clientRect.bottom - 5;
 		pGroupPur->SetWindowPos(NULL, groupPurRect.left, groupPurRect.top, groupPurRect.Width(), groupPurRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
@@ -127,7 +127,7 @@ void CPurchaseListView::AdjustLayout()
 	if (pPurList->GetSafeHwnd() != NULL)
 	{
 		purListRect.left = groupPurRect.left;
-		purListRect.top = groupPurRect.top + 60;
+		purListRect.top = groupPurRect.top + 65;
 		purListRect.right = purListRect.left + (clientRect.Width() - 10);
 		purListRect.bottom = clientRect.bottom - 5;
 		pPurList->SetWindowPos(NULL, purListRect.left, purListRect.top, purListRect.Width(), purListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);

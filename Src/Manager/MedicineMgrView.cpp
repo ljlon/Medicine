@@ -92,13 +92,13 @@ void CMedicineMgrView::OnInitialUpdate()
 	m_listMedicine.InsertColumn(0, "编号", LVCFMT_LEFT, 0, 0);
 	m_listMedicine.InsertColumn(1, "编码", LVCFMT_LEFT, 120, 0);
 	m_listMedicine.InsertColumn(2, "名称", LVCFMT_LEFT, 150, 0);
-	m_listMedicine.InsertColumn(3, "规格", LVCFMT_LEFT, 80, 0);
-	m_listMedicine.InsertColumn(4, "生产厂家", LVCFMT_LEFT, 80, 0);
+	m_listMedicine.InsertColumn(3, "规格", LVCFMT_LEFT, 90, 0);
+	m_listMedicine.InsertColumn(4, "生产厂家", LVCFMT_LEFT, 90, 0);
 	m_listMedicine.InsertColumn(5, "零售价", LVCFMT_LEFT, 60, 0);
 	m_listMedicine.InsertColumn(6, "单位", LVCFMT_LEFT, 40, 0);
 	m_listMedicine.InsertColumn(7, "供应商数量", LVCFMT_LEFT, 60, 0);
-	m_listMedicine.InsertColumn(8, "创建时间", LVCFMT_LEFT, 80, 0);
-	m_listMedicine.InsertColumn(9, "修改时间", LVCFMT_LEFT, 80, 0);
+	m_listMedicine.InsertColumn(8, "创建时间", LVCFMT_LEFT, 90, 0);
+	m_listMedicine.InsertColumn(9, "修改时间", LVCFMT_LEFT, 90, 0);
 	
 	DisplayListItem();
 
@@ -122,6 +122,28 @@ void CMedicineMgrView::AdjustLayout()
 	CRect clientRect, tempRect;
 	GetClientRect(clientRect);
 
+	CRect groupListRect;
+	CStatic *pGroupList = (CStatic*)GetDlgItem(IDC_STATIC_GROUP_LIST);
+	if (pGroupList->GetSafeHwnd() != NULL)
+	{
+		groupListRect.left = clientRect.left + 5;
+		groupListRect.top = clientRect.top + 60;
+		groupListRect.right = groupListRect.left + (clientRect.Width() - 10);
+		groupListRect.bottom = groupListRect.top + (clientRect.Height() - 55);
+		pGroupList->SetWindowPos(NULL, groupListRect.left, groupListRect.top, groupListRect.Width(), groupListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+	}
+
+	CRect listRect;
+	CListCtrl *pMedicineList = (CListCtrl*)GetDlgItem(IDC_LIST_MEDICINE);
+	if (pMedicineList->GetSafeHwnd() != NULL)
+	{
+		listRect.left = clientRect.left + 5;
+		listRect.top = groupListRect.top + 65;
+		listRect.right = listRect.left + (clientRect.Width() - 10);
+		listRect.bottom = listRect.top + (clientRect.Height() - 75 - 5);
+		pMedicineList->SetWindowPos(NULL, listRect.left, listRect.top, listRect.Width(), listRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+	}
+
 	CRect nextBtnRect;
 	CButton *pBtnNextPage = (CButton*)GetDlgItem(IDC_BTN_NEXTPAGE);
 	if (pBtnNextPage->GetSafeHwnd() != NULL)
@@ -131,7 +153,7 @@ void CMedicineMgrView::AdjustLayout()
 		iHeight = nextBtnRect.Height();
 		nextBtnRect.right = clientRect.Width() - 7;
 		nextBtnRect.left = nextBtnRect.right - iWidth;
-		nextBtnRect.top = clientRect.top + 15;
+		nextBtnRect.top = groupListRect.top + 20;
 		nextBtnRect.bottom =  nextBtnRect.top + iHeight;
 		pBtnNextPage->SetWindowPos(NULL, nextBtnRect.left, nextBtnRect.top, nextBtnRect.Width(),  nextBtnRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
@@ -145,7 +167,7 @@ void CMedicineMgrView::AdjustLayout()
 		iHeight = preBtnRect.Height();
 		preBtnRect.right =  nextBtnRect.left;
 		preBtnRect.left = preBtnRect.right - iWidth;
-		preBtnRect.top = clientRect.top + 15;
+		preBtnRect.top = nextBtnRect.top;
 		preBtnRect.bottom =  preBtnRect.top + iHeight;
 		pBtnPrePage->SetWindowPos(NULL, preBtnRect.left, preBtnRect.top, preBtnRect.Width(),  preBtnRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
@@ -159,31 +181,37 @@ void CMedicineMgrView::AdjustLayout()
 		iHeight = pageInfoRect.Height();
 		pageInfoRect.right =  preBtnRect.left - 3;
 		pageInfoRect.left = pageInfoRect.right - iWidth;
-		pageInfoRect.top = clientRect.top + 20;
+		pageInfoRect.top = groupListRect.top + 25;
 		pageInfoRect.bottom =  pageInfoRect.top + iHeight;
 		pStaticPageInfo->SetWindowPos(NULL, pageInfoRect.left, pageInfoRect.top, pageInfoRect.Width(),  pageInfoRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 
-	CRect listRect;
-	CListCtrl *pMedicineList = (CListCtrl*)GetDlgItem(IDC_LIST_MEDICINE);
-	if (pMedicineList->GetSafeHwnd() != NULL)
+	CRect editRect;
+	CButton *pEditBtn = (CButton*)GetDlgItem(IDC_BUTTON_MEDICINE_EDIT);
+	if (pEditBtn->GetSafeHwnd() != NULL)
 	{
-		listRect.left = clientRect.left + 5;
-		listRect.top = clientRect.top + 55;
-		listRect.right = listRect.left + (clientRect.Width() - 10);
-		listRect.bottom = listRect.top + (clientRect.Height() - 75 - 5);
-		pMedicineList->SetWindowPos(NULL, listRect.left, listRect.top, listRect.Width(), listRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+		pEditBtn->GetWindowRect(&editRect);
+		ScreenToClient(&editRect);
+		iWidth = editRect.Width();
+		iHeight = editRect.Height();
+		editRect.top = groupListRect.top + 25;
+		editRect.right = editRect.left + iWidth;
+		editRect.bottom = editRect.top + iHeight;
+		pEditBtn->SetWindowPos(NULL, editRect.left, editRect.top, editRect.Width(), editRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 
-	CRect groupListRect;
-	CStatic *pGroupList = (CStatic*)GetDlgItem(IDC_STATIC_GROUP_LIST);
-	if (pGroupList->GetSafeHwnd() != NULL)
+	CRect delRect;
+	CButton *pDelBtn = (CButton*)GetDlgItem(IDC_BUTTON_MEDICINE_DEL);
+	if (pDelBtn->GetSafeHwnd() != NULL)
 	{
-		groupListRect.left = clientRect.left + 5;
-		groupListRect.top = clientRect.top + 50;
-		groupListRect.right = listRect.left + (clientRect.Width() - 10);
-		groupListRect.bottom = listRect.top + (clientRect.Height() - 55);
-		pGroupList->SetWindowPos(NULL, groupListRect.left, groupListRect.top, groupListRect.Width(), groupListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+		pDelBtn->GetWindowRect(&delRect);
+		ScreenToClient(&delRect);
+		iWidth = delRect.Width();
+		iHeight = delRect.Height();
+		delRect.top = editRect.top;
+		delRect.right = delRect.left + iWidth;
+		delRect.bottom = delRect.top + iHeight;
+		pDelBtn->SetWindowPos(NULL, delRect.left, delRect.top, delRect.Width(), delRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 
 	CRect btnImportRect, btnSearchRect;
