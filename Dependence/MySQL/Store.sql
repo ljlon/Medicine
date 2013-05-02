@@ -163,7 +163,7 @@ CREATE TABLE `pos` (
   `pc_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pos_no_UNIQUE` (`pc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +190,7 @@ DROP TABLE IF EXISTS `medicine`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `medicine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sn` varchar(100) DEFAULT NULL,
+  `sn` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
   `name` varchar(100) NOT NULL,
   `spec` varchar(100) DEFAULT NULL,
   `vendor_id` int(11) DEFAULT NULL,
@@ -204,8 +204,8 @@ CREATE TABLE `medicine` (
   `form_id` int(11) DEFAULT NULL,
   `supplier_count` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `SN_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `SN_UNIQUE` (`sn`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +274,7 @@ CREATE TABLE `vendor` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,7 +357,7 @@ CREATE TABLE `purchase` (
   `modify_time` datetime DEFAULT NULL,
   `batch_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,7 +432,7 @@ CREATE TABLE `pc` (
   `pc_mac` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pc_mac_UNIQUE` (`pc_mac`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -485,7 +485,7 @@ CREATE TABLE `supplier` (
   `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -696,4 +696,4 @@ CREATE TABLE `retail` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-05 16:30:06
+-- Dump completed on 2013-05-02 10:16:05

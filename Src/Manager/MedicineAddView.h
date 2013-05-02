@@ -27,13 +27,13 @@ public:
 #endif
 
 	void AdjustLayout();
-	ERRCODE GetMedicineInfoBySN(LPTSTR lpMedicineSN, Medicine *pMedicine);
 	void DisplayMedicineInfo(LPTSTR lpMedicineID);
 	BOOL AddMedicine();
 	void OnListBtnClicked(LVHITTESTINFO *pHitInfo);
 	BOOL SaveDataToDoc();
 	BOOL LoadDataFromDoc();
 	BOOL BeCancel();
+	BOOL CheckSNExist();
 
 protected:
 	EnumViewType m_viewType;			//标识类型：新建或者修改
@@ -108,6 +108,7 @@ public:
 	CButton m_btnAddVendor;
 	CButton m_btnAdd;
 	CButton m_btnCancel;
+	afx_msg void OnEnKillfocusEditMedicineSn();
 };
 
 

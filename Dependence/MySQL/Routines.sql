@@ -4,7 +4,7 @@ USE `store`;
 --
 -- Host: localhost    Database: store
 -- ------------------------------------------------------
--- Server version	5.5.23
+-- Server version	5.5.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -1886,8 +1886,8 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SET @sqlString = CONCAT(@sqlString, ' AND supplier_id=',supplierID);
     END IF;
 	  IF (medicineSN!='' && medicineSN is not null) THEN
-        SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_sn=',medicineSN);
-        SET @sqlString = CONCAT(@sqlString, ' AND medicine_sn=',medicineSN);
+        SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_sn=\'',medicineSN, '\'');
+        SET @sqlString = CONCAT(@sqlString, ' AND medicine_sn=\'',medicineSN, '\'');
     END IF;
      IF (medicineName!='' && medicineName is not null) THEN
         SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_name LIKE \'',medicineName, '\'');
@@ -2621,4 +2621,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-04-14 10:00:40
+-- Dump completed on 2013-05-02  9:36:16
