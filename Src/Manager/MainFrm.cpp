@@ -656,11 +656,17 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 
 void CMainFrame::OnClose()
 {
-	ShowWindow(SW_HIDE);
-
-	SetLeftViewMenu(TREE_ROOT_ID);
-	ShowRightView(TREE_ROOT_ID);
+	if (SetLeftViewMenu(TREE_ROOT_ID) != TRUE)
+	{
+		return;
+	}
+	if (ShowRightView(TREE_ROOT_ID) != TRUE)
+	{
+		return;
+	}
 	m_listPreRightViewID.clear();
+
+	ShowWindow(SW_HIDE);
 
 	m_bAuthorized = FALSE;
 

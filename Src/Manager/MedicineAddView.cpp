@@ -303,19 +303,7 @@ BOOL CMedicineAddView::PreTranslateMessage(MSG* pMsg)
 	{
 		if (pMsg->wParam == VK_RETURN)
 		{
-			CWnd *pWnd = GetFocus();
-			if (pWnd == GetDlgItem(IDC_EDIT_MEDICINE_SN))
-			{
-				BOOL bExist = CheckSNExist();
-				if (bExist != TRUE)
-				{
-					pMsg->wParam = VK_TAB;
-				}
-			}
-			else
-			{
-				pMsg->wParam = VK_TAB;
-			}
+			pMsg->wParam = VK_TAB;
 		}
 	}  
 
@@ -550,6 +538,10 @@ BOOL CMedicineAddView::AddMedicine()
 		MessageBox(csMsg, _T("药品管理"), MB_ICONERROR);
 		return FALSE;
 	}
+	if (CheckSNExist() == TRUE)
+	{
+		return FALSE;
+	}
 
 	if (csName == _T(""))
 	{
@@ -721,23 +713,6 @@ BOOL CMedicineAddView::AddMedicine()
 	}
 	else
 	{
-		if (medicine.csSN != m_medicine.csSN)
-		{
-			BOOL bExist = TRUE;
-			errRet = medicineDB.CheckMedicineExistBySN(medicine.csSN.GetBuffer(), bExist);
-			if (errRet != err_OK)
-			{
-				csMsg.Format(_T("修改药品失败，%s"), GetErrMsg(errRet));
-				MessageBox(csMsg, _T("药品管理"), MB_ICONERROR);
-				return FALSE;
-			}
-			if (bExist == TRUE)
-			{
-				csMsg.Format(_T("该药品编码已经存在，请重新输入！"));
-				MessageBox(csMsg, _T("药品管理"), MB_ICONERROR);
-				return FALSE;
-			}
-		}
 		errRet = medicineDB.UpdateMedicine(medicine.csID.GetBuffer(), &medicine);
 		if (errRet == err_Medicine_AlreadyExist)
 		{
