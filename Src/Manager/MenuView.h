@@ -40,6 +40,7 @@ public:
 	virtual  BOOL PreTranslateMessage(MSG* pMsg);
 
 	void SetMenuItem(TreeMenuID menuID);
+	void ChangeFont();
 
 	// Generated message map functions
 protected:

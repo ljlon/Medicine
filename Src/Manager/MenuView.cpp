@@ -70,7 +70,11 @@ void CMenuView::OnInitialUpdate()
 	// 填入一些静态树视图数据(此处只需填入虚拟代码，而不是复杂的数据)
 	FillMenuView();
 	AdjustLayout();
+	ChangeFont();
+}
 
+void CMenuView::ChangeFont()
+{
 	CFont *pFont = g_theme.GetFont();
 	if (pFont != NULL)
 	{
