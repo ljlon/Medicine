@@ -127,6 +127,7 @@ BEGIN_MESSAGE_MAP(CMedicineAddView, CFormView)
 	ON_CBN_KILLFOCUS(IDC_COMBO_POPUP, &CMedicineAddView::OnCbnKillfocusPopupCombox)
 	ON_NOTIFY(LVN_ENDSCROLL, IDC_LIST_SUPPLIER, &CMedicineAddView::OnLvnEndScrollListSupplier)
 	ON_BN_CLICKED(IDC_BTN_VENDOR_ADD, &CMedicineAddView::OnBnClickedBtnVendorAdd)
+	ON_EN_KILLFOCUS(IDC_EDIT_MEDICINE_SN, &CMedicineAddView::OnEnKillfocusEditMedicineSn)
 END_MESSAGE_MAP()
 
 
@@ -258,7 +259,7 @@ void CMedicineAddView::OnInitialUpdate()
 		pDoc->m_csMedicineSN.Trim();
 		if (m_viewType == VIEW_EDIT)
 		{
-			m_editMedicineSN.SetReadOnly(TRUE);
+			//m_editMedicineSN.SetReadOnly(TRUE);
 			m_btnAddPur.EnableWindow(TRUE);
 			m_btnDelPur.EnableWindow(FALSE);
 			m_medicine.csID = pDoc->m_csMedicineID;
@@ -302,22 +303,6 @@ BOOL CMedicineAddView::PreTranslateMessage(MSG* pMsg)
 	{
 		if (pMsg->wParam == VK_RETURN)
 		{
-			CString csSN;
-			CWnd *pWnd = GetFocus();
-			if (pWnd == GetDlgItem(IDC_EDIT_MEDICINE_SN))
-			{
-				GetDlgItemText(IDC_EDIT_MEDICINE_SN, csSN);
-				csSN.Trim();
-
-				Medicine medicine;
-				if (GetMedicineInfoBySN(csSN.GetBuffer(), &medicine) == err_OK)
-				{
-					SetDlgItemText(IDC_EDIT_MEDICINE_SN, _T(""));
-					MessageBox(_T("该药品编码已经存在！"), _T(""), MB_ICONINFORMATION);
-					GetDlgItem(IDC_EDIT_MEDICINE_SN)->SetFocus();
-					return CFormView::PreTranslateMessage(pMsg);
-				}
-			}
 			pMsg->wParam = VK_TAB;
 		}
 	}  
@@ -388,6 +373,30 @@ void CMedicineAddView::AdjustLayout()
 	pListSupplier->GetWindowRect(supplierListRect);
 	ScreenToClient(&supplierListRect);
 	pListSupplier->SetWindowPos(NULL, supplierListRect.left, supplierListRect.top, supplierListRect.Width(), supplierListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+}
+
+
+BOOL CMedicineAddView::CheckSNExist()
+{
+	CString csSN;
+	m_editMedicineSN.GetWindowText(csSN);
+	csSN.Trim();
+
+	BOOL bExist = TRUE;
+	CMedicineDB medicineDB;
+	if (m_medicine.csSN != csSN)
+	{
+		ERRCODE errRet = medicineDB.CheckMedicineExistBySN(csSN.GetBuffer(), bExist);
+		if (errRet == err_OK && bExist == TRUE)
+		{
+			m_editMedicineSN.SetSel(0, csSN.GetLength());
+			MessageBox(_T("该药品编码已经存在！"), _T(""), MB_ICONINFORMATION);
+			m_editMedicineSN.SetFocus();
+			return TRUE;
+		}
+	}
+
+	return FALSE;
 }
 
 
@@ -527,6 +536,10 @@ BOOL CMedicineAddView::AddMedicine()
 	{
 		csMsg.Format("药品编码不能为空！");
 		MessageBox(csMsg, _T("药品管理"), MB_ICONERROR);
+		return FALSE;
+	}
+	if (CheckSNExist() == TRUE)
+	{
 		return FALSE;
 	}
 
@@ -795,25 +808,6 @@ BOOL CMedicineAddView::AddMedicine()
 	m_mapVctSupplierMedicine.clear();
 
 	return TRUE;
-}
-
-
-ERRCODE CMedicineAddView::GetMedicineInfoBySN(LPTSTR lpMedicineSN, Medicine *pMedicine)
-{
-	if (lpMedicineSN == NULL || strlen(lpMedicineSN) == 0 || pMedicine == NULL)
-	{
-		return err_InvalidParameter;
-	}
-
-	CMedicineDB medicineDB;
-	CString csMsg;
-	ERRCODE errRet = medicineDB.GetMedicineBySN(lpMedicineSN, pMedicine);
-	if (errRet != err_OK)
-	{
-		return errRet;
-	}
-
-	return err_OK;
 }
 
 
@@ -2108,4 +2102,11 @@ BOOL CMedicineAddView::LoadDataFromDoc()
 	GetDlgItem(IDC_BUTTON_MEDICINE_ADD_OK)->EnableWindow(TRUE);
 
 	return TRUE;
+}
+
+void CMedicineAddView::OnEnKillfocusEditMedicineSn()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	CheckSNExist();
 }

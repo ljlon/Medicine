@@ -934,12 +934,9 @@ BOOL CPurchaseAddView::BeCancel()
 
 	if (m_btnOK.IsWindowEnabled() == TRUE)
 	{
-		csMsg.Format(_T("存在未完成的进货，是否确定放弃本次进货？"));
-		int iRet = MessageBox(csMsg, _T("进货管理"), MB_ICONQUESTION|MB_OKCANCEL);
-		if (iRet == IDCANCEL)
-		{
-			return FALSE;
-		}
+		csMsg.Format(_T("存在未完成的进货!"));
+		int iRet = MessageBox(csMsg, _T("进货管理"), MB_ICONINFORMATION);
+		return FALSE;
 	}
 
 	return TRUE;
