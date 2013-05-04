@@ -154,11 +154,20 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 		{	
 			int  ch = (int) pMsg->wParam ;
 			if('x' == ch || 'X' == ch)	
+			{
 				::SendMessage(GetFocus()->GetSafeHwnd(),WM_CUT,ID_EDIT_CUT,0);
+				return TRUE;
+			}
 			if('c' == ch || 'C' == ch)	
+			{
 				::SendMessage(GetFocus()->GetSafeHwnd(),WM_COPY,ID_EDIT_CUT,0);
+				return TRUE;
+			}
 			if('v' == ch || 'V' == ch)	
+			{
 				::SendMessage(GetFocus()->GetSafeHwnd(),WM_PASTE,ID_EDIT_CUT,0);
+				return TRUE;
+			}
 		}	
 	}
 
