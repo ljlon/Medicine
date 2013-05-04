@@ -83,6 +83,7 @@ BOOL CRetailItemDlg::OnInitDialog()
 			for (unsigned int i = 0; i < vctRetailItem.size(); i++)
 			{
 				pPrintItem->vctRetailItem[i].csName = vctRetailItem[i]->csMedicineName;
+				pPrintItem->vctRetailItem[i].csSpec = vctRetailItem[i]->csMedicineSpec;
 				pPrintItem->vctRetailItem[i].csSN = vctRetailItem[i]->csMedicineSN;
 				pPrintItem->vctRetailItem[i].csNum = vctRetailItem[i]->csMedicineNumber;
 				pPrintItem->vctRetailItem[i].csPrice = vctRetailItem[i]->csMedicinePrice;

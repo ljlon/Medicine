@@ -190,15 +190,18 @@ void CCfgPrintFormatDlg::OnBnClickedButtonPresee()
 		pPrintItem->vctRetailItem.resize(3);
 		pPrintItem->vctRetailItem[0].csName = _T("示例药品1");
 		pPrintItem->vctRetailItem[0].csSN = _T("YP88888888");
+		pPrintItem->vctRetailItem[0].csSpec = _T("10g");
 		pPrintItem->vctRetailItem[0].csNum = _T("10");
 		pPrintItem->vctRetailItem[0].csPrice = _T("10");
 		pPrintItem->vctRetailItem[0].csTotalPrice = _T("100");
 		pPrintItem->vctRetailItem[1].csName = _T("示例药品2");
+		pPrintItem->vctRetailItem[1].csSpec = _T("10g");
 		pPrintItem->vctRetailItem[1].csSN = _T("YP88888888");
 		pPrintItem->vctRetailItem[1].csNum = _T("20");
 		pPrintItem->vctRetailItem[1].csPrice = _T("20");
 		pPrintItem->vctRetailItem[1].csTotalPrice = _T("400");
 		pPrintItem->vctRetailItem[2].csName = _T("示例药品3");
+		pPrintItem->vctRetailItem[2].csSpec = _T("10g");
 		pPrintItem->vctRetailItem[2].csSN = _T("YP88888888");
 		pPrintItem->vctRetailItem[2].csNum = _T("30");
 		pPrintItem->vctRetailItem[2].csPrice = _T("30");

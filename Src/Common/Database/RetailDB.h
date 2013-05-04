@@ -33,6 +33,7 @@ typedef struct _RetailItem
 	CString csMedicineID;
 	CString csMedicineSN;
 	CString csMedicineName;
+	CString csMedicineSpec;
 	CString csMedicinePrice;
 	CString csMedicineUnitName;
 	CString csMedicineNumber;

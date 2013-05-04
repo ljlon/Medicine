@@ -71,6 +71,7 @@ BEGIN_MESSAGE_MAP(CPurchaseAddView, CFormView)
 	ON_CBN_SELCHANGE(IDC_CB_POPUP, &CPurchaseAddView::OnCbnSelchangeCbPopup)
 	ON_CBN_DROPDOWN(IDC_CB_POPUP, &CPurchaseAddView::OnCbnDropdownCbPopup)
 	ON_CBN_EDITUPDATE(IDC_CB_POPUP, &CPurchaseAddView::OnCbnEditupdateCbPopup)
+	ON_BN_CLICKED(IDC_BUTTON_AUTOPURCHASE, &CPurchaseAddView::OnBnClickedButtonAutoPurchase)
 END_MESSAGE_MAP()
 
 
@@ -261,10 +262,17 @@ void CPurchaseAddView::AdjustLayout()
 	{
 		pBtnOK->SetWindowPos(NULL, rectClient.left + 10, rectClient.bottom - 40, 100, 24, SWP_NOACTIVATE | SWP_NOZORDER);
 	}
+
 	CButton *pBtnCancel = (CButton*)GetDlgItem(IDC_BUTTON_CANCEL);
 	if (pBtnCancel->GetSafeHwnd() != NULL)
 	{
 		pBtnCancel->SetWindowPos(NULL, rectClient.left + 10 + 100 + 10, rectClient.bottom - 40, 100, 24, SWP_NOACTIVATE | SWP_NOZORDER);
+	}
+
+	CButton *pBtnAutoPur = (CButton*)GetDlgItem(IDC_BUTTON_AUTOPURCHASE);
+	if (pBtnAutoPur->GetSafeHwnd() != NULL)
+	{
+		pBtnAutoPur->SetWindowPos(NULL, rectClient.left + 10 + 200 + 20, rectClient.bottom - 40, 100, 24, SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 }
 
@@ -1413,4 +1421,56 @@ void CPurchaseAddView::OnCbnEditupdateCbPopup()
 	m_pCbPopupBox->ShowDropDown(FALSE);
 	m_pCbPopupBox->ShowDropDown(TRUE);
 	SetCursor(LoadCursor(NULL, IDC_ARROW));
+}
+
+
+void CPurchaseAddView::OnBnClickedButtonAutoPurchase()
+{
+	ERRCODE errRet = err_OK;
+	CString csMsg;
+	CMedicineDB medicineDB;
+	CPurchaseDB purchaseDB;
+	DWORD dwPageNum = 0, dwTotalPage = 0, dwTotalNum = 0;
+	vector<Medicine*> vctMedicine;
+
+	while(TRUE)
+	{
+		errRet = medicineDB.GetMedicines(dwPageNum++, g_ciNumPerPage, dwTotalPage, dwTotalNum, vctMedicine);
+		if (errRet != err_OK || vctMedicine.size() == 0)
+		{
+			break;
+		}
+
+		for (int i = 0; i < (int)vctMedicine.size(); i++)
+		{
+			Medicine *pMedicine = vctMedicine[i];
+			if (pMedicine == NULL)
+			{
+				continue;
+			}
+
+			Purchase purchase; 
+			purchase.csUserID = theApp.m_curUser.csID;
+			purchase.csMedicineID = pMedicine->csID;
+			double dbPurPrice = atof(pMedicine->csRetailPrice.GetBuffer());
+			dbPurPrice *= 0.8;
+			purchase.csPurPrice.Format(_T("%0.2f"), dbPurPrice);
+			purchase.csBatchNum = _T("FFFFFFFF");
+			purchase.csProductDate = _T("2013-01-01");
+			purchase.csExpireDate = _T("2014-01-01");
+			purchase.csNumber.Format(_T("%d"), 0);
+
+			errRet = purchaseDB.AddPurchase(&purchase);
+			if (errRet != err_OK)
+			{
+				csMsg.Format(_T("添加进货信息(%s)错误！%s"), pMedicine->csSN, GetErrMsg(errRet));
+				MessageBox(csMsg, _T("进货管理"), MB_ICONERROR);
+				continue;
+			}
+
+			delete pMedicine;
+			pMedicine = NULL;
+		}
+		vctMedicine.clear();
+	}
 }

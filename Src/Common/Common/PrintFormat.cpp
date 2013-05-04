@@ -390,6 +390,15 @@ ERRCODE CPrintFormat::DecodeItemPrintStr(BYTE *pbyFormatStr,
 						((*pdwRetPrintStrSize)) += dwCmdLen;
 					}
 				}
+				else if (dwCmdLen == strlen(MARCO_SPEC) && !_strnicmp((CHAR*)pby, MARCO_SPEC, dwCmdLen))
+				{
+					if (pRetailItem != NULL)
+					{
+						dwCmdLen = strlen(pRetailItem->csSpec.GetBuffer());
+						memcpy(pbyPrintStr + (*pdwRetPrintStrSize), pRetailItem->csSpec.GetBuffer(), dwCmdLen);
+						((*pdwRetPrintStrSize)) += dwCmdLen;
+					}
+				}
 				else if (dwCmdLen == strlen(MARCO_NUM) && !_strnicmp((CHAR*)pby, MARCO_NUM, dwCmdLen))
 				{
 					if (pRetailItem != NULL)

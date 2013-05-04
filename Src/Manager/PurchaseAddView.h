@@ -74,6 +74,7 @@ public:
 	afx_msg void OnCbnSelchangeCbPopup();
 	afx_msg void OnCbnDropdownCbPopup();
 	afx_msg void OnCbnEditupdateCbPopup();
+	afx_msg void OnBnClickedButtonAutoPurchase();
 };
 
 
