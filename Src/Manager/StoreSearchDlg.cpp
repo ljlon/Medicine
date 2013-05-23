@@ -104,7 +104,7 @@ BOOL CStoreSearchDlg::OnInitDialog()
 	{
 		m_cbMedicineSN.SetCheck(TRUE);
 		m_editMedicineSN.EnableWindow(TRUE);
-		m_editMedicineSN.SetWindowText(m_csMedicineSN);
+		//m_editMedicineSN.SetWindowText(m_csMedicineSN);
 	}
 
 	if (m_csVendorID != _T(""))

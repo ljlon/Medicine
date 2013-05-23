@@ -1,6 +1,7 @@
 #pragma once
 #include "StdHead.h"
 #include "Database.h"
+#include "SupplierDB.h"
 
 //Medicne)
 #define PROCEDURE_PURCHASE_ADD _T("purchase_add")
@@ -14,6 +15,8 @@ typedef struct _Purchase
 	CString csUserID;
 	CString csUserUID;
 	CString csUserName;
+	CString csSupplierID;
+	CString csSupplierName;
 	CString csMedicineID;
 	CString csMedicineSN;
 	CString csMedicineName;
@@ -43,7 +46,11 @@ public:
 										double &dbTotalPrice, 
 										vector<Purchase*> &vctPurchases,
 										LPTSTR lpPurDateBegin = _T(""),
-										LPTSTR lpPurDateEnd = _T(""));
+										LPTSTR lpPurDateEnd = _T(""),
+										LPTSTR lpMedicineSN = _T(""),
+										LPTSTR lpMedicineName = _T(""),
+										LPTSTR lpMedicineBatchNum = _T(""),
+										LPTSTR lpSupplierID = _T(""));
 	ERRCODE GetPurchase(LPTSTR lpID, Purchase* pPurchase);
 	ERRCODE DeletePurchase(LPTSTR lpID);
 

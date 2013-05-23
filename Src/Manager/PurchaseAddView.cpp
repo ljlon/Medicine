@@ -1046,6 +1046,7 @@ BOOL CPurchaseAddView::AddPurchase()
 	for (int i = m_purchaseList.GetItemCount() - 2; i >= 0; i--)
 	{
 		purchase.csUserID = theApp.m_curUser.csID;
+		purchase.csSupplierID = m_curSupplier.csID;
 		purchase.csMedicineID = m_purchaseList.GetItemText(i, 1);
 		purchase.csMedicineSN = m_purchaseList.GetItemText(i, 2);
 		purchase.csMedicineName = m_purchaseList.GetItemText(i, 3);
@@ -1451,6 +1452,7 @@ void CPurchaseAddView::OnBnClickedButtonAutoPurchase()
 
 			Purchase purchase; 
 			purchase.csUserID = theApp.m_curUser.csID;
+			purchase.csSupplierID = m_curSupplier.csID;
 			purchase.csMedicineID = pMedicine->csID;
 			double dbPurPrice = atof(pMedicine->csRetailPrice.GetBuffer());
 			dbPurPrice *= 0.8;

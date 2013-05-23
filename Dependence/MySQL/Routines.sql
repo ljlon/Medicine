@@ -4,7 +4,7 @@ USE `store`;
 --
 -- Host: localhost    Database: store
 -- ------------------------------------------------------
--- Server version	5.5.24
+-- Server version	5.5.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -859,6 +859,7 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `purchase_add`(
 IN userID int,
+IN supplierID int,
 IN medicineID int,
 IN number int,
 IN purPrice double,
@@ -875,8 +876,8 @@ DECLARE storeID int;
 CALL medicine_batch_update(medicineID, batchNum, productDate, expireDate, batchID, returnVal);
 IF (returnVal > 0) THEN
 	-- Insert into purchase
-	INSERT INTO purchase (user_id, medicine_num, pur_price, create_time, modify_time, batch_id) 
-				VALUES (userID, number, purPrice, now(), now(), batchID);
+	INSERT INTO purchase (user_id, supplier_id, medicine_num, pur_price, create_time, modify_time, batch_id) 
+				VALUES (userID, supplierID, number, purPrice, now(), now(), batchID);
 	SET returnVal=row_count();
 	SELECT last_insert_id() INTO purchaseID FROM purchase LIMIT 1;
 
@@ -947,6 +948,10 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `purchase_get`(
 IN purDateBegin varchar(20),
 IN purDateEnd varchar(20),
+IN medicineSN varchar(100),
+IN medicineName varchar(100),
+IN medicineBatchNum varchar(100),
+IN supplierID int, 
 IN numPerPage int,
 IN pageNum int,
 OUT totalNum int,
@@ -965,6 +970,22 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SET @sqlString = CONCAT(@sqlString, ' AND DATEDIFF(create_time,\'', purDateBegin,'\')>=0');
         SET @countSqlString = CONCAT(@countSqlString, ' AND DATEDIFF(create_time,\'', purDateEnd,'\')<=0');
         SET @sqlString = CONCAT(@sqlString, ' AND DATEDIFF(create_time,\'', purDateEnd,'\')<=0');
+    END IF;
+	IF (medicineSN!='' && medicineSN is not null) THEN
+        SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_sn=\'',medicineSN, '\'');
+        SET @sqlString = CONCAT(@sqlString, ' AND medicine_sn=\'',medicineSN, '\'');
+    END IF;
+    IF (medicineName!='' && medicineName is not null) THEN
+        SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_name LIKE \'',medicineName, '\'');
+        SET @sqlString = CONCAT(@sqlString, ' AND medicine_name LIKE \'',medicineName, '\'');
+    END IF;
+	IF (medicineBatchNum!='' && medicineBatchNum is not null) THEN
+        SET @countSqlString = CONCAT(@countSqlString, ' AND batch_num =\'',medicineBatchNum, '\'');
+        SET @sqlString = CONCAT(@sqlString, ' AND batch_num =\'',medicineBatchNum, '\'');
+    END IF;
+	IF (supplierID >= 0 && supplierID is not null) THEN
+       SET @countSqlString = CONCAT(@countSqlString, ' AND supplier_id=',supplierID);
+       SET @sqlString = CONCAT(@sqlString, ' AND supplier_id=',supplierID);
     END IF;
     SET @sqlString = CONCAT(@sqlString, ' ORDER BY id DESC LIMIT ',offset,',', numPerPage);
     
@@ -2621,4 +2642,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-02  9:36:16
+-- Dump completed on 2013-05-23 21:20:59
