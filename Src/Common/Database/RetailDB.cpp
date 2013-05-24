@@ -367,6 +367,11 @@ ERRCODE CRetailDB::AddRetailItem(RetailItem *pRetailItem)
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
+	if (m_database.ProcedureAddParam("medicineBatchNum", adVarChar, adParamInput, pRetailItem->csMedicineBatchNum.GetBuffer()) != TRUE)
+	{
+		g_log.Write(m_database.GetLastErrorMsg());
+		return err_DB_Proc_Execute;
+	}
 	if (m_database.ProcedureAddParam("medicinePrice", adVarChar, adParamInput, pRetailItem->csMedicinePrice.GetBuffer()) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
@@ -444,7 +449,7 @@ ERRCODE CRetailDB::GetRetailItems(LPTSTR lpRetailID, vector<RetailItem*> &vctRet
 	while((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 9)
+		if (iFieldNum < 10)
 		{
 			g_log.Write(_T("StoreDB Error:Num fields not match!"));
 			for (unsigned int i = 0; i < vctRetailItem.size(); i++)
@@ -467,6 +472,7 @@ ERRCODE CRetailDB::GetRetailItems(LPTSTR lpRetailID, vector<RetailItem*> &vctRet
 		pRetailItem->csMedicineID = LPSTR(row[iItem++]); 
 		pRetailItem->csMedicineSN = LPSTR(row[iItem++]); 
 		pRetailItem->csMedicineName = LPSTR(row[iItem++]); 
+		pRetailItem->csMedicineBatchNum = LPSTR(row[iItem++]); 
 		pRetailItem->csMedicineSpec = LPSTR(row[iItem++]); 
 		pRetailItem->csMedicineUnitName = LPSTR(row[iItem++]); 
 		pRetailItem->csMedicinePrice = LPSTR(row[iItem++]);

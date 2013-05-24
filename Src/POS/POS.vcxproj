@@ -150,6 +150,7 @@
     <ClInclude Include="CheckOutDlg.h" />
     <ClInclude Include="CfgCustomerDisplayDlg.h" />
     <ClInclude Include="DeleteOneRowDlg.h" />
+    <ClInclude Include="BatchNumDlg.h" />
     <ClInclude Include="LoginDlg.h" />
     <ClInclude Include="PasswordMgrDlg.h" />
     <ClInclude Include="POS.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="CheckOutDlg.cpp" />
     <ClCompile Include="CfgCustomerDisplayDlg.cpp" />
     <ClCompile Include="DeleteOneRowDlg.cpp" />
+    <ClCompile Include="BatchNumDlg.cpp" />
     <ClCompile Include="LoginDlg.cpp" />
     <ClCompile Include="PasswordMgrDlg.cpp" />
     <ClCompile Include="POS.cpp" />

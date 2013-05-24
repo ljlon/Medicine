@@ -10,6 +10,7 @@
 #define MARCO_ITEM		 _T("ITEM")			//零售药品项
 #define MARCO_NAME		 _T("NAME")			//药品名称
 #define MARCO_SN         _T("SN")					//药品编码
+#define MARCO_BATCHNUM	 _T("BATCHNUM")			//药品批号
 #define MARCO_SPEC       _T("SPEC")         //药品规格
 #define MARCO_NUM		 _T("NUM")			//药品数量
 #define MARCO_PRICE      _T("PRICE")				//药品价格
@@ -22,6 +23,7 @@ typedef struct _PrintRetailItem
 {
 	CString csName;
 	CString csSN;
+	CString csBatchNum;
 	CString csSpec;
 	CString csPrice;
 	CString csNum;

@@ -212,6 +212,7 @@ CREATE TABLE `retail_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `retail_id` int(11) DEFAULT NULL,
   `medicine_id` int(11) DEFAULT NULL,
+  `medicine_batch_num` varchar(100),
   `medicine_num` int(11) DEFAULT NULL,
   `medicine_price` double DEFAULT NULL,
   `retail_price` double DEFAULT NULL,

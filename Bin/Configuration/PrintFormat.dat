@@ -7,8 +7,8 @@ POS机号：%8POS%收银员：%UID%
 －－－－－－－－－－－－－－－－
 名称
 编码               数量  金额
-%ITEM%(%NAME% %SPEC%
-%19SN%%6NUM%%7SUM%)
+%ITEM%(%NAME% %SPEC% 
+%11SN%%7BATCHNUM%%6NUM%%7SUM%)
 －－－－－－－－－－－－－－－－
                   总计：%8TOTAL%
                   实收：%8IN%

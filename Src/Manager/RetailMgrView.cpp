@@ -106,10 +106,11 @@ void CRetailMgrView::OnInitialUpdate()
 	m_listRetailDetail.InsertColumn(0, "编号", LVCFMT_LEFT, 0, 0);
 	m_listRetailDetail.InsertColumn(1, "药品编码", LVCFMT_LEFT, 150, 0);
 	m_listRetailDetail.InsertColumn(2, "药品名称", LVCFMT_LEFT, 150, 0);
-	m_listRetailDetail.InsertColumn(3, "药品价格", LVCFMT_LEFT, 150, 0);
-	m_listRetailDetail.InsertColumn(4, "药品数量", LVCFMT_LEFT, 150, 0);
-	m_listRetailDetail.InsertColumn(5, "药品单位", LVCFMT_LEFT, 150, 0);
-	m_listRetailDetail.InsertColumn(6, "金额", LVCFMT_LEFT, 150, 0);
+	m_listRetailDetail.InsertColumn(3, "药品批号", LVCFMT_LEFT, 150, 0);
+	m_listRetailDetail.InsertColumn(4, "药品价格", LVCFMT_LEFT, 150, 0);
+	m_listRetailDetail.InsertColumn(5, "药品数量", LVCFMT_LEFT, 150, 0);
+	m_listRetailDetail.InsertColumn(6, "药品单位", LVCFMT_LEFT, 150, 0);
+	m_listRetailDetail.InsertColumn(7, "金额", LVCFMT_LEFT, 150, 0);
 
 	DisplayListItem();
 }
@@ -229,12 +230,13 @@ void CRetailMgrView::DisplayDetailListItem(LPTSTR lpRetailID)
 		m_listRetailDetail.InsertItem(i, vctRetailItem[i]->csID);
 		m_listRetailDetail.SetItemText(i, 1, vctRetailItem[i]->csMedicineSN);
 		m_listRetailDetail.SetItemText(i, 2, vctRetailItem[i]->csMedicineName);
+		m_listRetailDetail.SetItemText(i, 3, vctRetailItem[i]->csMedicineBatchNum);
 		csMsg.Format(_T("%0.2f"), atof(vctRetailItem[i]->csMedicinePrice));
-		m_listRetailDetail.SetItemText(i, 3, csMsg);
-		m_listRetailDetail.SetItemText(i, 4, vctRetailItem[i]->csMedicineNumber);
-		m_listRetailDetail.SetItemText(i, 5, vctRetailItem[i]->csMedicineUnitName);
+		m_listRetailDetail.SetItemText(i, 4, csMsg);
+		m_listRetailDetail.SetItemText(i, 5, vctRetailItem[i]->csMedicineNumber);
+		m_listRetailDetail.SetItemText(i, 6, vctRetailItem[i]->csMedicineUnitName);
 		csMsg.Format(_T("%0.2f"), atof(vctRetailItem[i]->csRetailPrice));
-		m_listRetailDetail.SetItemText(i, 6, csMsg);
+		m_listRetailDetail.SetItemText(i, 7, csMsg);
 
 		delete vctRetailItem[i];
 		vctRetailItem[i] = NULL;

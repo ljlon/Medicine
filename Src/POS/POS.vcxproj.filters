@@ -228,6 +228,9 @@
     <ClInclude Include="..\Common\Common\POSConfig.h">
       <Filter>头文件\Common</Filter>
     </ClInclude>
+    <ClInclude Include="BatchNumDlg.h">
+      <Filter>头文件\RetailDlg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="POS.cpp">
@@ -364,6 +367,9 @@
     </ClCompile>
     <ClCompile Include="..\Common\Common\POSConfig.cpp">
       <Filter>源文件\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="BatchNumDlg.cpp">
+      <Filter>源文件\RetailDlg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
