@@ -113,8 +113,9 @@ SET character_set_client = utf8;
   `medicine_id` int(11),
   `medicine_sn` varchar(100),
   `medicine_name` varchar(100),
-  `medicine_batch_num` varchar(100),
+  `medicine_vendor_name` varchar(100),
   `medicine_spec` varchar(100),
+  `medicine_batch_num` varchar(100),
   `unit_name` varchar(45),
   `medicine_price` double,
   `medicine_num` int(11),
@@ -296,7 +297,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_retail_item` AS select `a`.`id` AS `id`,`a`.`retail_id` AS `retail_id`,`a`.`medicine_id` AS `medicine_id`,`b`.`sn` AS `medicine_sn`,`b`.`name` AS `medicine_name`,`a`.`medicine_batch_num` AS `medicine_batch_num`,`b`.`spec` AS `medicine_spec`,`b`.`unit_name` AS `unit_name`,`a`.`medicine_price` AS `medicine_price`,`a`.`medicine_num` AS `medicine_num`,`a`.`retail_price` AS `retail_price` from (`retail_item` `a` left join `view_medicine` `b` on((`a`.`medicine_id` = `b`.`id`))) */;
+/*!50001 VIEW `view_retail_item` AS select `a`.`id` AS `id`,`a`.`retail_id` AS `retail_id`,`a`.`medicine_id` AS `medicine_id`,`b`.`sn` AS `medicine_sn`,`b`.`name` AS `medicine_name`,`b`.`vendor_name` AS `medicine_vendor_name`,`b`.`spec` AS `medicine_spec`,`a`.`medicine_batch_num` AS `medicine_batch_num`,`b`.`unit_name` AS `unit_name`,`a`.`medicine_price` AS `medicine_price`,`a`.`medicine_num` AS `medicine_num`,`a`.`retail_price` AS `retail_price` from (`retail_item` `a` left join `view_medicine` `b` on((`a`.`medicine_id` = `b`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -3003,4 +3004,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-24 21:56:28
+-- Dump completed on 2013-05-24 22:16:05

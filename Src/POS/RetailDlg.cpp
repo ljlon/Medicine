@@ -98,8 +98,9 @@ BOOL CRetailDlg::OnInitDialog()
 	m_listRetail.InsertColumn(iIdx++, "药品编号", LVCFMT_LEFT, 0, 0);
 	m_listRetail.InsertColumn(iIdx++, "药品编码", LVCFMT_LEFT, 150, 0);
 	m_listRetail.InsertColumn(iIdx++, "药品名称", LVCFMT_LEFT, 200, 0);
+	m_listRetail.InsertColumn(iIdx++, "生产厂家", LVCFMT_LEFT, 80, 0);
+	m_listRetail.InsertColumn(iIdx++, "规格", LVCFMT_LEFT, 80, 0);
 	m_listRetail.InsertColumn(iIdx++, "批号", LVCFMT_LEFT, 80, 0);
-	m_listRetail.InsertColumn(iIdx++, "规格", LVCFMT_LEFT, 0, 0);
 	m_listRetail.InsertColumn(iIdx++, "单价", LVCFMT_LEFT, 80, 0);
 	m_listRetail.InsertColumn(iIdx++, "单位", LVCFMT_LEFT, 80, 0);
 	m_listRetail.InsertColumn(iIdx++, "数量", LVCFMT_LEFT, 80, 0);
@@ -644,8 +645,9 @@ void CRetailDlg::OnAddRetailItem(LPTSTR lpMedicineIDORSN)
 	m_listRetail.SetItemText(iItem, ++iSubItem, medicineStore.csMedicineID);
 	m_listRetail.SetItemText(iItem, ++iSubItem, medicineStore.csMedicineSN);
 	m_listRetail.SetItemText(iItem, ++iSubItem, medicineStore.csMedicineName);
-	m_listRetail.SetItemText(iItem, ++iSubItem, batchNumDlg.m_csBatchNum);
+	m_listRetail.SetItemText(iItem, ++iSubItem, medicineStore.csMedicineVendorName);
 	m_listRetail.SetItemText(iItem, ++iSubItem, medicineStore.csMedicineSpec);
+	m_listRetail.SetItemText(iItem, ++iSubItem, batchNumDlg.m_csBatchNum);
 	dbPrice = atof(medicineStore.csMedicineRetailPrice.GetBuffer());
 	csMsg.Format(_T("%0.2f"), dbPrice);
 	m_listRetail.SetItemText(iItem, ++iSubItem, csMsg);
@@ -696,7 +698,7 @@ void CRetailDlg::OnDelRetailItem()
 
 	iSelectItem = deleteOneRowDlg.m_iRow - 1;
 
-	csMsg = m_listRetail.GetItemText(iSelectItem, 9);
+	csMsg = m_listRetail.GetItemText(iSelectItem, 10);
 	double dbPrice = atof(csMsg.GetBuffer());
 	m_dbTotalPrice -= dbPrice;
 
@@ -836,11 +838,11 @@ void CRetailDlg::OnStatusFinishCheckOut()
 			retailItem.csMedicineID = m_listRetail.GetItemText(i, 1);
 			retailItem.csMedicineSN = m_listRetail.GetItemText(i, 2);
 			retailItem.csMedicineName = m_listRetail.GetItemText(i, 3);
-			retailItem.csMedicineBatchNum = m_listRetail.GetItemText(i, 4);
-			retailItem.csMedicinePrice = m_listRetail.GetItemText(i, 6);
-			retailItem.csMedicineUnitName = m_listRetail.GetItemText(i, 7);
-			retailItem.csMedicineNumber = m_listRetail.GetItemText(i, 8);
-			retailItem.csRetailPrice = m_listRetail.GetItemText(i, 9);
+			retailItem.csMedicineBatchNum = m_listRetail.GetItemText(i, 6);
+			retailItem.csMedicinePrice = m_listRetail.GetItemText(i, 7);
+			retailItem.csMedicineUnitName = m_listRetail.GetItemText(i, 8);
+			retailItem.csMedicineNumber = m_listRetail.GetItemText(i, 9);
+			retailItem.csRetailPrice = m_listRetail.GetItemText(i, 10);
 
 			errRet = retailDB.AddRetailItem(&retailItem);
 			if (errRet != err_OK)
@@ -909,15 +911,18 @@ ERRCODE CRetailDlg::OnPrint()
 				csMsg.Format(_T("%s\r%-18s %-6s %-6s\r"), 
 					m_listRetail.GetItemText(i, 3),
 					m_listRetail.GetItemText(i, 2),
-					csMsg = m_listRetail.GetItemText(i, 8),
-					csMsg = m_listRetail.GetItemText(i, 9));
+					csMsg = m_listRetail.GetItemText(i, 9),
+					csMsg = m_listRetail.GetItemText(i, 10));
 
 				pPrintItem->vctRetailItem[i].csSN = m_listRetail.GetItemText(i, 2);
 				pPrintItem->vctRetailItem[i].csName = m_listRetail.GetItemText(i, 3);
+				pPrintItem->vctRetailItem[i].csVendor = m_listRetail.GetItemText(i, 4);
 				pPrintItem->vctRetailItem[i].csSpec = m_listRetail.GetItemText(i, 5);
-				pPrintItem->vctRetailItem[i].csPrice = m_listRetail.GetItemText(i, 6);
-				pPrintItem->vctRetailItem[i].csNum = m_listRetail.GetItemText(i, 8);
-				pPrintItem->vctRetailItem[i].csTotalPrice = m_listRetail.GetItemText(i, 9);
+				pPrintItem->vctRetailItem[i].csBatchNum = m_listRetail.GetItemText(i, 6);
+				pPrintItem->vctRetailItem[i].csPrice = m_listRetail.GetItemText(i, 7);
+				pPrintItem->vctRetailItem[i].csNum = m_listRetail.GetItemText(i, 9);
+				pPrintItem->vctRetailItem[i].csTotalPrice = m_listRetail.GetItemText(i, 10);
+
 			}
 			pPrintItem->csTotalPrice.Format(_T("%0.2f"), m_dbTotalPrice);
 			pPrintItem->csTotalIn.Format(_T("%0.2f"), m_dbInPrice);
@@ -1008,7 +1013,7 @@ void CRetailDlg::OnChangeNum()
 	
 	CChangeNumDlg changeNumDlg;
 	changeNumDlg.m_iRow = iSelectItem + 1;
-	csMsg = m_listRetail.GetItemText(iSelectItem, 8);
+	csMsg = m_listRetail.GetItemText(iSelectItem, 9);
 	changeNumDlg.m_iNum = atol(csMsg.GetBuffer());	
 	if (changeNumDlg.DoModal() != IDOK)
 	{
@@ -1017,24 +1022,24 @@ void CRetailDlg::OnChangeNum()
 	
 	iSelectItem = changeNumDlg.m_iRow - 1;
 
-	csMsg = m_listRetail.GetItemText(iSelectItem, 8);
-	int iNum = atol(csMsg.GetBuffer());	
 	csMsg = m_listRetail.GetItemText(iSelectItem, 9);
+	int iNum = atol(csMsg.GetBuffer());	
+	csMsg = m_listRetail.GetItemText(iSelectItem, 10);
 	double dbPrice = atof(csMsg.GetBuffer());
 	m_dbTotalPrice -= dbPrice;
 
 	iNum = changeNumDlg.m_iNum;
 
-	csMsg = m_listRetail.GetItemText(iSelectItem, 6);
+	csMsg = m_listRetail.GetItemText(iSelectItem, 7);
 	dbPrice = atof(csMsg.GetBuffer());
 	dbPrice *= iNum;
 	m_dbTotalPrice += dbPrice;
 
 	csMsg.Format(_T("%d"), iNum);
-	m_listRetail.SetItemText(iSelectItem, 8, csMsg);
+	m_listRetail.SetItemText(iSelectItem, 9, csMsg);
 
 	csMsg.Format(_T("%0.2f"), dbPrice);
-	m_listRetail.SetItemText(iSelectItem, 9, csMsg);
+	m_listRetail.SetItemText(iSelectItem, 10, csMsg);
 
 	DisplayTotalPrice();
 

@@ -9,14 +9,15 @@
 #define MARCO_DATETIME   _T("DATETIME")	//时间
 #define MARCO_ITEM		 _T("ITEM")			//零售药品项
 #define MARCO_NAME		 _T("NAME")			//药品名称
-#define MARCO_SN         _T("SN")					//药品编码
-#define MARCO_BATCHNUM	 _T("BATCHNUM")			//药品批号
+#define MARCO_SN         _T("SN")			//药品编码
+#define MARCO_BATCHNUM	 _T("BATCHNUM")		//药品批号
 #define MARCO_SPEC       _T("SPEC")         //药品规格
+#define MARCO_VENDOR     _T("VENDOR")		//药品厂商
 #define MARCO_NUM		 _T("NUM")			//药品数量
-#define MARCO_PRICE      _T("PRICE")				//药品价格
+#define MARCO_PRICE      _T("PRICE")		//药品价格
 #define MARCO_SUMPRICE   _T("SUM")			//药品金额小计
 #define MARCO_TOTALPRICE _T("TOTAL")		//所有零售药品项金额总计
-#define MARCO_TOTALIN    _T("IN")				//实收金额
+#define MARCO_TOTALIN    _T("IN")			//实收金额
 #define MARCO_TOTALOUT   _T("OUT")			//找零金额
 
 typedef struct _PrintRetailItem
@@ -25,6 +26,7 @@ typedef struct _PrintRetailItem
 	CString csSN;
 	CString csBatchNum;
 	CString csSpec;
+	CString csVendor;
 	CString csPrice;
 	CString csNum;
 	CString csTotalPrice;
