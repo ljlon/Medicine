@@ -3,16 +3,12 @@
 POS机号：%8POS%收银员：%UID%
 单号：%12NO%
 时间：%DATETIME%
-
 －－－－－－－－－－－－－－－－
-名称
-编码               数量  金额
-%ITEM%(%NAME% %SPEC% 
-%11SN%%7BATCHNUM%%6NUM%%7SUM%)
+名称         规格  生产厂家
+批号         单价  数量  金额
+%ITEM%(%NAME% %SPEC% %VENDOR%
+%13BATCHNUM%%6PRICE%%6NUM%%7SUM%)
 －－－－－－－－－－－－－－－－
                   总计：%8TOTAL%
                   实收：%8IN%
                   找零：%8OUT%
-
-地点：天津市南开区
-电话：13888888888

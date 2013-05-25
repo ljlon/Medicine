@@ -30,6 +30,8 @@ public:
 	BOOL LoadDataFromDoc();
 	BOOL BeCancel();
 
+	CComboBox m_cbSupplier;
+	CDateTimeCtrl m_purchaseDate;
 	CRichListCtrl m_purchaseList;
 	CString m_csSubSupplierName;
 	CString m_csSubPopupStr;

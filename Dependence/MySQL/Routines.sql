@@ -90,7 +90,7 @@ SET character_set_client = utf8;
   `medicine_unit_name` varchar(45),
   `pur_price` double,
   `create_time` datetime,
-  `modify_time` datetime,
+  `purchase_time` datetime,
   `batch_num` varchar(100),
   `product_date` datetime,
   `expire_date` datetime,
@@ -278,7 +278,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_purchase` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`d`.`uid` AS `user_uid`,`d`.`name` AS `user_name`,`c`.`id` AS `medicine_id`,`c`.`sn` AS `medicine_sn`,`c`.`name` AS `medicine_name`,`c`.`spec` AS `medicine_spec`,`c`.`vendor_name` AS `medicine_vendor_name`,`a`.`medicine_num` AS `medicine_num`,`c`.`unit_name` AS `medicine_unit_name`,`a`.`pur_price` AS `pur_price`,`a`.`create_time` AS `create_time`,`a`.`modify_time` AS `modify_time`,`b`.`batch_num` AS `batch_num`,`b`.`product_date` AS `product_date`,`b`.`expire_date` AS `expire_date`,`e`.`id` AS `supplier_id`,`e`.`name` AS `supplier_name` from ((((`purchase` `a` left join `medicine_batch` `b` on((`a`.`batch_id` = `b`.`id`))) left join `view_medicine` `c` on((`b`.`medicine_id` = `c`.`id`))) left join `user` `d` on((`a`.`user_id` = `d`.`id`))) left join `supplier` `e` on((`a`.`supplier_id` = `e`.`id`))) */;
+/*!50001 VIEW `view_purchase` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`d`.`uid` AS `user_uid`,`d`.`name` AS `user_name`,`c`.`id` AS `medicine_id`,`c`.`sn` AS `medicine_sn`,`c`.`name` AS `medicine_name`,`c`.`spec` AS `medicine_spec`,`c`.`vendor_name` AS `medicine_vendor_name`,`a`.`medicine_num` AS `medicine_num`,`c`.`unit_name` AS `medicine_unit_name`,`a`.`pur_price` AS `pur_price`,`a`.`create_time` AS `create_time`,`a`.`purchase_time` AS `purchase_time`,`b`.`batch_num` AS `batch_num`,`b`.`product_date` AS `product_date`,`b`.`expire_date` AS `expire_date`,`e`.`id` AS `supplier_id`,`e`.`name` AS `supplier_name` from ((((`purchase` `a` left join `medicine_batch` `b` on((`a`.`batch_id` = `b`.`id`))) left join `view_medicine` `c` on((`b`.`medicine_id` = `c`.`id`))) left join `user` `d` on((`a`.`user_id` = `d`.`id`))) left join `supplier` `e` on((`a`.`supplier_id` = `e`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1221,6 +1221,7 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `purchase_add`(
 IN userID int,
 IN supplierID int,
+IN purchaseDate datetime,
 IN medicineID int,
 IN number int,
 IN purPrice double,
@@ -1237,8 +1238,8 @@ DECLARE storeID int;
 CALL medicine_batch_update(medicineID, batchNum, productDate, expireDate, batchID, returnVal);
 IF (returnVal > 0) THEN
 	-- Insert into purchase
-	INSERT INTO purchase (user_id, supplier_id, medicine_num, pur_price, create_time, modify_time, batch_id) 
-				VALUES (userID, supplierID, number, purPrice, now(), now(), batchID);
+	INSERT INTO purchase (user_id, supplier_id, medicine_num, pur_price, create_time, purchase_time, batch_id) 
+				VALUES (userID, supplierID, number, purPrice, now(), purchaseDate, batchID);
 	SET returnVal=row_count();
 	SELECT last_insert_id() INTO purchaseID FROM purchase LIMIT 1;
 
@@ -1327,10 +1328,10 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     SET @countSqlString = 'SELECT COUNT(*),SUM(pur_price*medicine_num) INTO @totalNum,@totalPrice FROM view_purchase WHERE 1=1';
     SET @sqlString = 'SELECT * FROM view_purchase WHERE 1=1';
     IF (purDateBegin!='' && purDateBegin is not null && purDateEnd!='' && purDateEnd is not null) THEN
-        SET @countSqlString = CONCAT(@countSqlString, ' AND DATEDIFF(create_time,\'',purDateBegin, '\')>=0');
-        SET @sqlString = CONCAT(@sqlString, ' AND DATEDIFF(create_time,\'', purDateBegin,'\')>=0');
-        SET @countSqlString = CONCAT(@countSqlString, ' AND DATEDIFF(create_time,\'', purDateEnd,'\')<=0');
-        SET @sqlString = CONCAT(@sqlString, ' AND DATEDIFF(create_time,\'', purDateEnd,'\')<=0');
+        SET @countSqlString = CONCAT(@countSqlString, ' AND DATEDIFF(purchase_time,\'',purDateBegin, '\')>=0');
+        SET @sqlString = CONCAT(@sqlString, ' AND DATEDIFF(purchase_time,\'', purDateBegin,'\')>=0');
+        SET @countSqlString = CONCAT(@countSqlString, ' AND DATEDIFF(purchase_time,\'', purDateEnd,'\')<=0');
+        SET @sqlString = CONCAT(@sqlString, ' AND DATEDIFF(purchase_time,\'', purDateEnd,'\')<=0');
     END IF;
 	IF (medicineSN!='' && medicineSN is not null) THEN
         SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_sn=\'',medicineSN, '\'');
@@ -3004,4 +3005,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-24 22:16:05
+-- Dump completed on 2013-05-25 19:00:32

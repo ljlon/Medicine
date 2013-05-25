@@ -43,6 +43,11 @@ ERRCODE CPurchaseDB::AddPurchase(Purchase *pPurchase)
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
+	if (m_database.ProcedureAddParam("purchaseDate", adVarChar, adParamInput, pPurchase->csPurchaseTime.GetBuffer()) != TRUE)
+	{
+		g_log.Write(m_database.GetLastErrorMsg());
+		return err_DB_Proc_Execute;
+	}
 	if (m_database.ProcedureAddParam("medicineID", adVarChar, adParamInput, pPurchase->csMedicineID.GetBuffer()) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
@@ -163,7 +168,7 @@ ERRCODE CPurchaseDB::GetPurchase(LPTSTR lpID, Purchase* pPurchase)
 		pPurchase->csMedicineUnit = LPSTR(row[iItem++]);
 		pPurchase->csPurPrice = LPSTR(row[iItem++]);
 		pPurchase->csCreateTime = LPSTR(row[iItem++]);
-		pPurchase->csModifyTime = LPSTR(row[iItem++]);
+		pPurchase->csPurchaseTime = LPSTR(row[iItem++]);
 		pPurchase->csBatchNum = LPSTR(row[iItem++]);
 		pPurchase->csProductDate = LPSTR(row[iItem++]);
 		pPurchase->csExpireDate = LPSTR(row[iItem++]);
@@ -308,7 +313,7 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 		pPurchase->csMedicineUnit = LPSTR(row[iItem++]);
 		pPurchase->csPurPrice = LPSTR(row[iItem++]);
 		pPurchase->csCreateTime = LPSTR(row[iItem++]);
-		pPurchase->csModifyTime = LPSTR(row[iItem++]);
+		pPurchase->csPurchaseTime = LPSTR(row[iItem++]);
 		pPurchase->csBatchNum = LPSTR(row[iItem++]);
 		pPurchase->csProductDate = LPSTR(row[iItem++]);
 		pPurchase->csExpireDate = LPSTR(row[iItem++]);

@@ -261,7 +261,7 @@ void CPurchaseListView::DisplayListItem()
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csMedicineUnit);
 		csMsg.Format(_T("%0.2f"), atof(vctPurchases[i]->csPurPrice.GetBuffer()) * atol(vctPurchases[i]->csNumber.GetBuffer()));
 		m_listPur.SetItemText(i,iSubItem++, csMsg);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csCreateTime);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csPurchaseTime);
 
 		delete vctPurchases[i];
 		vctPurchases[i] = NULL;

@@ -46,6 +46,8 @@ CPurchaseAddView::~CPurchaseAddView()
 void CPurchaseAddView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_COMBO_SUPPLIER, m_cbSupplier);
+	DDX_Control(pDX, IDC_PURCHASE_DATE, m_purchaseDate);
 	DDX_Control(pDX, IDC_LIST_PURCHASE, m_purchaseList);
 	DDX_Control(pDX, IDC_BUTTON_OK, m_btnOK);
 	DDX_Control(pDX, IDC_BUTTON_CANCEL, m_btnCancel);
@@ -154,6 +156,10 @@ void CPurchaseAddView::OnInitialUpdate()
 	m_btnOK.EnableWindow(FALSE);
 	m_btnCancel.EnableWindow(FALSE);
 
+	SYSTEMTIME purchaseDate;
+	GetSystemTime(&purchaseDate);
+	m_purchaseDate.SetTime(&purchaseDate);
+
 	LoadDataFromDoc();
 }
 
@@ -196,11 +202,9 @@ BOOL CPurchaseAddView::PreTranslateMessage(MSG* pMsg)
 		{
 			CString csSN;
 			CWnd *pWnd = GetFocus();
-			if (pWnd != m_pPurListPopupEdit && 
-				pWnd != m_pDataTimeCtrl && 
-				!m_pCbPopupBox->IsWindowVisible() &&
-				pWnd != GetDlgItem(IDC_COMBO_SUPPLIER) && 
-				pWnd != &m_editSN)
+			
+			if ((pWnd == &m_purchaseList) ||
+				pWnd == this)
 			{
 				m_editSN.GetWindowText(csSN);
 				csSN.Trim();
@@ -210,7 +214,7 @@ BOOL CPurchaseAddView::PreTranslateMessage(MSG* pMsg)
 				m_editSN.SetSel(csSN.GetLength(), csSN.GetLength());
 			}
 		}
-	}  
+	}
 
 	return bRet;
 }
@@ -1043,10 +1047,12 @@ BOOL CPurchaseAddView::AddPurchase()
 		}
 	}
 
+	purchase.csUserID = theApp.m_curUser.csID;
+	purchase.csSupplierID = m_curSupplier.csID;
+	m_purchaseDate.GetWindowText(purchase.csPurchaseTime);
+	purchase.csPurchaseTime.Trim();
 	for (int i = m_purchaseList.GetItemCount() - 2; i >= 0; i--)
 	{
-		purchase.csUserID = theApp.m_curUser.csID;
-		purchase.csSupplierID = m_curSupplier.csID;
 		purchase.csMedicineID = m_purchaseList.GetItemText(i, 1);
 		purchase.csMedicineSN = m_purchaseList.GetItemText(i, 2);
 		purchase.csMedicineName = m_purchaseList.GetItemText(i, 3);
@@ -1129,6 +1135,10 @@ BOOL CPurchaseAddView::SaveDataToDoc()
 	PURMGRVIEW_CONTEXT *pPurMgrViewContext = pDoc->m_pPurMgrViewContext;
 
 	pPurMgrViewContext->csSupplierID = m_curSupplier.csID.GetBuffer();
+	
+	m_purchaseDate.GetWindowText(pPurMgrViewContext->csPurchaseDate);
+	pPurMgrViewContext->csPurchaseDate.Trim();
+
 	for (unsigned int i = 0; i < pPurMgrViewContext->m_vctPurchaseList.size(); i++)
 	{
 		pPurMgrViewContext->m_vctPurchaseList[i].clear();
@@ -1196,6 +1206,13 @@ BOOL CPurchaseAddView::LoadDataFromDoc()
 	m_curSupplier.csName = m_curSupplier.csName;
 	m_purchaseList.EnableWindow(TRUE);
 	m_editSN.EnableWindow(TRUE);
+
+	SYSTEMTIME purchaseDate;
+	if (ChangeDate(pPurMgrViewContext->csPurchaseDate.GetBuffer(), purchaseDate) != TRUE)
+	{
+		GetSystemTime(&purchaseDate);
+	}
+	m_purchaseDate.SetTime(&purchaseDate);
 
 	m_iPurListItem = 0;
 	for (unsigned int i = 0; i < pPurMgrViewContext->m_vctPurchaseList.size(); i++)

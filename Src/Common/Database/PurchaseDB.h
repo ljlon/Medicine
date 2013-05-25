@@ -29,7 +29,7 @@ typedef struct _Purchase
 	CString csProductDate;
 	CString csExpireDate;
 	CString csCreateTime;
-	CString csModifyTime;
+	CString csPurchaseTime;
 }Purchase;
 
 class CPurchaseDB

@@ -50,6 +50,7 @@ TreeMenuID GetMenuID(LPSTR lpMenuName);
 typedef struct _PURMGRVIEW_CONTEXT
 {
 	CString csSupplierID;
+	CString csPurchaseDate;
 	vector<vector<CString>> m_vctPurchaseList;
 }PURMGRVIEW_CONTEXT;
 
