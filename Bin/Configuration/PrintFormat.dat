@@ -4,10 +4,12 @@ POS机号：%8POS%收银员：%UID%
 单号：%12NO%
 时间：%DATETIME%
 －－－－－－－－－－－－－－－－
-名称         规格  生产厂家
-批号         单价  数量  金额
-%ITEM%(%NAME% %SPEC% %VENDOR%
-%13BATCHNUM%%6PRICE%%6NUM%%7SUM%)
+名称               规格  
+生产厂家
+批号        单价   数量  金额
+%ITEM%(%18NAME% %SPEC% 
+%VENDOR%
+%12BATCHNUM%%7PRICE%%6NUM%%7SUM%)
 －－－－－－－－－－－－－－－－
                   总计：%8TOTAL%
                   实收：%8IN%
