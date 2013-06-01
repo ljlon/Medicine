@@ -84,6 +84,7 @@ SET character_set_client = utf8;
   `medicine_id` int(11),
   `medicine_sn` varchar(100),
   `medicine_name` varchar(100),
+  `medicine_form` varchar(45),
   `medicine_spec` varchar(100),
   `medicine_vendor_name` varchar(100),
   `medicine_num` int(11),
@@ -95,7 +96,8 @@ SET character_set_client = utf8;
   `product_date` datetime,
   `expire_date` datetime,
   `supplier_id` int(11),
-  `supplier_name` varchar(45)
+  `supplier_name` varchar(45),
+  `medicine_reg_num` varchar(100)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -180,7 +182,9 @@ SET character_set_client = utf8;
   `class_id` int(11),
   `otc_id` int(11),
   `form_id` int(11),
-  `supplier_count` int(11)
+  `form_name` varchar(45),
+  `supplier_count` int(11),
+  `reg_num` varchar(100)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -278,7 +282,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_purchase` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`d`.`uid` AS `user_uid`,`d`.`name` AS `user_name`,`c`.`id` AS `medicine_id`,`c`.`sn` AS `medicine_sn`,`c`.`name` AS `medicine_name`,`c`.`spec` AS `medicine_spec`,`c`.`vendor_name` AS `medicine_vendor_name`,`a`.`medicine_num` AS `medicine_num`,`c`.`unit_name` AS `medicine_unit_name`,`a`.`pur_price` AS `pur_price`,`a`.`create_time` AS `create_time`,`a`.`purchase_time` AS `purchase_time`,`b`.`batch_num` AS `batch_num`,`b`.`product_date` AS `product_date`,`b`.`expire_date` AS `expire_date`,`e`.`id` AS `supplier_id`,`e`.`name` AS `supplier_name` from ((((`purchase` `a` left join `medicine_batch` `b` on((`a`.`batch_id` = `b`.`id`))) left join `view_medicine` `c` on((`b`.`medicine_id` = `c`.`id`))) left join `user` `d` on((`a`.`user_id` = `d`.`id`))) left join `supplier` `e` on((`a`.`supplier_id` = `e`.`id`))) */;
+/*!50001 VIEW `view_purchase` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`d`.`uid` AS `user_uid`,`d`.`name` AS `user_name`,`c`.`id` AS `medicine_id`,`c`.`sn` AS `medicine_sn`,`c`.`name` AS `medicine_name`,`c`.`form_name` AS `medicine_form`,`c`.`spec` AS `medicine_spec`,`c`.`vendor_name` AS `medicine_vendor_name`,`a`.`medicine_num` AS `medicine_num`,`c`.`unit_name` AS `medicine_unit_name`,`a`.`pur_price` AS `pur_price`,`a`.`create_time` AS `create_time`,`a`.`purchase_time` AS `purchase_time`,`b`.`batch_num` AS `batch_num`,`b`.`product_date` AS `product_date`,`b`.`expire_date` AS `expire_date`,`e`.`id` AS `supplier_id`,`e`.`name` AS `supplier_name`,`c`.`reg_num` AS `medicine_reg_num` from ((((`purchase` `a` left join `medicine_batch` `b` on((`a`.`batch_id` = `b`.`id`))) left join `view_medicine` `c` on((`b`.`medicine_id` = `c`.`id`))) left join `user` `d` on((`a`.`user_id` = `d`.`id`))) left join `supplier` `e` on((`a`.`supplier_id` = `e`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -335,7 +339,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_medicine` AS select `a`.`id` AS `id`,`a`.`sn` AS `sn`,`a`.`name` AS `name`,`a`.`spec` AS `spec`,`a`.`vendor_id` AS `vendor_id`,`b`.`name` AS `vendor_name`,`a`.`create_time` AS `create_time`,`a`.`modify_time` AS `modify_time`,`a`.`unit_id` AS `unit_id`,`c`.`name` AS `unit_name`,`a`.`retail_price` AS `retail_price`,`a`.`type_id` AS `type_id`,`a`.`class_id` AS `class_id`,`a`.`otc_id` AS `otc_id`,`a`.`form_id` AS `form_id`,`a`.`supplier_count` AS `supplier_count` from ((`medicine` `a` left join `vendor` `b` on((`a`.`vendor_id` = `b`.`id`))) left join `medicine_unit` `c` on((`a`.`unit_id` = `c`.`id`))) */;
+/*!50001 VIEW `view_medicine` AS select `a`.`id` AS `id`,`a`.`sn` AS `sn`,`a`.`name` AS `name`,`a`.`spec` AS `spec`,`a`.`vendor_id` AS `vendor_id`,`b`.`name` AS `vendor_name`,`a`.`create_time` AS `create_time`,`a`.`modify_time` AS `modify_time`,`a`.`unit_id` AS `unit_id`,`c`.`name` AS `unit_name`,`a`.`retail_price` AS `retail_price`,`a`.`type_id` AS `type_id`,`a`.`class_id` AS `class_id`,`a`.`otc_id` AS `otc_id`,`a`.`form_id` AS `form_id`,`d`.`name` AS `form_name`,`a`.`supplier_count` AS `supplier_count`,`a`.`reg_num` AS `reg_num` from (((`medicine` `a` left join `vendor` `b` on((`a`.`vendor_id` = `b`.`id`))) left join `medicine_unit` `c` on((`a`.`unit_id` = `c`.`id`))) left join `medicine_form` `d` on((`a`.`form_id` = `d`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -632,7 +636,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `medicine_add`(
 IN medicineSN varchar(100),
@@ -644,10 +648,12 @@ IN retailPrice double,
 IN typeID int,
 IN OTCID int,
 IN formID int,
+IN regNum varchar(100),
 OUT returnVal int)
 BEGIN
 -- Insert into Medicine
-INSERT INTO medicine (sn, name, spec, vendor_id, unit_id, retail_price, type_id, otc_id, form_id, create_time, modify_time) VALUES (medicineSN, medicineName, medicineSpec, medicineVendorID, unitID, retailPrice, typeID, OTCID, formID, now(), now());
+INSERT INTO medicine (sn, name, spec, vendor_id, unit_id, retail_price, type_id, otc_id, form_id, reg_num, create_time, modify_time) 
+	VALUES (medicineSN, medicineName, medicineSpec, medicineVendorID, unitID, retailPrice, typeID, OTCID, formID, regNum, now(), now());
 SET returnVal=row_count();
 
 -- Update supplier's medicine count
@@ -999,6 +1005,7 @@ IN retailPrice double,
 IN typeID int,
 IN OTCID int,
 IN formID int,
+IN regNum varchar(100),
 OUT returnVal int)
 BEGIN
 DECLARE oldVendorID INT;
@@ -1008,7 +1015,7 @@ DECLARE medicineCount INT;
 SELECT vendor_id INTO oldVendorID FROM medicine WHERE id = oldID; 
 
 -- Update the medicine
-UPDATE medicine SET id=medicineID, sn=medicineSN, name=medicineName, spec=medicineSpec, vendor_id=medicineVendorID, unit_id=unitID, retail_price=retailPrice, type_id=typeID, otc_id=OTCID, form_id=formID, modify_time=now() WHERE id=oldID;
+UPDATE medicine SET id=medicineID, sn=medicineSN, name=medicineName, spec=medicineSpec, vendor_id=medicineVendorID, unit_id=unitID, retail_price=retailPrice, type_id=typeID, otc_id=OTCID, form_id=formID, reg_num=regNum, modify_time=now() WHERE id=oldID;
 SET returnVal=row_count();
 
 -- Update the medicine_count of the old supplier and new supplier
@@ -3005,4 +3012,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-25 19:00:32
+-- Dump completed on 2013-06-01  9:16:03

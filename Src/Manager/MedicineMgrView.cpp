@@ -74,8 +74,7 @@ void CMedicineMgrView::OnInitialUpdate()
 		};
 	}
 
-	if(atol(theApp.m_curUser.csRole.GetBuffer()) == Role_Supper || 
-		atol(theApp.m_curUser.csRole.GetBuffer()) == Role_Manager)
+	if(atol(theApp.m_curUser.csRole.GetBuffer()) == Role_Supper)
 	{
 		m_btnImport.ShowWindow(SW_SHOW);
 	}
@@ -307,7 +306,7 @@ void CMedicineMgrView::DisplayListItem()
 			m_listMedicine.SetItemText(i,4, vctMedicines[i]->csVendorName);
 			csMsg.Format(_T("%0.2f"), atof(vctMedicines[i]->csRetailPrice));
 			m_listMedicine.SetItemText(i, 5, csMsg);
-			m_listMedicine.SetItemText(i, 6, vctMedicines[i]->util.csName);
+			m_listMedicine.SetItemText(i, 6, vctMedicines[i]->unit.csName);
 			m_listMedicine.SetItemText(i, 7, vctMedicines[i]->csSupplierCount);
 			m_listMedicine.SetItemText(i,8, vctMedicines[i]->csCreateTime);
 			m_listMedicine.SetItemText(i,9, vctMedicines[i]->csModifyTime);
@@ -366,7 +365,7 @@ void CMedicineMgrView::DisplayListItem()
 			m_listMedicine.SetItemText(i,4, vctSupplierMedicine[i]->medicine.csVendorName);
 			csMsg.Format(_T("%0.2f"), atof(vctSupplierMedicine[i]->medicine.csRetailPrice));
 			m_listMedicine.SetItemText(i, 5, csMsg);
-			m_listMedicine.SetItemText(i, 6, vctSupplierMedicine[i]->medicine.util.csName);
+			m_listMedicine.SetItemText(i, 6, vctSupplierMedicine[i]->medicine.unit.csName);
 			m_listMedicine.SetItemText(i, 7, vctSupplierMedicine[i]->medicine.csSupplierCount);
 			m_listMedicine.SetItemText(i,8, vctSupplierMedicine[i]->medicine.csCreateTime);
 			m_listMedicine.SetItemText(i,9, vctSupplierMedicine[i]->medicine.csModifyTime);

@@ -48,7 +48,7 @@ ERRCODE CPurchaseDB::AddPurchase(Purchase *pPurchase)
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
-	if (m_database.ProcedureAddParam("medicineID", adVarChar, adParamInput, pPurchase->csMedicineID.GetBuffer()) != TRUE)
+	if (m_database.ProcedureAddParam("medicineID", adVarChar, adParamInput, pPurchase->medicine.csID.GetBuffer()) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
@@ -145,7 +145,7 @@ ERRCODE CPurchaseDB::GetPurchase(LPTSTR lpID, Purchase* pPurchase)
 	if((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 19)
+		if (iFieldNum < 21)
 		{
 			g_log.Write(_T("PurchaseDB Error:Num fields not match!"));
 
@@ -159,13 +159,14 @@ ERRCODE CPurchaseDB::GetPurchase(LPTSTR lpID, Purchase* pPurchase)
 		pPurchase->csUserID = LPSTR(row[iItem++]);
 		pPurchase->csUserUID = LPSTR(row[iItem++]);
 		pPurchase->csUserName = LPSTR(row[iItem++]);
-		pPurchase->csMedicineID = LPSTR(row[iItem++]);
-		pPurchase->csMedicineSN = LPSTR(row[iItem++]);
-		pPurchase->csMedicineName = LPSTR(row[iItem++]);
-		pPurchase->csMedicineSpec = LPSTR(row[iItem++]);
-		pPurchase->csMedicineVendorName = LPSTR(row[iItem++]);
+		pPurchase->medicine.csID = LPSTR(row[iItem++]);
+		pPurchase->medicine.csSN = LPSTR(row[iItem++]);
+		pPurchase->medicine.csName = LPSTR(row[iItem++]);
+		pPurchase->medicine.form.csName = LPSTR(row[iItem++]);
+		pPurchase->medicine.csSpec = LPSTR(row[iItem++]);
+		pPurchase->medicine.csVendorName = LPSTR(row[iItem++]);
 		pPurchase->csNumber = LPSTR(row[iItem++]);
-		pPurchase->csMedicineUnit = LPSTR(row[iItem++]);
+		pPurchase->medicine.unit.csName = LPSTR(row[iItem++]);
 		pPurchase->csPurPrice = LPSTR(row[iItem++]);
 		pPurchase->csCreateTime = LPSTR(row[iItem++]);
 		pPurchase->csPurchaseTime = LPSTR(row[iItem++]);
@@ -174,6 +175,7 @@ ERRCODE CPurchaseDB::GetPurchase(LPTSTR lpID, Purchase* pPurchase)
 		pPurchase->csExpireDate = LPSTR(row[iItem++]);
 		pPurchase->csSupplierID = LPSTR(row[iItem++]);
 		pPurchase->csSupplierName = LPSTR(row[iItem++]);
+		pPurchase->medicine.csRegNum = LPSTR(row[iItem++]);
 	} 
 	else
 	{
@@ -283,7 +285,7 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 	while((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 19)
+		if (iFieldNum < 21)
 		{
 			g_log.Write(_T("PurchaseDB Error:Num fields not match!"));
 			for (unsigned int i = 0; i < vctPurchases.size(); i++)
@@ -304,13 +306,14 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 		pPurchase->csUserID = LPSTR(row[iItem++]);
 		pPurchase->csUserUID = LPSTR(row[iItem++]);
 		pPurchase->csUserName = LPSTR(row[iItem++]);
-		pPurchase->csMedicineID = LPSTR(row[iItem++]);
-		pPurchase->csMedicineSN = LPSTR(row[iItem++]);
-		pPurchase->csMedicineName = LPSTR(row[iItem++]);
-		pPurchase->csMedicineSpec = LPSTR(row[iItem++]);
-		pPurchase->csMedicineVendorName = LPSTR(row[iItem++]);
+		pPurchase->medicine.csID = LPSTR(row[iItem++]);
+		pPurchase->medicine.csSN = LPSTR(row[iItem++]);
+		pPurchase->medicine.csName = LPSTR(row[iItem++]);
+		pPurchase->medicine.form.csName = LPSTR(row[iItem++]);
+		pPurchase->medicine.csSpec = LPSTR(row[iItem++]);
+		pPurchase->medicine.csVendorName = LPSTR(row[iItem++]);
 		pPurchase->csNumber = LPSTR(row[iItem++]);
-		pPurchase->csMedicineUnit = LPSTR(row[iItem++]);
+		pPurchase->medicine.unit.csName = LPSTR(row[iItem++]);
 		pPurchase->csPurPrice = LPSTR(row[iItem++]);
 		pPurchase->csCreateTime = LPSTR(row[iItem++]);
 		pPurchase->csPurchaseTime = LPSTR(row[iItem++]);
@@ -319,6 +322,7 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 		pPurchase->csExpireDate = LPSTR(row[iItem++]);
 		pPurchase->csSupplierID = LPSTR(row[iItem++]);
 		pPurchase->csSupplierName = LPSTR(row[iItem++]);
+		pPurchase->medicine.csRegNum = LPSTR(row[iItem++]);
 		vctPurchases.push_back(pPurchase);
 	} 
 	mysql_free_result(pResults);

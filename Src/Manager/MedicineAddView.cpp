@@ -90,6 +90,7 @@ void CMedicineAddView::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_MEDICINE_SPEC, m_editMedicineSpec);
 	DDX_Control(pDX, IDC_EDIT_MEDICINE_RETAILPRICE, m_editRetailPrice);
 	DDX_Control(pDX, IDC_EDIT_MEDICINE_ID, m_editMedicineID);
+	DDX_Control(pDX, IDC_EDIT_MEDICINE_REGNUM, m_editMedicineRegNum);
 	DDX_Control(pDX, IDC_BTN_VENDOR_ADD, m_btnAddVendor);
 	DDX_Control(pDX, IDC_BUTTON_MEDICINE_ADD_OK, m_btnAdd);
 	DDX_Control(pDX, IDC_BUTTON_MEDICINE_CANCEL, m_btnCancel);
@@ -119,6 +120,7 @@ BEGIN_MESSAGE_MAP(CMedicineAddView, CFormView)
 	ON_CBN_DROPDOWN(IDC_COMBO_MEDICINE_FORM, &CMedicineAddView::OnCbnDropdownComboMedicineForm)
 	ON_EN_CHANGE(IDC_EDIT_MEDICINE_SPEC, &CMedicineAddView::OnEnChangeEditMedicineSpec)
 	ON_EN_CHANGE(IDC_EDIT_MEDICINE_RETAILPRICE, &CMedicineAddView::OnEnChangeEditMedicineRetailprice)
+	ON_EN_CHANGE(IDC_EDIT_MEDICINE_REGNUM, &CMedicineAddView::OnEnChangeEditMedicineRegNum)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_SUPPLIER, &CMedicineAddView::OnLvnItemchangedListSupplier)
 	ON_BN_CLICKED(IDC_BTN_SUPPLIER_DEL, &CMedicineAddView::OnBnClickedBtnSupplierMedicineDel)
 	ON_BN_CLICKED(IDC_BTN_SUPPLIER_ADD, &CMedicineAddView::OnBnClickedBtnSupplierMedicineAdd)
@@ -493,12 +495,13 @@ BOOL CMedicineAddView::AddMedicine()
 {
 	ERRCODE errRet = err_OK;
 	CString csMsg;
-	CString csSN, csName, csSpec,csVendor, csRetailPrice, csUnit, csType, csOTC, csForm;
+	CString csSN, csName, csSpec,csVendor, csRetailPrice, csUnit, csType, csOTC, csForm, csRegNum;
 	GetDlgItemText(IDC_EDIT_MEDICINE_SN, csSN);
 	GetDlgItemText(IDC_EDIT_MEDICINE_NAME, csName);
 	GetDlgItemText(IDC_EDIT_MEDICINE_SPEC, csSpec);
 	GetDlgItemText(IDC_COMBO_MEDICINE_VENDORID, csVendor);
 	GetDlgItemText(IDC_EDIT_MEDICINE_RETAILPRICE, csRetailPrice);
+	m_editMedicineRegNum.GetWindowText(csRegNum);
 
 	unsigned int iCurSel = m_cbUtil.GetCurSel();
 	if (iCurSel < m_vctMedicineUtil.size())
@@ -509,11 +512,6 @@ BOOL CMedicineAddView::AddMedicine()
 	if (iCurSel < m_vctMedicineType.size())
 	{
 		csType = m_vctMedicineType[iCurSel]->csID;
-	}
-	iCurSel = m_cbOTC.GetCurSel();
-	if (iCurSel < m_vctMedicineOTC.size())
-	{
-		csOTC = m_vctMedicineOTC[iCurSel]->csID;
 	}
 	iCurSel = m_cbForm.GetCurSel();
 	if (iCurSel < m_vctMedicineForm.size())
@@ -528,8 +526,8 @@ BOOL CMedicineAddView::AddMedicine()
 	csRetailPrice.Trim();
 	csUnit.Trim();
 	csType.Trim();
-	csOTC.Trim();
 	csForm.Trim();
+	csRegNum.Trim();
 
 	//检查未填写
 	if (csSN == _T(""))
@@ -578,18 +576,30 @@ BOOL CMedicineAddView::AddMedicine()
 		return FALSE;
 	}
 
-	if (csOTC == _T(""))
-	{
-		csMsg.Format("请选择药品是否处方！");
-		MessageBox(csMsg, _T("药品管理"), MB_ICONERROR);
-		return FALSE;
-	}
-
 	if (csForm == _T(""))
 	{
 		csMsg.Format("请选择药品剂型！");
 		MessageBox(csMsg, _T("药品管理"), MB_ICONERROR);
 		return FALSE;
+	}
+
+	//OTC特殊处理
+	if (m_cbOTC.IsWindowEnabled())
+	{
+		iCurSel = m_cbOTC.GetCurSel();
+		if (iCurSel < m_vctMedicineOTC.size())
+		{
+			csOTC = m_vctMedicineOTC[iCurSel]->csID;
+		}
+
+		csOTC.Trim();
+
+		if (csOTC == _T(""))
+		{
+			csMsg.Format("请选择药品是否处方！");
+			MessageBox(csMsg, _T("药品管理"), MB_ICONERROR);
+			return FALSE;
+		}
 	}
 
 	int iFind = -1;
@@ -682,10 +692,11 @@ BOOL CMedicineAddView::AddMedicine()
 	medicine.csSpec = csSpec;
 	medicine.csVendorID = csVendor;
 	medicine.csRetailPrice = csRetailPrice;
-	medicine.util.csID = csUnit;
+	medicine.unit.csID = csUnit;
 	medicine.OTC.csID = csOTC;
 	medicine.type.csID = csType;
 	medicine.form.csID = csForm;
+	medicine.csRegNum = csRegNum;
 
 	if (m_viewType != VIEW_EDIT)
 	{
@@ -834,12 +845,13 @@ void CMedicineAddView::DisplayMedicineInfo(LPTSTR lpMedicineID)
 	SetDlgItemText(IDC_EDIT_MEDICINE_SPEC, m_medicine.csSpec);
 	csMsg.Format(_T("%0.2f"), atof(m_medicine.csRetailPrice));
 	SetDlgItemText(IDC_EDIT_MEDICINE_RETAILPRICE, csMsg);
+	m_editMedicineRegNum.SetWindowText(m_medicine.csRegNum);
 
 	for (unsigned int i = 0; i < m_vctMedicineUtil.size(); i++)
 	{
-		if (m_vctMedicineUtil[i]->csID == m_medicine.util.csID)
+		if (m_vctMedicineUtil[i]->csID == m_medicine.unit.csID)
 		{
-			m_medicine.util.csName = m_vctMedicineUtil[i]->csName;
+			m_medicine.unit.csName = m_vctMedicineUtil[i]->csName;
 			m_cbUtil.SetCurSel(i);
 			break;
 		}
@@ -854,14 +866,25 @@ void CMedicineAddView::DisplayMedicineInfo(LPTSTR lpMedicineID)
 			break;
 		}
 	}
-
-	for (unsigned int i = 0; i < m_vctMedicineOTC.size(); i++)
+	if (m_medicine.type.csName != ZHONGCHENGYAO &&
+		m_medicine.type.csName != ZHONGCAOYAO &&
+		m_medicine.type.csName != XIYAO)
 	{
-		if (m_vctMedicineOTC[i]->csID == m_medicine.OTC.csID)
+		m_cbOTC.SetCurSel(-1);
+		m_cbOTC.EnableWindow(FALSE);
+	}
+	else
+	{
+		m_cbOTC.EnableWindow(TRUE);
+
+		for (unsigned int i = 0; i < m_vctMedicineOTC.size(); i++)
 		{
-			m_medicine.OTC.csName = m_vctMedicineOTC[i]->csName;
-			m_cbOTC.SetCurSel(i);
-			break;
+			if (m_vctMedicineOTC[i]->csID == m_medicine.OTC.csID)
+			{
+				m_medicine.OTC.csName = m_vctMedicineOTC[i]->csName;
+				m_cbOTC.SetCurSel(i);
+				break;
+			}
 		}
 	}
 
@@ -1011,6 +1034,22 @@ void CMedicineAddView::OnEnChangeEditMedicineSpec()
 		GetDlgItemText(IDC_EDIT_MEDICINE_SPEC, csSpec);
 		csSpec.Trim();
 		if (csSpec != m_medicine.csSpec)
+		{
+			m_bDataChanged = TRUE;
+			GetDlgItem(IDC_BUTTON_MEDICINE_ADD_OK)->EnableWindow(TRUE);
+		}
+	}
+}
+
+
+void CMedicineAddView::OnEnChangeEditMedicineRegNum()
+{
+	if (m_bDataChanged != TRUE)
+	{
+		CString csRegNum;
+		m_editMedicineRegNum.GetWindowText(csRegNum);
+		csRegNum.Trim();
+		if (csRegNum != m_medicine.csRegNum)
 		{
 			m_bDataChanged = TRUE;
 			GetDlgItem(IDC_BUTTON_MEDICINE_ADD_OK)->EnableWindow(TRUE);
@@ -1292,13 +1331,12 @@ void CMedicineAddView::OnCbnSelchangeComboMedicineUnit()
 	// TODO: Add your control notification handler code here
 	if (m_bDataChanged != TRUE)
 	{
-		CString csMsg;
 		CString csUnit;
 		int iSel =  m_cbUtil. GetCurSel();
 		m_cbUtil.GetLBText(iSel, csUnit);
 		csUnit.Trim();
 
-		if (m_medicine.util.csName != csUnit)
+		if (m_medicine.unit.csName != csUnit)
 		{
 			m_bDataChanged = TRUE;
 			GetDlgItem(IDC_BUTTON_MEDICINE_ADD_OK)->EnableWindow(TRUE);
@@ -1310,14 +1348,25 @@ void CMedicineAddView::OnCbnSelchangeComboMedicineUnit()
 void CMedicineAddView::OnCbnSelchangeComboMedicineType()
 {
 	// TODO: Add your control notification handler code here
+	CString csType;
+	int iSel =  m_cbType. GetCurSel();
+	m_cbType.GetLBText(iSel, csType);
+	csType.Trim();
+
+	if (csType != ZHONGCHENGYAO &&
+		csType != ZHONGCAOYAO &&
+		csType != XIYAO)
+	{
+		m_cbOTC.SetCurSel(-1);
+		m_cbOTC.EnableWindow(FALSE);
+	}
+	else
+	{
+		m_cbOTC.EnableWindow(TRUE);
+	}
+
 	if (m_bDataChanged != TRUE)
 	{
-		CString csMsg;
-		CString csType;
-		int iSel =  m_cbType. GetCurSel();
-		m_cbType.GetLBText(iSel, csType);
-		csType.Trim();
-
 		if (m_medicine.type.csName != csType)
 		{
 			m_bDataChanged = TRUE;
@@ -1967,7 +2016,7 @@ BOOL CMedicineAddView::SaveDataToDoc()
 	medicine.csName = csName;
 	medicine.csSpec = csSpec;
 	medicine.csRetailPrice = csRetailPrice;
-	medicine.util.csID = csUnit;
+	medicine.unit.csID = csUnit;
 	medicine.OTC.csID = csOTC;
 	medicine.type.csID = csType;
 	medicine.form.csID = csForm;
@@ -2014,9 +2063,9 @@ BOOL CMedicineAddView::LoadDataFromDoc()
 
 	for (unsigned int i = 0; i < m_vctMedicineUtil.size(); i++)
 	{
-		if (m_vctMedicineUtil[i]->csID == m_medicine.util.csID)
+		if (m_vctMedicineUtil[i]->csID == m_medicine.unit.csID)
 		{
-			m_medicine.util.csName = m_vctMedicineUtil[i]->csName;
+			m_medicine.unit.csName = m_vctMedicineUtil[i]->csName;
 			m_cbUtil.SetCurSel(i);
 			break;
 		}

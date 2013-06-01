@@ -549,8 +549,8 @@ ERRCODE CSupplierMedicineDB::GetSupplierMedicines(DWORD dwPageNum,
 		pSupplierMedicine->medicine.csVendorName = LPSTR(row[iItem++]); 
 		pSupplierMedicine->medicine.csCreateTime = LPSTR(row[iItem++]); 
 		pSupplierMedicine->medicine.csModifyTime = LPSTR(row[iItem++]); 
-		pSupplierMedicine->medicine.util.csID = LPSTR(row[iItem++]); 
-		pSupplierMedicine->medicine.util.csName = LPSTR(row[iItem++]); 
+		pSupplierMedicine->medicine.unit.csID = LPSTR(row[iItem++]); 
+		pSupplierMedicine->medicine.unit.csName = LPSTR(row[iItem++]); 
 		pSupplierMedicine->medicine.csRetailPrice = LPSTR(row[iItem++]); 
 		pSupplierMedicine->medicine.type.csID = LPSTR(row[iItem++]); 
 		pSupplierMedicine->medicine.medicineClass.csID = LPSTR(row[iItem++]); 

@@ -34,6 +34,11 @@ typedef struct _MedicineType
 	CString csID;
 	CString csName;
 }MedicineType;
+#define ZHONGCHENGYAO "中成药"
+#define ZHONGCAOYAO "中草药"
+#define XIYAO "西药"
+#define BAOJIANPIN "保健药"
+#define QIXIE "医疗器械"
 
 typedef struct _MedicineOTC
 {
@@ -70,12 +75,13 @@ typedef struct _Medicine
 	CString csCreateTime;
 	CString csModifyTime;
 	CString csRetailPrice;
-	MedicineUtil util;
+	MedicineUtil unit;
 	MedicineClass medicineClass;
 	MedicineType type;
 	MedicineOTC OTC;
 	MedicineForm form;
 	CString csSupplierCount;
+	CString csRegNum;
 }Medicine;
 
 class CMedicineDB

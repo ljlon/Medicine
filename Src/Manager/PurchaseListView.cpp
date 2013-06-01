@@ -77,20 +77,22 @@ void CPurchaseListView::OnInitialUpdate()
 		);
 	int iSubItem = 0;
 	m_listPur.InsertColumn(iSubItem++, "编号", LVCFMT_LEFT, 0, 0);
+	m_listPur.InsertColumn(iSubItem++, "进货日期", LVCFMT_LEFT, 80, 0);
 	m_listPur.InsertColumn(iSubItem++, "进货人员", LVCFMT_LEFT, 80, 0);
-	m_listPur.InsertColumn(iSubItem++, "供应商", LVCFMT_LEFT, 80, 0);
 	m_listPur.InsertColumn(iSubItem++, "药品编码", LVCFMT_LEFT, 120, 0);
 	m_listPur.InsertColumn(iSubItem++, "药品名称", LVCFMT_LEFT, 150, 0);
-	m_listPur.InsertColumn(iSubItem++, "药品规格", LVCFMT_LEFT, 80, 0);
+	m_listPur.InsertColumn(iSubItem++, "剂型", LVCFMT_LEFT, 60, 0);
+	m_listPur.InsertColumn(iSubItem++, "规格", LVCFMT_LEFT, 80, 0);
+	m_listPur.InsertColumn(iSubItem++, "供应商", LVCFMT_LEFT, 80, 0);
 	m_listPur.InsertColumn(iSubItem++, "生产厂家", LVCFMT_LEFT, 80, 0);
-	m_listPur.InsertColumn(iSubItem++, "批号", LVCFMT_LEFT, 80, 0);
+	m_listPur.InsertColumn(iSubItem++, "生产批号", LVCFMT_LEFT, 80, 0);
+	m_listPur.InsertColumn(iSubItem++, "批准文号", LVCFMT_LEFT, 80, 0);
 	m_listPur.InsertColumn(iSubItem++, "生产日期", LVCFMT_LEFT, 80, 0);
 	m_listPur.InsertColumn(iSubItem++, "有效期至", LVCFMT_LEFT, 80, 0);
 	m_listPur.InsertColumn(iSubItem++, "进价", LVCFMT_LEFT, 60, 0);
 	m_listPur.InsertColumn(iSubItem++, "数量", LVCFMT_LEFT, 60, 0);
-	m_listPur.InsertColumn(iSubItem++, "单位", LVCFMT_LEFT, 40, 0);
+	m_listPur.InsertColumn(iSubItem++, "单位", LVCFMT_LEFT, 60, 0);
 	m_listPur.InsertColumn(iSubItem++, "金额", LVCFMT_LEFT, 80, 0);
-	m_listPur.InsertColumn(iSubItem++, "进货时间", LVCFMT_LEFT, 80, 0);
 
 	DisplayListItem();
 }
@@ -184,6 +186,8 @@ void CPurchaseListView::DisplayListItem()
 	CMedicineDB medicineDB;
 	vector<Purchase*> vctPurchases;
 	vector<MedicineUtil*> vctMedicineUnit;
+	CString csMedicineName;
+	csMedicineName.Format(_T("%%%s%%"), m_purchaseSearchDlg.m_csMedicineName);
 
 	ERRCODE errRet = purchaseDB.GetPurchases(m_dwCurPage, 
 																		g_ciNumPerPage, 
@@ -194,7 +198,7 @@ void CPurchaseListView::DisplayListItem()
 																		m_purchaseSearchDlg.m_csPurBeginDate.GetBuffer(),
 																		m_purchaseSearchDlg.m_csPurEndDate.GetBuffer(),
 																		m_purchaseSearchDlg.m_csMedicineSN.GetBuffer(),
-																		m_purchaseSearchDlg.m_csMedicineName.GetBuffer(),
+																		csMedicineName.GetBuffer(),
 																		m_purchaseSearchDlg.m_csMedicineBatchNum.GetBuffer(),
 																		m_purchaseSearchDlg.m_csSupplierID.GetBuffer());
 	if (errRet != err_OK)
@@ -245,23 +249,26 @@ void CPurchaseListView::DisplayListItem()
 	{
 		m_listPur.InsertItem(i, vctPurchases[i]->csID);
 		iSubItem = 1;
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csPurchaseTime);
 		csMsg.Format(_T("%s-%s"), vctPurchases[i]->csUserUID, vctPurchases[i]->csUserName);
 		m_listPur.SetItemText(i, iSubItem++, csMsg);
+		m_listPur.SetItemText(i, iSubItem++, vctPurchases[i]->medicine.csSN);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.csName);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.form.csName);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.csSpec);
 		m_listPur.SetItemText(i, iSubItem++, vctPurchases[i]->csSupplierName);
-		m_listPur.SetItemText(i, iSubItem++, vctPurchases[i]->csMedicineSN);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csMedicineName);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csMedicineSpec);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csMedicineVendorName);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.csVendorName);
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csBatchNum);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.csRegNum);
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csProductDate);
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csExpireDate);
 		csMsg.Format(_T("%0.2f"), atof(vctPurchases[i]->csPurPrice));
 		m_listPur.SetItemText(i,iSubItem++, csMsg);
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csNumber);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csMedicineUnit);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.unit.csName);
 		csMsg.Format(_T("%0.2f"), atof(vctPurchases[i]->csPurPrice.GetBuffer()) * atol(vctPurchases[i]->csNumber.GetBuffer()));
 		m_listPur.SetItemText(i,iSubItem++, csMsg);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csPurchaseTime);
+		
 
 		delete vctPurchases[i];
 		vctPurchases[i] = NULL;

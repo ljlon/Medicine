@@ -869,9 +869,9 @@ BOOL CPurchaseAddView::DisplaySupplierMedicineInfo(LPTSTR lpMedicineSN)
 	m_purchaseList.SetItemText(m_iPurListItem, 7, csMsg);
 
 	MedicineUtil medicineUtil;
-	if (medicine.util.csID != _T(""))
+	if (medicine.unit.csID != _T(""))
 	{
-		errRet = medicineDB.GetMedicineUnit(atoi(medicine.util.csID), &medicineUtil);
+		errRet = medicineDB.GetMedicineUnit(atoi(medicine.unit.csID), &medicineUtil);
 		if (errRet != err_OK)
 		{
 			csMsg.Format(_T("获取药品信息错误！%s"), GetErrMsg(errRet));
@@ -988,28 +988,28 @@ BOOL CPurchaseAddView::AddPurchase()
 
 	for (int i = 0; i < m_purchaseList.GetItemCount() - 1; i++)
 	{
-		purchase.csMedicineID = m_purchaseList.GetItemText(i, 1);
-		purchase.csMedicineSN = m_purchaseList.GetItemText(i, 2);
+		purchase.medicine.csID = m_purchaseList.GetItemText(i, 1);
+		purchase.medicine.csSN = m_purchaseList.GetItemText(i, 2);
 		purchase.csBatchNum = m_purchaseList.GetItemText(i, 4);
 		purchase.csProductDate = m_purchaseList.GetItemText(i, 5);
 		purchase.csExpireDate = m_purchaseList.GetItemText(i, 6);
 		purchase.csPurPrice = m_purchaseList.GetItemText(i, 7);
 		purchase.csNumber = m_purchaseList.GetItemText(i, 8);
 
-		purchase.csMedicineID.Trim();
-		purchase.csMedicineSN.Trim();
+		purchase.medicine.csID.Trim();
+		purchase.medicine.csSN.Trim();
 		purchase.csBatchNum.Trim();
 		purchase.csProductDate.Trim();
 		purchase.csExpireDate.Trim();
 		purchase.csPurPrice.Trim();
 		purchase.csNumber.Trim();
-		if (purchase.csMedicineID == _T(""))
+		if (purchase.medicine.csID == _T(""))
 		{
 			csMsg.Format(_T("请填写第%d行的药品编码！"), i+1);
 			MessageBox(csMsg, _T(""), MB_ICONWARNING);
 			return FALSE;
 		}
-		if (purchase.csMedicineSN == _T(""))
+		if (purchase.medicine.csSN == _T(""))
 		{
 			csMsg.Format(_T("请填写第%d行的药品编码！"), i+1);
 			MessageBox(csMsg, _T(""), MB_ICONWARNING);
@@ -1053,19 +1053,19 @@ BOOL CPurchaseAddView::AddPurchase()
 	purchase.csPurchaseTime.Trim();
 	for (int i = m_purchaseList.GetItemCount() - 2; i >= 0; i--)
 	{
-		purchase.csMedicineID = m_purchaseList.GetItemText(i, 1);
-		purchase.csMedicineSN = m_purchaseList.GetItemText(i, 2);
-		purchase.csMedicineName = m_purchaseList.GetItemText(i, 3);
+		purchase.medicine.csID = m_purchaseList.GetItemText(i, 1);
+		purchase.medicine.csSN = m_purchaseList.GetItemText(i, 2);
+		purchase.medicine.csName = m_purchaseList.GetItemText(i, 3);
 		purchase.csBatchNum = m_purchaseList.GetItemText(i, 4);
 		purchase.csProductDate = m_purchaseList.GetItemText(i, 5);
 		purchase.csExpireDate = m_purchaseList.GetItemText(i, 6);
 		purchase.csPurPrice = m_purchaseList.GetItemText(i, 7);
 		purchase.csNumber = m_purchaseList.GetItemText(i, 8);
-		purchase.csMedicineUnit = m_purchaseList.GetItemText(i, 9);
+		purchase.medicine.unit.csName = m_purchaseList.GetItemText(i, 9);
 		csTotalPrice = m_purchaseList.GetItemText(i, 10);
 
-		purchase.csMedicineID.Trim();
-		if (purchase.csMedicineID == _T(""))
+		purchase.medicine.csID.Trim();
+		if (purchase.medicine.csID == _T(""))
 		{
 			continue;
 		}
@@ -1082,15 +1082,15 @@ BOOL CPurchaseAddView::AddPurchase()
 		m_purchaseList.DeleteItem(i);
 
 		//如果SupplierMedicine不存在，将medicine信息保存为SupplierMedicine
-		errRet = supplierMedicineDB.GetSupplierMedicine(purchase.csMedicineID.GetBuffer(), m_curSupplier.csID.GetBuffer(), &supplierMedicine);
+		errRet = supplierMedicineDB.GetSupplierMedicine(purchase.medicine.csID.GetBuffer(), m_curSupplier.csID.GetBuffer(), &supplierMedicine);
 		if (errRet == err_Medicine_NotExist)
 		{
-			errRet = medicineDB.GetMedicineBySN(purchase.csMedicineSN.GetBuffer(), &medicine);
+			errRet = medicineDB.GetMedicineBySN(purchase.medicine.csSN.GetBuffer(), &medicine);
 			if (errRet == err_OK)
 			{
 				supplierMedicine.csSupplierID = m_curSupplier.csID;
 				supplierMedicine.csPurPrice = purchase.csPurPrice;
-				supplierMedicine.medicine.csID = purchase.csMedicineID;
+				supplierMedicine.medicine.csID = purchase.medicine.csID;
 				supplierMedicineDB.AddSupplierMedicine(&supplierMedicine);
 			}
 		}
@@ -1470,7 +1470,7 @@ void CPurchaseAddView::OnBnClickedButtonAutoPurchase()
 			Purchase purchase; 
 			purchase.csUserID = theApp.m_curUser.csID;
 			purchase.csSupplierID = m_curSupplier.csID;
-			purchase.csMedicineID = pMedicine->csID;
+			purchase.medicine.csID = pMedicine->csID;
 			double dbPurPrice = atof(pMedicine->csRetailPrice.GetBuffer());
 			dbPurPrice *= 0.8;
 			purchase.csPurPrice.Format(_T("%0.2f"), dbPurPrice);

@@ -108,7 +108,7 @@ void CMedicineImportDlg::OnBnClickedExport()
 				continue;
 			}
 
-			fprintf_s(pFile,_T("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\r\n"), 
+			fprintf_s(pFile,_T("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\r\n"), 
 					pMedicine->csID,
 					pMedicine->csSN,
 					pMedicine->csName,
@@ -116,12 +116,13 @@ void CMedicineImportDlg::OnBnClickedExport()
 					pMedicine->csVendorName,
 					pMedicine->csCreateTime,
 					pMedicine->csModifyTime,
-					pMedicine->util.csID,
+					pMedicine->unit.csID,
 					pMedicine->csRetailPrice,
 					pMedicine->type.csID,
 					pMedicine->medicineClass.csID,
 					pMedicine->OTC.csID,
 					pMedicine->form.csID,
+					pMedicine->csRegNum,
 					pMedicine->csSupplierCount);
 
 			delete pMedicine;
@@ -242,7 +243,7 @@ void CMedicineImportDlg::OnBnClickedImport()
 			continue;
 		}
 		pPos[0] = 0;
-		medicine.util.csID = pBuf;
+		medicine.unit.csID = pBuf;
 		pBuf = pPos + 1;
 
 		pPos = strstr(pBuf, _T(","));
@@ -288,6 +289,15 @@ void CMedicineImportDlg::OnBnClickedImport()
 		}
 		pPos[0] = 0;
 		medicine.form.csID = pBuf;
+		pBuf = pPos + 1;
+
+		pPos = strstr(pBuf, _T(","));
+		if (pPos == NULL)
+		{
+			continue;
+		}
+		pPos[0] = 0;
+		medicine.csRegNum = pBuf;
 		pBuf = pPos + 1;
 
 		medicine.csSupplierCount = pBuf;

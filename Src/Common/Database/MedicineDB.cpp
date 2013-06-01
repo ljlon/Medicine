@@ -66,7 +66,7 @@ ERRCODE CMedicineDB::AddMedicine(Medicine *pMedicine)
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
-	DWORD dwUnitID = atol(pMedicine->util.csID.GetBuffer());
+	DWORD dwUnitID = atol(pMedicine->unit.csID.GetBuffer());
 	if (m_database.ProcedureAddParam("unitID", adInteger, adParamInput, &dwUnitID) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
@@ -92,6 +92,11 @@ ERRCODE CMedicineDB::AddMedicine(Medicine *pMedicine)
 	}
 	DWORD dwFormID = atol(pMedicine->form.csID.GetBuffer());
 	if (m_database.ProcedureAddParam("formID", adInteger, adParamInput, &dwFormID) != TRUE)
+	{
+		g_log.Write(m_database.GetLastErrorMsg());
+		return err_DB_Proc_Execute;
+	}
+	if (m_database.ProcedureAddParam("regNum", adVarChar, adParamInput, pMedicine->csRegNum.GetBuffer()) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
@@ -189,7 +194,7 @@ ERRCODE CMedicineDB::UpdateMedicine(LPTSTR lpID, Medicine *pMedicine)
 		return err_DB_Proc_Execute;
 	}
 
-	LONG lUnitID = atol(pMedicine->util.csID.GetBuffer());
+	LONG lUnitID = atol(pMedicine->unit.csID.GetBuffer());
 	if (m_database.ProcedureAddParam("unitID", adInteger, adParamInput, &lUnitID) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
@@ -215,6 +220,11 @@ ERRCODE CMedicineDB::UpdateMedicine(LPTSTR lpID, Medicine *pMedicine)
 	}
 	DWORD dwFormID = atol(pMedicine->form.csID.GetBuffer());
 	if (m_database.ProcedureAddParam("formID", adInteger, adParamInput, &dwFormID) != TRUE)
+	{
+		g_log.Write(m_database.GetLastErrorMsg());
+		return err_DB_Proc_Execute;
+	}
+	if (m_database.ProcedureAddParam("regNum", adVarChar, adParamInput, pMedicine->csRegNum.GetBuffer()) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
@@ -432,7 +442,7 @@ ERRCODE CMedicineDB::GetMedicine(LPTSTR lpID, Medicine* pMedicine)
 	if((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 16)
+		if (iFieldNum < 18)
 		{
 			g_log.Write(_T("MedicineDB Error:Num fields not match!"));
 			mysql_free_result(pResults);
@@ -449,14 +459,16 @@ ERRCODE CMedicineDB::GetMedicine(LPTSTR lpID, Medicine* pMedicine)
 		pMedicine->csVendorName = LPSTR(row[iItem++]); 
 		pMedicine->csCreateTime = LPSTR(row[iItem++]); 
 		pMedicine->csModifyTime = LPSTR(row[iItem++]); 
-		pMedicine->util.csID = LPSTR(row[iItem++]); 
-		pMedicine->util.csName = LPSTR(row[iItem++]); 
+		pMedicine->unit.csID = LPSTR(row[iItem++]); 
+		pMedicine->unit.csName = LPSTR(row[iItem++]); 
 		pMedicine->csRetailPrice = LPSTR(row[iItem++]); 
 		pMedicine->type.csID = LPSTR(row[iItem++]); 
 		pMedicine->medicineClass.csID = LPSTR(row[iItem++]); 
 		pMedicine->OTC.csID = LPSTR(row[iItem++]); 
 		pMedicine->form.csID = LPSTR(row[iItem++]); 
+		pMedicine->form.csName = LPSTR(row[iItem++]);
 		pMedicine->csSupplierCount =  LPSTR(row[iItem++]); 
+		pMedicine->csRegNum = LPSTR(row[iItem++]);
 	} 
 	else
 	{
@@ -510,7 +522,7 @@ ERRCODE CMedicineDB::GetMedicineBySN(LPTSTR lpSN, Medicine* pMedicine)
 	if((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 16)
+		if (iFieldNum < 18)
 		{
 			g_log.Write(_T("MedicineDB Error:Num fields not match!"));
 			mysql_free_result(pResults);
@@ -527,14 +539,16 @@ ERRCODE CMedicineDB::GetMedicineBySN(LPTSTR lpSN, Medicine* pMedicine)
 		pMedicine->csVendorName = LPSTR(row[iItem++]); 
 		pMedicine->csCreateTime = LPSTR(row[iItem++]); 
 		pMedicine->csModifyTime = LPSTR(row[iItem++]); 
-		pMedicine->util.csID = LPSTR(row[iItem++]); 
-		pMedicine->util.csName = LPSTR(row[iItem++]); 
+		pMedicine->unit.csID = LPSTR(row[iItem++]); 
+		pMedicine->unit.csName = LPSTR(row[iItem++]); 
 		pMedicine->csRetailPrice = LPSTR(row[iItem++]); 
 		pMedicine->type.csID = LPSTR(row[iItem++]); 
 		pMedicine->medicineClass.csID = LPSTR(row[iItem++]); 
 		pMedicine->OTC.csID = LPSTR(row[iItem++]); 
 		pMedicine->form.csID = LPSTR(row[iItem++]);
+		pMedicine->form.csName = LPSTR(row[iItem++]);
 		pMedicine->csSupplierCount =  LPSTR(row[iItem++]); 
+		pMedicine->csRegNum = LPSTR(row[iItem++]);
 	} 
 	else
 	{
@@ -627,7 +641,7 @@ ERRCODE CMedicineDB::GetMedicines(DWORD dwPageNum,
 	while((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 16)
+		if (iFieldNum < 18)
 		{
 			g_log.Write(_T("MedicineDB Error:Num fields not match!"));
 			for (unsigned int i = 0; i < vctMedicines.size(); i++)
@@ -652,14 +666,16 @@ ERRCODE CMedicineDB::GetMedicines(DWORD dwPageNum,
 		pMedicine->csVendorName = LPSTR(row[iItem++]); 
 		pMedicine->csCreateTime = LPSTR(row[iItem++]); 
 		pMedicine->csModifyTime = LPSTR(row[iItem++]); 
-		pMedicine->util.csID = LPSTR(row[iItem++]); 
-		pMedicine->util.csName = LPSTR(row[iItem++]); 
+		pMedicine->unit.csID = LPSTR(row[iItem++]); 
+		pMedicine->unit.csName = LPSTR(row[iItem++]); 
 		pMedicine->csRetailPrice = LPSTR(row[iItem++]); 
 		pMedicine->type.csID = LPSTR(row[iItem++]); 
 		pMedicine->medicineClass.csID = LPSTR(row[iItem++]); 
 		pMedicine->OTC.csID = LPSTR(row[iItem++]); 
 		pMedicine->form.csID = LPSTR(row[iItem++]); 
+		pMedicine->form.csName = LPSTR(row[iItem++]);
 		pMedicine->csSupplierCount =  LPSTR(row[iItem++]); 
+		pMedicine->csRegNum = LPSTR(row[iItem++]);
 		vctMedicines.push_back(pMedicine);
 	} 
 	mysql_free_result(pResults);

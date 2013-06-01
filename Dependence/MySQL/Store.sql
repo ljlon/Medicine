@@ -18,59 +18,6 @@ USE `store`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `medicine_class`
---
-
-DROP TABLE IF EXISTS `medicine_class`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `medicine_class` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `vendor`
---
-
-DROP TABLE IF EXISTS `vendor`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `vendor` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `tel` varchar(45) DEFAULT NULL,
-  `address` varchar(100) DEFAULT NULL,
-  `medicine_count` int(11) DEFAULT '0',
-  `create_time` datetime DEFAULT NULL,
-  `modify_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `supplier_medicine`
---
-
-DROP TABLE IF EXISTS `supplier_medicine`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `supplier_medicine` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `medicine_id` int(11) NOT NULL,
-  `supplier_id` int(11) NOT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `modify_time` datetime DEFAULT NULL,
-  `pur_price` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `pos`
 --
 
@@ -101,24 +48,45 @@ CREATE TABLE `user_role` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `supplier`
+-- Table structure for table `medicine`
 --
 
-DROP TABLE IF EXISTS `supplier`;
+DROP TABLE IF EXISTS `medicine`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `supplier` (
+CREATE TABLE `medicine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `contact` varchar(45) NOT NULL,
-  `tel` varchar(45) DEFAULT NULL,
-  `address` varchar(45) DEFAULT NULL,
-  `medicine_count` int(11) DEFAULT '0',
+  `sn` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `spec` varchar(100) DEFAULT NULL,
+  `vendor_id` int(11) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `modify_time` datetime DEFAULT NULL,
+  `unit_id` int(11) DEFAULT NULL,
+  `retail_price` double DEFAULT NULL,
+  `type_id` int(11) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `otc_id` int(11) DEFAULT NULL,
+  `form_id` int(11) DEFAULT NULL,
+  `supplier_count` int(11) DEFAULT '0',
+  `reg_num` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `SN_UNIQUE` (`sn`)
+) ENGINE=InnoDB AUTO_INCREMENT=987 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `medicine_class`
+--
+
+DROP TABLE IF EXISTS `medicine_class`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medicine_class` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,21 +106,42 @@ CREATE TABLE `user` (
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid_UNIQUE` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `medicine_type`
+-- Table structure for table `medicine_otc`
 --
 
-DROP TABLE IF EXISTS `medicine_type`;
+DROP TABLE IF EXISTS `medicine_otc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `medicine_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `medicine_otc` (
+  `id` int(11) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vendor`
+--
+
+DROP TABLE IF EXISTS `vendor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `tel` varchar(45) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `medicine_count` int(11) DEFAULT '0',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=499 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,7 +159,21 @@ CREATE TABLE `store_by_batch` (
   `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `medicine_batch_id_UNIQUE` (`medicine_batch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1476 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `medicine_type`
+--
+
+DROP TABLE IF EXISTS `medicine_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medicine_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +190,7 @@ CREATE TABLE `medicine_batch` (
   `product_date` datetime DEFAULT NULL,
   `expire_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1475 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +210,39 @@ CREATE TABLE `purchase` (
   `batch_id` int(11) DEFAULT NULL,
   `supplier_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=550 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `supplier_medicine`
+--
+
+DROP TABLE IF EXISTS `supplier_medicine`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `supplier_medicine` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `medicine_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  `pur_price` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=498 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `medicine_form`
+--
+
+DROP TABLE IF EXISTS `medicine_form`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medicine_form` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,20 +258,6 @@ CREATE TABLE `pc` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `pc_mac_UNIQUE` (`pc_mac`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `medicine_form`
---
-
-DROP TABLE IF EXISTS `medicine_form`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `medicine_form` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,50 +289,29 @@ CREATE TABLE `retail_item` (
   `medicine_num` int(11) DEFAULT NULL,
   `medicine_price` double DEFAULT NULL,
   `retail_price` double DEFAULT NULL,
-  `retail_itemcol` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `medicine`
---
-
-DROP TABLE IF EXISTS `medicine`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `medicine` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sn` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `spec` varchar(100) DEFAULT NULL,
-  `vendor_id` int(11) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `modify_time` datetime DEFAULT NULL,
-  `unit_id` int(11) DEFAULT NULL,
-  `retail_price` double DEFAULT NULL,
-  `type_id` int(11) DEFAULT NULL,
-  `class_id` int(11) DEFAULT NULL,
-  `otc_id` int(11) DEFAULT NULL,
-  `form_id` int(11) DEFAULT NULL,
-  `supplier_count` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `SN_UNIQUE` (`sn`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `medicine_otc`
---
-
-DROP TABLE IF EXISTS `medicine_otc`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `medicine_otc` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `supplier`
+--
+
+DROP TABLE IF EXISTS `supplier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `supplier` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `contact` varchar(45) NOT NULL,
+  `tel` varchar(45) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  `medicine_count` int(11) DEFAULT '0',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +331,7 @@ CREATE TABLE `retail` (
   `sn` varchar(100) DEFAULT NULL,
   `pc_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -343,4 +343,4 @@ CREATE TABLE `retail` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-25 18:51:32
+-- Dump completed on 2013-06-01  9:15:46

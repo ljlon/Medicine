@@ -91,6 +91,7 @@ protected:
 	afx_msg void OnCbnDropdownComboMedicineForm();
 	afx_msg void OnEnChangeEditMedicineSpec();
 	afx_msg void OnEnChangeEditMedicineRetailprice();
+	afx_msg void OnEnChangeEditMedicineRegNum();
 	afx_msg void OnLvnItemchangedListSupplier(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedBtnSupplierMedicineDel();
 	afx_msg void OnBnClickedBtnSupplierMedicineAdd();
@@ -105,6 +106,7 @@ public:
 	CEdit m_editMedicineSpec;
 	CEdit m_editRetailPrice;
 	CEdit m_editMedicineID;
+	CEdit m_editMedicineRegNum;
 	CButton m_btnAddVendor;
 	CButton m_btnAdd;
 	CButton m_btnCancel;
