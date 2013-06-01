@@ -38,7 +38,7 @@ protected:
 	CButton m_btnPrePage;
 	CButton m_btnNextPage;
 	CButton m_btnAdd;
-	//CButton m_btnDel;
+	CButton m_btnDel;
 	DWORD m_dwCurPage;
 	DWORD m_dwTotalPage;
 	DWORD m_dwTotalNum;

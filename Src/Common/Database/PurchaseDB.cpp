@@ -63,17 +63,17 @@ ERRCODE CPurchaseDB::AddPurchase(Purchase *pPurchase)
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
-	if (m_database.ProcedureAddParam("batchNum", adVarChar, adParamInput, pPurchase->csBatchNum.GetBuffer()) != TRUE)
+	if (m_database.ProcedureAddParam("batchNum", adVarChar, adParamInput, pPurchase->medicineBatch.csBatchNum.GetBuffer()) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
-	if (m_database.ProcedureAddParam("productDate", adVarChar, adParamInput, pPurchase->csProductDate.GetBuffer()) != TRUE)
+	if (m_database.ProcedureAddParam("productDate", adVarChar, adParamInput, pPurchase->medicineBatch.csProductDate.GetBuffer()) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
-	if (m_database.ProcedureAddParam("expireDate", adVarChar, adParamInput, pPurchase->csExpireDate.GetBuffer()) != TRUE)
+	if (m_database.ProcedureAddParam("expireDate", adVarChar, adParamInput, pPurchase->medicineBatch.csExpireDate.GetBuffer()) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
@@ -145,7 +145,7 @@ ERRCODE CPurchaseDB::GetPurchase(LPTSTR lpID, Purchase* pPurchase)
 	if((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 21)
+		if (iFieldNum < 22)
 		{
 			g_log.Write(_T("PurchaseDB Error:Num fields not match!"));
 
@@ -170,9 +170,10 @@ ERRCODE CPurchaseDB::GetPurchase(LPTSTR lpID, Purchase* pPurchase)
 		pPurchase->csPurPrice = LPSTR(row[iItem++]);
 		pPurchase->csCreateTime = LPSTR(row[iItem++]);
 		pPurchase->csPurchaseTime = LPSTR(row[iItem++]);
-		pPurchase->csBatchNum = LPSTR(row[iItem++]);
-		pPurchase->csProductDate = LPSTR(row[iItem++]);
-		pPurchase->csExpireDate = LPSTR(row[iItem++]);
+		pPurchase->medicineBatch.csID = LPSTR(row[iItem++]);
+		pPurchase->medicineBatch.csBatchNum = LPSTR(row[iItem++]);
+		pPurchase->medicineBatch.csProductDate = LPSTR(row[iItem++]);
+		pPurchase->medicineBatch.csExpireDate = LPSTR(row[iItem++]);
 		pPurchase->csSupplierID = LPSTR(row[iItem++]);
 		pPurchase->csSupplierName = LPSTR(row[iItem++]);
 		pPurchase->medicine.csRegNum = LPSTR(row[iItem++]);
@@ -285,7 +286,7 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 	while((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 21)
+		if (iFieldNum < 22)
 		{
 			g_log.Write(_T("PurchaseDB Error:Num fields not match!"));
 			for (unsigned int i = 0; i < vctPurchases.size(); i++)
@@ -317,9 +318,10 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 		pPurchase->csPurPrice = LPSTR(row[iItem++]);
 		pPurchase->csCreateTime = LPSTR(row[iItem++]);
 		pPurchase->csPurchaseTime = LPSTR(row[iItem++]);
-		pPurchase->csBatchNum = LPSTR(row[iItem++]);
-		pPurchase->csProductDate = LPSTR(row[iItem++]);
-		pPurchase->csExpireDate = LPSTR(row[iItem++]);
+		pPurchase->medicineBatch.csID = LPSTR(row[iItem++]);
+		pPurchase->medicineBatch.csBatchNum = LPSTR(row[iItem++]);
+		pPurchase->medicineBatch.csProductDate = LPSTR(row[iItem++]);
+		pPurchase->medicineBatch.csExpireDate = LPSTR(row[iItem++]);
 		pPurchase->csSupplierID = LPSTR(row[iItem++]);
 		pPurchase->csSupplierName = LPSTR(row[iItem++]);
 		pPurchase->medicine.csRegNum = LPSTR(row[iItem++]);

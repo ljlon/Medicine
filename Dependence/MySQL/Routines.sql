@@ -92,6 +92,7 @@ SET character_set_client = utf8;
   `pur_price` double,
   `create_time` datetime,
   `purchase_time` datetime,
+  `batch_id` int(11),
   `batch_num` varchar(100),
   `product_date` datetime,
   `expire_date` datetime,
@@ -282,7 +283,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_purchase` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`d`.`uid` AS `user_uid`,`d`.`name` AS `user_name`,`c`.`id` AS `medicine_id`,`c`.`sn` AS `medicine_sn`,`c`.`name` AS `medicine_name`,`c`.`form_name` AS `medicine_form`,`c`.`spec` AS `medicine_spec`,`c`.`vendor_name` AS `medicine_vendor_name`,`a`.`medicine_num` AS `medicine_num`,`c`.`unit_name` AS `medicine_unit_name`,`a`.`pur_price` AS `pur_price`,`a`.`create_time` AS `create_time`,`a`.`purchase_time` AS `purchase_time`,`b`.`batch_num` AS `batch_num`,`b`.`product_date` AS `product_date`,`b`.`expire_date` AS `expire_date`,`e`.`id` AS `supplier_id`,`e`.`name` AS `supplier_name`,`c`.`reg_num` AS `medicine_reg_num` from ((((`purchase` `a` left join `medicine_batch` `b` on((`a`.`batch_id` = `b`.`id`))) left join `view_medicine` `c` on((`b`.`medicine_id` = `c`.`id`))) left join `user` `d` on((`a`.`user_id` = `d`.`id`))) left join `supplier` `e` on((`a`.`supplier_id` = `e`.`id`))) */;
+/*!50001 VIEW `view_purchase` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`d`.`uid` AS `user_uid`,`d`.`name` AS `user_name`,`c`.`id` AS `medicine_id`,`c`.`sn` AS `medicine_sn`,`c`.`name` AS `medicine_name`,`c`.`form_name` AS `medicine_form`,`c`.`spec` AS `medicine_spec`,`c`.`vendor_name` AS `medicine_vendor_name`,`a`.`medicine_num` AS `medicine_num`,`c`.`unit_name` AS `medicine_unit_name`,`a`.`pur_price` AS `pur_price`,`a`.`create_time` AS `create_time`,`a`.`purchase_time` AS `purchase_time`,`a`.`batch_id` AS `batch_id`,`b`.`batch_num` AS `batch_num`,`b`.`product_date` AS `product_date`,`b`.`expire_date` AS `expire_date`,`e`.`id` AS `supplier_id`,`e`.`name` AS `supplier_name`,`c`.`reg_num` AS `medicine_reg_num` from ((((`purchase` `a` left join `medicine_batch` `b` on((`a`.`batch_id` = `b`.`id`))) left join `view_medicine` `c` on((`b`.`medicine_id` = `c`.`id`))) left join `user` `d` on((`a`.`user_id` = `d`.`id`))) left join `supplier` `e` on((`a`.`supplier_id` = `e`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1282,17 +1283,15 @@ OUT returnVal int
 )
 BEGIN
 DECLARE storeID int;
-DECLARE supplierMedicineID int;
-DECLARE medicineID int;
 DECLARE medicineBatchID int;
 DECLARE purMedicineNum int;
 DECLARE storeMedicineNum int;
 
 -- Update store
-SELECT medicine_id, batch_id, medicine_num INTO medicineID, medicineBatchID, purMedicineNum FROM view_purchase WHERE id=purchaseID;
+SELECT batch_id, medicine_num INTO medicineBatchID, purMedicineNum FROM view_purchase WHERE id=purchaseID;
 
 IF (found_rows() != 0) THEN
-    CALL store_add_num(medicineID, medicineBatchID,-purMedicineNum, storeID, returnVal);
+    CALL store_add_num(medicineBatchID,-purMedicineNum, storeID, returnVal);
 END IF;
 
 DELETE FROM purchase WHERE id = purchaseID; 
@@ -3012,4 +3011,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-01  9:16:03
+-- Dump completed on 2013-06-01 11:33:16

@@ -45,6 +45,7 @@ public:
 	CEdit m_editMedicineVendor;
 	CEdit m_editRetailPrice;
 	CEdit m_editMedicineNum;
+	CEdit m_editMedicineSpec;
 	CStatic m_staticMedicineUnit;
 	CButton m_btnOK;
 	CButton m_btnCancel;

@@ -32,7 +32,7 @@ void CPurchaseListView::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BTN_PREPAGE, m_btnPrePage);
 	DDX_Control(pDX, IDC_BTN_NEXTPAGE, m_btnNextPage);
 	DDX_Control(pDX, IDC_BUTTON_ADD, m_btnAdd);
-	//DDX_Control(pDX, IDC_BUTTON_DEL, m_btnDel);
+	DDX_Control(pDX, IDC_BUTTON_DELETE, m_btnDel);
 	DDX_Control(pDX, IDC_STATIC_GROUP_PUR, m_staticGroupPur);
 }
 
@@ -41,7 +41,7 @@ BEGIN_MESSAGE_MAP(CPurchaseListView, CFormView)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_PUR, &CPurchaseListView::OnLvnItemchangedListPur)
 	ON_BN_CLICKED(IDC_BUTTON_ADD, &CPurchaseListView::OnBnClickedButtonAdd)
 	ON_BN_CLICKED(IDC_BUTTON_EDIT, &CPurchaseListView::OnBnClickedButtonEdit)
-	//ON_BN_CLICKED(IDC_BUTTON_DEL, &CPurchaseListView::OnBnClickedButtonDel)
+	ON_BN_CLICKED(IDC_BUTTON_DELETE, &CPurchaseListView::OnBnClickedButtonDel)
 	ON_BN_CLICKED(IDC_BTN_PREPAGE, &CPurchaseListView::OnBnClickedBtnPrepage)
 	ON_BN_CLICKED(IDC_BTN_NEXTPAGE, &CPurchaseListView::OnBnClickedBtnNextpage)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CPurchaseListView::OnBnClickedButtonSearch)
@@ -258,10 +258,10 @@ void CPurchaseListView::DisplayListItem()
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.csSpec);
 		m_listPur.SetItemText(i, iSubItem++, vctPurchases[i]->csSupplierName);
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.csVendorName);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csBatchNum);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicineBatch.csBatchNum);
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicine.csRegNum);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csProductDate);
-		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csExpireDate);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicineBatch.csProductDate);
+		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->medicineBatch.csExpireDate);
 		csMsg.Format(_T("%0.2f"), atof(vctPurchases[i]->csPurPrice));
 		m_listPur.SetItemText(i,iSubItem++, csMsg);
 		m_listPur.SetItemText(i,iSubItem++, vctPurchases[i]->csNumber);
@@ -377,21 +377,13 @@ void CPurchaseListView::OnBnClickedButtonDel()
 
 	CString csID = m_listPur.GetItemText(iSelected, 0);
 
-	csMsg.Format(_T("您确认删除订单'%s'吗？"), csID);
+	csMsg.Format(_T("您确认执行以下操作吗？\r\n  1. 更新库存，取消该订单进货量；\r\n  2. 删除该进货订单记录信息。"), csID);
 	if (IDCANCEL == MessageBox(csMsg, _T("进货管理"), MB_ICONQUESTION|MB_OKCANCEL))
 	{
 		return;
 	}
 
 	CPurchaseDB purchaseDB;
-	Purchase purchase;
-	errRet = purchaseDB.GetPurchase(csID.GetBuffer(), &purchase);
-	if (errRet != err_OK)
-	{
-		csMsg.Format(_T("删除订单失败，%s"), GetErrMsg(errRet));
-		MessageBox(csMsg, _T("进货管理"), MB_ICONERROR);
-		return;
-	}
 
 	errRet = purchaseDB.DeletePurchase(csID.GetBuffer());
 	if (errRet != err_OK)

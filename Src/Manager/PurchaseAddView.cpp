@@ -990,17 +990,17 @@ BOOL CPurchaseAddView::AddPurchase()
 	{
 		purchase.medicine.csID = m_purchaseList.GetItemText(i, 1);
 		purchase.medicine.csSN = m_purchaseList.GetItemText(i, 2);
-		purchase.csBatchNum = m_purchaseList.GetItemText(i, 4);
-		purchase.csProductDate = m_purchaseList.GetItemText(i, 5);
-		purchase.csExpireDate = m_purchaseList.GetItemText(i, 6);
+		purchase.medicineBatch.csBatchNum = m_purchaseList.GetItemText(i, 4);
+		purchase.medicineBatch.csProductDate = m_purchaseList.GetItemText(i, 5);
+		purchase.medicineBatch.csExpireDate = m_purchaseList.GetItemText(i, 6);
 		purchase.csPurPrice = m_purchaseList.GetItemText(i, 7);
 		purchase.csNumber = m_purchaseList.GetItemText(i, 8);
 
 		purchase.medicine.csID.Trim();
 		purchase.medicine.csSN.Trim();
-		purchase.csBatchNum.Trim();
-		purchase.csProductDate.Trim();
-		purchase.csExpireDate.Trim();
+		purchase.medicineBatch.csBatchNum.Trim();
+		purchase.medicineBatch.csProductDate.Trim();
+		purchase.medicineBatch.csExpireDate.Trim();
 		purchase.csPurPrice.Trim();
 		purchase.csNumber.Trim();
 		if (purchase.medicine.csID == _T(""))
@@ -1015,19 +1015,19 @@ BOOL CPurchaseAddView::AddPurchase()
 			MessageBox(csMsg, _T(""), MB_ICONWARNING);
 			return FALSE;
 		}
-		if (purchase.csBatchNum == _T(""))
+		if (purchase.medicineBatch.csBatchNum == _T(""))
 		{
 			csMsg.Format(_T("请填写第%d行的药品批号！"), i+1);
 			MessageBox(csMsg, _T(""), MB_ICONWARNING);
 			return FALSE;
 		}
-		if (purchase.csProductDate == _T(""))
+		if (purchase.medicineBatch.csProductDate == _T(""))
 		{
 			csMsg.Format(_T("请正确填写第%d行的药品生产日期！"), i+1);
 			MessageBox(csMsg, _T(""), MB_ICONWARNING);
 			return FALSE;
 		}
-		if (purchase.csExpireDate == _T(""))
+		if (purchase.medicineBatch.csExpireDate == _T(""))
 		{
 			csMsg.Format(_T("请正确填写第%d行的有效期至！"), i+1);
 			MessageBox(csMsg, _T(""), MB_ICONWARNING);
@@ -1056,9 +1056,9 @@ BOOL CPurchaseAddView::AddPurchase()
 		purchase.medicine.csID = m_purchaseList.GetItemText(i, 1);
 		purchase.medicine.csSN = m_purchaseList.GetItemText(i, 2);
 		purchase.medicine.csName = m_purchaseList.GetItemText(i, 3);
-		purchase.csBatchNum = m_purchaseList.GetItemText(i, 4);
-		purchase.csProductDate = m_purchaseList.GetItemText(i, 5);
-		purchase.csExpireDate = m_purchaseList.GetItemText(i, 6);
+		purchase.medicineBatch.csBatchNum = m_purchaseList.GetItemText(i, 4);
+		purchase.medicineBatch.csProductDate = m_purchaseList.GetItemText(i, 5);
+		purchase.medicineBatch.csExpireDate = m_purchaseList.GetItemText(i, 6);
 		purchase.csPurPrice = m_purchaseList.GetItemText(i, 7);
 		purchase.csNumber = m_purchaseList.GetItemText(i, 8);
 		purchase.medicine.unit.csName = m_purchaseList.GetItemText(i, 9);
@@ -1474,9 +1474,9 @@ void CPurchaseAddView::OnBnClickedButtonAutoPurchase()
 			double dbPurPrice = atof(pMedicine->csRetailPrice.GetBuffer());
 			dbPurPrice *= 0.8;
 			purchase.csPurPrice.Format(_T("%0.2f"), dbPurPrice);
-			purchase.csBatchNum = _T("FFFFFFFF");
-			purchase.csProductDate = _T("2013-01-01");
-			purchase.csExpireDate = _T("2014-01-01");
+			purchase.medicineBatch.csBatchNum = _T("FFFFFFFF");
+			purchase.medicineBatch.csProductDate = _T("2013-01-01");
+			purchase.medicineBatch.csExpireDate = _T("2014-01-01");
 			purchase.csNumber.Format(_T("%d"), 0);
 
 			errRet = purchaseDB.AddPurchase(&purchase);

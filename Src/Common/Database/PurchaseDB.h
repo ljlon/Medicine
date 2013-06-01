@@ -3,6 +3,7 @@
 #include "Database.h"
 #include "SupplierDB.h"
 #include "MedicineDB.h"
+#include "MedicineBatchDB.h"
 
 //Medicne)
 #define PROCEDURE_PURCHASE_ADD _T("purchase_add")
@@ -21,9 +22,7 @@ typedef struct _Purchase
 	Medicine medicine;
 	CString csNumber;
 	CString csPurPrice;
-	CString csBatchNum;
-	CString csProductDate;
-	CString csExpireDate;
+	MedicineBatch medicineBatch;
 	CString csCreateTime;
 	CString csPurchaseTime;
 }Purchase;

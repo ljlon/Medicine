@@ -40,6 +40,7 @@ void CStoreEditView::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_MEDICINE_NAME, m_editMedicineName);
 	DDX_Control(pDX, IDC_EDIT_MEDICINE_VENDOR, m_editMedicineVendor);
 	DDX_Control(pDX, IDC_EDIT_MEDICINE_RETAILPRICE, m_editRetailPrice);
+	DDX_Control(pDX, IDC_EDIT_MEDICINE_SPEC, m_editMedicineSpec);
 	DDX_Control(pDX, IDC_EDIT_MEDICINE_STORE_NUM, m_editMedicineNum);
 	DDX_Control(pDX, IDC_STATIC_MEDICINE_STORE_UNIT, m_staticMedicineUnit);
 	DDX_Control(pDX, IDC_BUTTON_OK, m_btnOK);
@@ -283,6 +284,7 @@ BOOL CStoreEditView::LoadDataFromDoc()
 	m_editMedicineSN.SetWindowText(pStoreEditViewContext->medicineStore.csMedicineSN);
 	m_editMedicineName.SetWindowText(pStoreEditViewContext->medicineStore.csMedicineName);
 	m_editMedicineVendor.SetWindowText(pStoreEditViewContext->medicineStore.csMedicineVendorName);
+	m_editMedicineSpec.SetWindowText(pStoreEditViewContext->medicineStore.csMedicineSpec);
 	csMsg.Format(_T("%0.2f"), atof(pStoreEditViewContext->medicineStore.csMedicineRetailPrice));
 	m_editRetailPrice.SetWindowText(csMsg);
 	m_editMedicineNum.SetWindowText(pStoreEditViewContext->medicineStore.csMedicineNum);
