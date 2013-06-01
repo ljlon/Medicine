@@ -53,12 +53,14 @@ ERRCODE CPurchaseDB::AddPurchase(Purchase *pPurchase)
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
-	if (m_database.ProcedureAddParam("number", adVarChar, adParamInput, pPurchase->csNumber.GetBuffer()) != TRUE)
+	long lNum = atol(pPurchase->csNumber.GetBuffer());
+	if (m_database.ProcedureAddParam("number", adInteger, adParamInput, &lNum) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
-	if (m_database.ProcedureAddParam("purPrice", adVarChar, adParamInput, pPurchase->csPurPrice.GetBuffer()) != TRUE)
+	double dbPurPrice = atof(pPurchase->csPurPrice.GetBuffer());
+	if (m_database.ProcedureAddParam("purPrice", adDouble, adParamInput, &dbPurPrice) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
