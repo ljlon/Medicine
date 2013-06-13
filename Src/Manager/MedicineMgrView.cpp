@@ -128,7 +128,7 @@ void CMedicineMgrView::AdjustLayout()
 		groupListRect.left = clientRect.left + 5;
 		groupListRect.top = clientRect.top + 60;
 		groupListRect.right = groupListRect.left + (clientRect.Width() - 10);
-		groupListRect.bottom = groupListRect.top + (clientRect.Height() - 55);
+		groupListRect.bottom = clientRect.bottom - 5;
 		pGroupList->SetWindowPos(NULL, groupListRect.left, groupListRect.top, groupListRect.Width(), groupListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 
@@ -139,7 +139,7 @@ void CMedicineMgrView::AdjustLayout()
 		listRect.left = clientRect.left + 5;
 		listRect.top = groupListRect.top + 65;
 		listRect.right = listRect.left + (clientRect.Width() - 10);
-		listRect.bottom = listRect.top + (clientRect.Height() - 75 - 5);
+		listRect.bottom = clientRect.bottom - 5;
 		pMedicineList->SetWindowPos(NULL, listRect.left, listRect.top, listRect.Width(), listRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 

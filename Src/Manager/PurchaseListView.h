@@ -53,4 +53,6 @@ public:
 	afx_msg void OnBnClickedButtonDel();
 	CStatic m_staticGroupPur;
 	afx_msg void OnBnClickedButtonSearch();
+	CComboBox m_comboMedicineType;
+	afx_msg void OnCbnSelchangeComboMedicineType();
 };

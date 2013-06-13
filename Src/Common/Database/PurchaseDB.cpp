@@ -147,7 +147,7 @@ ERRCODE CPurchaseDB::GetPurchase(LPTSTR lpID, Purchase* pPurchase)
 	if((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 22)
+		if (iFieldNum < 23)
 		{
 			g_log.Write(_T("PurchaseDB Error:Num fields not match!"));
 
@@ -169,6 +169,7 @@ ERRCODE CPurchaseDB::GetPurchase(LPTSTR lpID, Purchase* pPurchase)
 		pPurchase->medicine.csVendorName = LPSTR(row[iItem++]);
 		pPurchase->csNumber = LPSTR(row[iItem++]);
 		pPurchase->medicine.unit.csName = LPSTR(row[iItem++]);
+		pPurchase->medicine.type.csID = LPSTR(row[iItem++]);
 		pPurchase->csPurPrice = LPSTR(row[iItem++]);
 		pPurchase->csCreateTime = LPSTR(row[iItem++]);
 		pPurchase->csPurchaseTime = LPSTR(row[iItem++]);
@@ -200,6 +201,7 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 								LPTSTR lpPurDateEnd,
 								LPTSTR lpMedicineSN,
 								LPTSTR lpMedicineName,
+								LPTSTR lpMedicineTypeID,
 								LPTSTR lpMedicineBatchNum,
 								LPTSTR lpSupplierID)
 {
@@ -230,6 +232,11 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 		return err_DB_Proc_Execute;
 	}
 	if (m_database.ProcedureAddParam("medicineName", adVarChar, adParamInput,  lpMedicineName) != TRUE)
+	{
+		g_log.Write(m_database.GetLastErrorMsg());
+		return err_DB_Proc_Execute;
+	}
+	if (m_database.ProcedureAddParam("medicineTypeID", adVarChar, adParamInput,  lpMedicineTypeID) != TRUE)
 	{
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
@@ -288,7 +295,7 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 	while((row = mysql_fetch_row(pResults)))   
 	{ 
 		int iFieldNum = mysql_num_fields(pResults);
-		if (iFieldNum < 22)
+		if (iFieldNum < 23)
 		{
 			g_log.Write(_T("PurchaseDB Error:Num fields not match!"));
 			for (unsigned int i = 0; i < vctPurchases.size(); i++)
@@ -317,6 +324,7 @@ ERRCODE CPurchaseDB::GetPurchases(DWORD dwPageNum,
 		pPurchase->medicine.csVendorName = LPSTR(row[iItem++]);
 		pPurchase->csNumber = LPSTR(row[iItem++]);
 		pPurchase->medicine.unit.csName = LPSTR(row[iItem++]);
+		pPurchase->medicine.type.csID = LPSTR(row[iItem++]);
 		pPurchase->csPurPrice = LPSTR(row[iItem++]);
 		pPurchase->csCreateTime = LPSTR(row[iItem++]);
 		pPurchase->csPurchaseTime = LPSTR(row[iItem++]);

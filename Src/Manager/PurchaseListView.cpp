@@ -34,6 +34,7 @@ void CPurchaseListView::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON_ADD, m_btnAdd);
 	DDX_Control(pDX, IDC_BUTTON_DELETE, m_btnDel);
 	DDX_Control(pDX, IDC_STATIC_GROUP_PUR, m_staticGroupPur);
+	DDX_Control(pDX, IDC_COMBO_MEDICINE_TYPE, m_comboMedicineType);
 }
 
 BEGIN_MESSAGE_MAP(CPurchaseListView, CFormView)
@@ -45,6 +46,7 @@ BEGIN_MESSAGE_MAP(CPurchaseListView, CFormView)
 	ON_BN_CLICKED(IDC_BTN_PREPAGE, &CPurchaseListView::OnBnClickedBtnPrepage)
 	ON_BN_CLICKED(IDC_BTN_NEXTPAGE, &CPurchaseListView::OnBnClickedBtnNextpage)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CPurchaseListView::OnBnClickedButtonSearch)
+	ON_CBN_SELCHANGE(IDC_COMBO_MEDICINE_TYPE, &CPurchaseListView::OnCbnSelchangeComboMedicineType)
 END_MESSAGE_MAP()
 
 void CPurchaseListView::OnInitialUpdate()
@@ -94,6 +96,12 @@ void CPurchaseListView::OnInitialUpdate()
 	m_listPur.InsertColumn(iSubItem++, "单位", LVCFMT_LEFT, 60, 0);
 	m_listPur.InsertColumn(iSubItem++, "金额", LVCFMT_LEFT, 80, 0);
 
+	m_comboMedicineType.AddString("全部");
+	m_comboMedicineType.AddString("药品");
+	m_comboMedicineType.AddString("保健品");
+	m_comboMedicineType.AddString("医疗器械");
+	m_comboMedicineType.SetCurSel(1);
+
 	DisplayListItem();
 }
 
@@ -113,6 +121,19 @@ void CPurchaseListView::AdjustLayout()
 	int iWidth = 0, iHeight = 0;
 	CRect clientRect;
 	GetClientRect(clientRect);
+
+	CRect comboMedicTypeRect;
+	CComboBox *pComboMedicType = (CComboBox*)GetDlgItem(IDC_COMBO_MEDICINE_TYPE);
+	if (pComboMedicType->GetSafeHwnd() != NULL)
+	{
+		pComboMedicType->GetWindowRect(comboMedicTypeRect);
+		ScreenToClient(&comboMedicTypeRect);
+		iWidth = comboMedicTypeRect.Width();
+		iHeight = comboMedicTypeRect.Height();
+		comboMedicTypeRect.right = clientRect.Width() - 7;
+		comboMedicTypeRect.left = comboMedicTypeRect.right - iWidth;
+		pComboMedicType->SetWindowPos(NULL, comboMedicTypeRect.left, comboMedicTypeRect.top, comboMedicTypeRect.Width(),  comboMedicTypeRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+	}
 
 	CRect groupPurRect;
 	CStatic *pGroupPur = (CStatic*)GetDlgItem(IDC_STATIC_GROUP_PUR);
@@ -134,6 +155,19 @@ void CPurchaseListView::AdjustLayout()
 		purListRect.right = purListRect.left + (clientRect.Width() - 10);
 		purListRect.bottom = clientRect.bottom - 5;
 		pPurList->SetWindowPos(NULL, purListRect.left, purListRect.top, purListRect.Width(), purListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+	}
+
+	CRect delBtnRect;
+	CButton *pBtnDel = (CButton*)GetDlgItem(IDC_BUTTON_DELETE);
+	if (pBtnDel->GetSafeHwnd() != NULL)
+	{
+		pBtnDel->GetWindowRect(delBtnRect);
+		ScreenToClient(&delBtnRect);
+		iWidth = delBtnRect.Width();
+		iHeight = delBtnRect.Height();
+		delBtnRect.top = groupPurRect.top + 25;
+		delBtnRect.bottom =  delBtnRect.top + iHeight;
+		pBtnDel->SetWindowPos(NULL, delBtnRect.left, delBtnRect.top, delBtnRect.Width(),  delBtnRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 
 	CRect nextBtnRect;
@@ -187,7 +221,29 @@ void CPurchaseListView::DisplayListItem()
 	vector<Purchase*> vctPurchases;
 	vector<MedicineUtil*> vctMedicineUnit;
 	CString csMedicineName;
-	csMedicineName.Format(_T("%%%s%%"), m_purchaseSearchDlg.m_csMedicineName);
+	if (m_purchaseSearchDlg.m_csMedicineName != "")
+	{
+		csMedicineName.Format(_T("%%%s%%"), m_purchaseSearchDlg.m_csMedicineName);
+	}
+
+	CString csMedicTypeID;
+	int iComboMedicType = m_comboMedicineType.GetCurSel();
+	if (iComboMedicType == 0)
+	{
+
+	}
+	else if (iComboMedicType == 1)
+	{
+		csMedicTypeID.Format("%d,%d,%d", TYPE_ZHONGCHENGYAO, TYPE_ZHONGCAOYAO, TYPE_XIYAO);
+	}
+	else if (iComboMedicType == 2)
+	{
+		csMedicTypeID.Format("%d", TYPE_BAOJIANPIN);
+	}
+	else if (iComboMedicType == 3)
+	{
+		csMedicTypeID.Format("%d", TYPE_YILIAOQIXIE);
+	}
 
 	ERRCODE errRet = purchaseDB.GetPurchases(m_dwCurPage, 
 																		g_ciNumPerPage, 
@@ -199,6 +255,7 @@ void CPurchaseListView::DisplayListItem()
 																		m_purchaseSearchDlg.m_csPurEndDate.GetBuffer(),
 																		m_purchaseSearchDlg.m_csMedicineSN.GetBuffer(),
 																		csMedicineName.GetBuffer(),
+																		csMedicTypeID.GetBuffer(),
 																		m_purchaseSearchDlg.m_csMedicineBatchNum.GetBuffer(),
 																		m_purchaseSearchDlg.m_csSupplierID.GetBuffer());
 	if (errRet != err_OK)
@@ -405,5 +462,16 @@ void CPurchaseListView::OnBnClickedButtonSearch()
 	}
 
 	m_dwCurPage = 0;
+	DisplayListItem();
+}
+
+
+void CPurchaseListView::OnCbnSelchangeComboMedicineType()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	m_dwCurPage = 0;
+	m_dwTotalNum = 0;
+	m_dwTotalPage = 0;
 	DisplayListItem();
 }

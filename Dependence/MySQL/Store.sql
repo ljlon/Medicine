@@ -4,7 +4,7 @@ USE `store`;
 --
 -- Host: localhost    Database: store
 -- ------------------------------------------------------
--- Server version	5.5.23
+-- Server version	5.5.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -72,7 +72,7 @@ CREATE TABLE `medicine` (
   `reg_num` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `SN_UNIQUE` (`sn`)
-) ENGINE=InnoDB AUTO_INCREMENT=987 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1045 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,7 @@ CREATE TABLE `vendor` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=499 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=520 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,13 +153,13 @@ DROP TABLE IF EXISTS `store_by_batch`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `store_by_batch` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `medicine_batch_id` int(11) DEFAULT NULL,
-  `medicine_num` int(11) DEFAULT NULL,
+  `medicine_batch_id` int(11) NOT NULL,
+  `medicine_num` int(11) NOT NULL,
   `create_time` datetime DEFAULT NULL,
   `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `medicine_batch_id_UNIQUE` (`medicine_batch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1476 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1895 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,12 +185,12 @@ DROP TABLE IF EXISTS `medicine_batch`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `medicine_batch` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `medicine_id` int(11) DEFAULT NULL,
-  `batch_num` varchar(100) DEFAULT NULL,
+  `medicine_id` int(11) NOT NULL,
+  `batch_num` varchar(100) NOT NULL,
   `product_date` datetime DEFAULT NULL,
   `expire_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1475 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1893 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,15 +202,15 @@ DROP TABLE IF EXISTS `purchase`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `purchase` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `medicine_num` int(11) DEFAULT NULL,
-  `pur_price` double DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `medicine_num` int(11) NOT NULL,
+  `pur_price` double NOT NULL,
   `create_time` datetime DEFAULT NULL,
   `purchase_time` datetime DEFAULT NULL,
-  `batch_id` int(11) DEFAULT NULL,
+  `batch_id` int(11) NOT NULL,
   `supplier_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=550 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=982 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,7 +228,7 @@ CREATE TABLE `supplier_medicine` (
   `modify_time` datetime DEFAULT NULL,
   `pur_price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=498 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=888 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,7 +290,7 @@ CREATE TABLE `retail_item` (
   `medicine_price` double DEFAULT NULL,
   `retail_price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -311,7 +311,7 @@ CREATE TABLE `supplier` (
   `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +331,7 @@ CREATE TABLE `retail` (
   `sn` varchar(100) DEFAULT NULL,
   `pc_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -343,4 +343,4 @@ CREATE TABLE `retail` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-01  9:15:46
+-- Dump completed on 2013-06-13 14:35:35

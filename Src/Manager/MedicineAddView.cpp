@@ -866,9 +866,9 @@ void CMedicineAddView::DisplayMedicineInfo(LPTSTR lpMedicineID)
 			break;
 		}
 	}
-	if (m_medicine.type.csName != ZHONGCHENGYAO &&
-		m_medicine.type.csName != ZHONGCAOYAO &&
-		m_medicine.type.csName != XIYAO)
+	if (m_medicine.type.csName != GetMedicTypeName(TYPE_ZHONGCHENGYAO) &&
+		m_medicine.type.csName != GetMedicTypeName(TYPE_ZHONGCAOYAO) &&
+		m_medicine.type.csName != GetMedicTypeName(TYPE_XIYAO))
 	{
 		m_cbOTC.SetCurSel(-1);
 		m_cbOTC.EnableWindow(FALSE);
@@ -1353,9 +1353,9 @@ void CMedicineAddView::OnCbnSelchangeComboMedicineType()
 	m_cbType.GetLBText(iSel, csType);
 	csType.Trim();
 
-	if (csType != ZHONGCHENGYAO &&
-		csType != ZHONGCAOYAO &&
-		csType != XIYAO)
+	if (csType != GetMedicTypeName(TYPE_ZHONGCHENGYAO) &&
+		csType != GetMedicTypeName(TYPE_ZHONGCAOYAO) &&
+		csType != GetMedicTypeName(TYPE_XIYAO))
 	{
 		m_cbOTC.SetCurSel(-1);
 		m_cbOTC.EnableWindow(FALSE);

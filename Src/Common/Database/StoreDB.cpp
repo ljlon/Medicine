@@ -254,10 +254,21 @@ ERRCODE CStoreDB::DeleteMedicineStore(LPTSTR lMedicineSN)
 		g_log.Write(m_database.GetLastErrorMsg());
 		return err_DB_Proc_Execute;
 	}
-	if (m_database.ProcedureAddParam("medicineSN", adVarChar, adParamInput, lMedicineSN) != TRUE)
+	if (lMedicineSN && strlen(lMedicineSN) != 0)
 	{
-		g_log.Write(m_database.GetLastErrorMsg());
-		return err_DB_Proc_Execute;
+		if (m_database.ProcedureAddParam("medicineSN", adVarChar, adParamInput, lMedicineSN) != TRUE)
+		{
+			g_log.Write(m_database.GetLastErrorMsg());
+			return err_DB_Proc_Execute;
+		}
+	}
+	else
+	{
+		if (m_database.ProcedureAddParam("medicineSN", adVarChar, adParamInput, NULL) != TRUE)
+		{
+			g_log.Write(m_database.GetLastErrorMsg());
+			return err_DB_Proc_Execute;
+		}
 	}
 	if (m_database.ProcedureAddParam("returnVal", adInteger, adParamOutput) != TRUE)
 	{

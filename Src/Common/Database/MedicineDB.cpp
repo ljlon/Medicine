@@ -1,6 +1,19 @@
 #include "stdafx.h"
 #include "MedicineDB.h"
 
+const CHAR *c_szMedicType[]={
+	"中成药",
+	"保健药",
+	"中草药",
+	"西药",
+	"医疗器械",
+};
+
+LPCSTR GetMedicTypeName(EnumMedicTypeID id)
+{
+	return c_szMedicType[id];
+}
+
 CMedicineDB::CMedicineDB()
 {
 

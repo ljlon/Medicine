@@ -149,10 +149,15 @@ void CSupplierMgrView::AdjustLayout()
 		pStaticPageInfo->SetWindowPos(NULL, pageInfoRect.left, pageInfoRect.top, pageInfoRect.Width(),  pageInfoRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 
+	CRect supplierListRect;
 	CListCtrl *pSupplierList = (CListCtrl*)GetDlgItem(IDC_LIST_SUPPLIER);
 	if (pSupplierList->GetSafeHwnd() != NULL)
 	{
-		pSupplierList->SetWindowPos(NULL, clientRect.left + 5, clientRect.top + 60, clientRect.Width() - 10, clientRect.Height() - 55, SWP_NOACTIVATE | SWP_NOZORDER);
+		supplierListRect.left = clientRect.left + 5;
+		supplierListRect.right = clientRect.right - 5;
+		supplierListRect.top = clientRect.top + 60;
+		supplierListRect.bottom = clientRect.bottom - 5;
+		pSupplierList->SetWindowPos(NULL, supplierListRect.left, supplierListRect.top, supplierListRect.Width(), supplierListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 }
 

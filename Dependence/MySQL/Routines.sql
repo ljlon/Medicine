@@ -4,7 +4,7 @@ USE `store`;
 --
 -- Host: localhost    Database: store
 -- ------------------------------------------------------
--- Server version	5.5.23
+-- Server version	5.5.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -89,6 +89,7 @@ SET character_set_client = utf8;
   `medicine_vendor_name` varchar(100),
   `medicine_num` int(11),
   `medicine_unit_name` varchar(45),
+  `medicine_type_id` int(11),
   `pur_price` double,
   `create_time` datetime,
   `purchase_time` datetime,
@@ -283,7 +284,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_purchase` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`d`.`uid` AS `user_uid`,`d`.`name` AS `user_name`,`c`.`id` AS `medicine_id`,`c`.`sn` AS `medicine_sn`,`c`.`name` AS `medicine_name`,`c`.`form_name` AS `medicine_form`,`c`.`spec` AS `medicine_spec`,`c`.`vendor_name` AS `medicine_vendor_name`,`a`.`medicine_num` AS `medicine_num`,`c`.`unit_name` AS `medicine_unit_name`,`a`.`pur_price` AS `pur_price`,`a`.`create_time` AS `create_time`,`a`.`purchase_time` AS `purchase_time`,`a`.`batch_id` AS `batch_id`,`b`.`batch_num` AS `batch_num`,`b`.`product_date` AS `product_date`,`b`.`expire_date` AS `expire_date`,`e`.`id` AS `supplier_id`,`e`.`name` AS `supplier_name`,`c`.`reg_num` AS `medicine_reg_num` from ((((`purchase` `a` left join `medicine_batch` `b` on((`a`.`batch_id` = `b`.`id`))) left join `view_medicine` `c` on((`b`.`medicine_id` = `c`.`id`))) left join `user` `d` on((`a`.`user_id` = `d`.`id`))) left join `supplier` `e` on((`a`.`supplier_id` = `e`.`id`))) */;
+/*!50001 VIEW `view_purchase` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`d`.`uid` AS `user_uid`,`d`.`name` AS `user_name`,`c`.`id` AS `medicine_id`,`c`.`sn` AS `medicine_sn`,`c`.`name` AS `medicine_name`,`c`.`form_name` AS `medicine_form`,`c`.`spec` AS `medicine_spec`,`c`.`vendor_name` AS `medicine_vendor_name`,`a`.`medicine_num` AS `medicine_num`,`c`.`unit_name` AS `medicine_unit_name`,`c`.`type_id` AS `medicine_type_id`,`a`.`pur_price` AS `pur_price`,`a`.`create_time` AS `create_time`,`a`.`purchase_time` AS `purchase_time`,`a`.`batch_id` AS `batch_id`,`b`.`batch_num` AS `batch_num`,`b`.`product_date` AS `product_date`,`b`.`expire_date` AS `expire_date`,`e`.`id` AS `supplier_id`,`e`.`name` AS `supplier_name`,`c`.`reg_num` AS `medicine_reg_num` from ((((`purchase` `a` left join `medicine_batch` `b` on((`a`.`batch_id` = `b`.`id`))) left join `view_medicine` `c` on((`b`.`medicine_id` = `c`.`id`))) left join `user` `d` on((`a`.`user_id` = `d`.`id`))) left join `supplier` `e` on((`a`.`supplier_id` = `e`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -729,7 +730,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SELECT * FROM medicine_batch WHERE medicine_id=medicineID AND batch_num LIKE batchNum ORDER BY id DESC LIMIT offset,numPerPage;
     END IF;
     
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
 END IF;
 
@@ -929,7 +930,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum=@totalNum;
-	SET totalPage = (totalNum - 1) / numPerPage + 1;
+	  SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -1155,7 +1156,7 @@ DECLARE offset int;
 
 IF (pageNum >= 0 && numPerPage > 0) THEN
     SELECT COUNT(*)INTO totalNum FROM view_pos ORDER BY id;
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
     SET offset = numPerPage*pageNum;
     SELECT * FROM view_pos ORDER BY id LIMIT offset,numPerPage;
@@ -1318,6 +1319,7 @@ IN purDateBegin varchar(20),
 IN purDateEnd varchar(20),
 IN medicineSN varchar(100),
 IN medicineName varchar(100),
+IN medicineTypeID varchar(100),
 IN medicineBatchNum varchar(100),
 IN supplierID int, 
 IN numPerPage int,
@@ -1339,7 +1341,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SET @countSqlString = CONCAT(@countSqlString, ' AND DATEDIFF(purchase_time,\'', purDateEnd,'\')<=0');
         SET @sqlString = CONCAT(@sqlString, ' AND DATEDIFF(purchase_time,\'', purDateEnd,'\')<=0');
     END IF;
-	IF (medicineSN!='' && medicineSN is not null) THEN
+	  IF (medicineSN!='' && medicineSN is not null) THEN
         SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_sn=\'',medicineSN, '\'');
         SET @sqlString = CONCAT(@sqlString, ' AND medicine_sn=\'',medicineSN, '\'');
     END IF;
@@ -1347,11 +1349,15 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_name LIKE \'',medicineName, '\'');
         SET @sqlString = CONCAT(@sqlString, ' AND medicine_name LIKE \'',medicineName, '\'');
     END IF;
-	IF (medicineBatchNum!='' && medicineBatchNum is not null) THEN
+    IF (medicineTypeID !='' && medicineTypeID is not null) THEN
+        SET @countSqlString = CONCAT(@countSqlString, ' AND medicine_type_id IN (',medicineTypeID, ')');
+        SET @sqlString = CONCAT(@sqlString, ' AND medicine_type_id IN (',medicineTypeID, ')');
+    END IF;
+	  IF (medicineBatchNum!='' && medicineBatchNum is not null) THEN
         SET @countSqlString = CONCAT(@countSqlString, ' AND batch_num =\'',medicineBatchNum, '\'');
         SET @sqlString = CONCAT(@sqlString, ' AND batch_num =\'',medicineBatchNum, '\'');
     END IF;
-	IF (supplierID >= 0 && supplierID is not null) THEN
+	  IF (supplierID >= 0 && supplierID is not null) THEN
        SET @countSqlString = CONCAT(@countSqlString, ' AND supplier_id=',supplierID);
        SET @sqlString = CONCAT(@sqlString, ' AND supplier_id=',supplierID);
     END IF;
@@ -1361,7 +1367,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     EXECUTE smtp;
     SET totalPrice=@totalPrice;
     SET totalNum=@totalNum;
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -1479,7 +1485,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     EXECUTE smtp;
     SET totalPrice=@totalPrice;
     SET totalNum=@totalNum;
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
         
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -1598,8 +1604,10 @@ DECLARE tempNum int;
 SELECT id, medicine_num INTO storeByBatchID, tempNum FROM store_by_batch WHERE medicine_batch_id=batchID;
 SET returnVal=found_rows();
 IF (returnVal = 0) THEN
-    INSERT INTO store_by_batch (medicine_batch_id,medicine_num, create_time, modify_time) 
-        VALUES (batchID, addNum, now(), now());
+    IF (addNum > 0) THEN
+        INSERT INTO store_by_batch (medicine_batch_id,medicine_num, create_time, modify_time) 
+            VALUES (batchID, addNum, now(), now());
+    END IF;
 ELSE
     SET tempNum = tempNum + addNum;
     IF (tempNum < 0) THEN
@@ -1742,7 +1750,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum=@totalNum;
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -1888,7 +1896,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum=@totalNum;
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -2292,7 +2300,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum=@totalNum;
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -2540,7 +2548,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SELECT * FROM supplier WHERE name REGEXP subName ORDER BY id DESC LIMIT offset,numPerPage;
     END IF;
 
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
 
 END IF;
 END */;;
@@ -2706,7 +2714,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
     PREPARE smtp FROM @countSqlString;
     EXECUTE smtp;
     SET totalNum = @totalNum;
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
     PREPARE smtp FROM @sqlString;
     EXECUTE smtp;
@@ -2922,7 +2930,7 @@ IF (pageNum >= 0 && numPerPage > 0) THEN
         SELECT * FROM vendor WHERE name REGEXP subName ORDER BY id DESC LIMIT offset,numPerPage;
     END IF;
     
-    SET totalPage = (totalNum - 1) / numPerPage + 1;
+    SET totalPage = floor((totalNum - 1) / numPerPage + 1);
     
 END IF;
 
@@ -2965,7 +2973,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `vendor_select_by_name`(
-IN vendorName varchar(100))
+IN vendorName int)
 BEGIN
 
 SELECT * FROM vendor WHERE name=vendorName;
@@ -3011,4 +3019,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-01 18:00:06
+-- Dump completed on 2013-06-13 14:36:08

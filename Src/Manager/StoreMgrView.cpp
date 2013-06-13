@@ -412,6 +412,11 @@ void CStoreMgrView::DisplayListItem()
 
 void CStoreMgrView::DisplayBatchListItem(LPSTR lpMedicineSN)
 {
+	if (lpMedicineSN == NULL || strlen(lpMedicineSN) == 0)
+	{
+		return;
+	}
+
 	ERRCODE errRet;
 	CString csMsg;
 	CMedicineDB medicineDB;

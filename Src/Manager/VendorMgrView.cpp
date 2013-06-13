@@ -148,10 +148,15 @@ void CVendorMgrView::AdjustLayout()
 		pStaticPageInfo->SetWindowPos(NULL, pageInfoRect.left, pageInfoRect.top, pageInfoRect.Width(),  pageInfoRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 
+	CRect vendorListRect;
 	CListCtrl *pVendorList = (CListCtrl*)GetDlgItem(IDC_LIST_VENDOR);
 	if (pVendorList->GetSafeHwnd() != NULL)
 	{
-		pVendorList->SetWindowPos(NULL, clientRect.left + 5, clientRect.top + 60, clientRect.Width() - 10, clientRect.Height() - 55, SWP_NOACTIVATE | SWP_NOZORDER);
+		vendorListRect.left = clientRect.left + 5;
+		vendorListRect.right = clientRect.right - 5;
+		vendorListRect.top = clientRect.top + 60;
+		vendorListRect.bottom = clientRect.bottom - 5;
+		pVendorList->SetWindowPos(NULL, vendorListRect.left, vendorListRect.top, vendorListRect.Width(), vendorListRect.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 	}
 }
 

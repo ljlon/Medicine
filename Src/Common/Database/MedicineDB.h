@@ -34,11 +34,15 @@ typedef struct _MedicineType
 	CString csID;
 	CString csName;
 }MedicineType;
-#define ZHONGCHENGYAO "中成药"
-#define ZHONGCAOYAO "中草药"
-#define XIYAO "西药"
-#define BAOJIANPIN "保健药"
-#define QIXIE "医疗器械"
+enum EnumMedicTypeID
+{
+	TYPE_ZHONGCHENGYAO = 0,
+	TYPE_BAOJIANPIN = 1,
+	TYPE_ZHONGCAOYAO = 2,
+	TYPE_XIYAO = 3,
+	TYPE_YILIAOQIXIE = 4,
+};
+LPCSTR GetMedicTypeName(EnumMedicTypeID id);
 
 typedef struct _MedicineOTC
 {

@@ -44,6 +44,7 @@ public:
 										LPTSTR lpPurDateEnd = _T(""),
 										LPTSTR lpMedicineSN = _T(""),
 										LPTSTR lpMedicineName = _T(""),
+										LPTSTR lpMedicineTypeID = _T(""),
 										LPTSTR lpMedicineBatchNum = _T(""),
 										LPTSTR lpSupplierID = _T(""));
 	ERRCODE GetPurchase(LPTSTR lpID, Purchase* pPurchase);
