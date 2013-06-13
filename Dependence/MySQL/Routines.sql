@@ -2973,7 +2973,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `vendor_select_by_name`(
-IN vendorName int)
+IN vendorName varchar(100))
 BEGIN
 
 SELECT * FROM vendor WHERE name=vendorName;
@@ -3019,4 +3019,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-13 14:36:08
+-- Dump completed on 2013-06-13 14:55:17
