@@ -4,7 +4,7 @@
 using namespace std;
 
 //版本
-#define APP_NAME     _T("福瑞堂医药管理系统")
+#define APP_NAME     _T("医药管理系统")
 
 //基础数据结构
 typedef struct _TreeStruct 
